@@ -1,0 +1,75 @@
+---
+title: Configuration
+description: Configure your project settings
+order: 1
+category: guides
+lastUpdated: 2026-04-20
+tags:
+  - guides
+  - configuration
+---
+
+# Configuration
+
+Learn how to configure your project settings.
+
+## Site Configuration
+
+Edit the `src/lib/site-config.ts` file to customize site information:
+
+```typescript
+export const siteConfig = {
+  name: "My Documentation",
+  description: "A modern documentation website",
+  url: "https://example.com",
+  author: "Your Name",
+  email: "hello@example.com",
+};
+```
+
+## Navigation Configuration
+
+Customize the navigation by editing `src/lib/navigation.ts`:
+
+```typescript
+export const mainNav = [
+  {
+    title: "Docs",
+    href: "/docs",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+  },
+];
+```
+
+## Contact Information
+
+Update contact information in `src/lib/contact.ts`:
+
+```typescript
+export const contactConfig = {
+  email: "hello@example.com",
+  location: "Ho Chi Minh City, Vietnam",
+  social: [
+    {
+      platform: "GitHub",
+      url: "https://github.com/username",
+      icon: "Github",
+    },
+  ],
+};
+```
+
+## Environment Variables
+
+Create a `.env.local` file for environment variables:
+
+```env
+# Site URL (for production)
+NEXT_PUBLIC_SITE_URL=https://example.com
+
+# Analytics (optional)
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```

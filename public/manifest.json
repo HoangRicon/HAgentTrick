@@ -1,0 +1,16 @@
+{
+  "name": "My Documentation",
+  "short_name": "MyDocs",
+  "description": "A modern documentation website with beautiful design",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

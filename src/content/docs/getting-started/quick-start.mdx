@@ -1,0 +1,66 @@
+---
+title: Quick Start
+description: Get up and running in minutes
+order: 3
+category: getting-started
+lastUpdated: 2026-04-20
+tags:
+  - getting-started
+  - quick-start
+  - tutorial
+---
+
+# Quick Start
+
+Get up and running with this quick start guide.
+
+## Create Your First Page
+
+Creating a new page is easy. Just create a new file in the `src/app` directory:
+
+```typescript
+// src/app/hello/page.tsx
+export default function HelloPage() {
+  return (
+    <main>
+      <h1>Hello, World!</h1>
+      <p>Welcome to my documentation site.</p>
+    </main>
+  );
+}
+```
+
+## Add Documentation
+
+Add new documentation by creating MDX files in the `src/content/docs` directory:
+
+```mdx
+---
+title: My New Page
+description: A description of my page
+---
+
+# My New Page
+
+This is my new documentation page!
+```
+
+## Customize the Theme
+
+The site supports both light and dark mode. Users can toggle between themes using the button in the header.
+
+## Deploy
+
+When you're ready to deploy, run:
+
+```bash
+npm run build
+```
+
+This will generate a static site in the `out` directory, ready to be deployed to GitHub Pages or any static hosting provider.
+
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [MDX](https://mdxjs.com/)

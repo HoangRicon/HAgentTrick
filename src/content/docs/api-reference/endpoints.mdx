@@ -1,0 +1,116 @@
+---
+title: Endpoints
+description: Available API endpoints
+order: 2
+category: api-reference
+lastUpdated: 2026-04-20
+tags:
+  - api-reference
+  - endpoints
+  - api
+---
+
+# Endpoints
+
+A list of available API endpoints.
+
+## Base URL
+
+All API requests should be made to:
+
+```
+https://api.example.com/v1
+```
+
+## Resources
+
+### Users
+
+#### List Users
+
+```bash
+GET /users
+```
+
+**Response:**
+
+```json
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com"
+    }
+  ],
+  "total": 1
+}
+```
+
+#### Get User
+
+```bash
+GET /users/:id
+```
+
+**Response:**
+
+```json
+{
+  "id": "1",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "createdAt": "2024-01-01T00:00:00Z"
+}
+```
+
+### Posts
+
+#### List Posts
+
+```bash
+GET /posts
+```
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| page | number | Page number |
+| limit | number | Items per page |
+| userId | string | Filter by user ID |
+
+#### Create Post
+
+```bash
+POST /posts
+```
+
+**Request Body:**
+
+```json
+{
+  "title": "My Post",
+  "content": "Post content here...",
+  "userId": "1"
+}
+```
+
+## Error Handling
+
+All errors follow this format:
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid input",
+    "details": [
+      {
+        "field": "title",
+        "message": "Title is required"
+      }
+    ]
+  }
+}
+```

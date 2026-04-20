@@ -1,0 +1,50 @@
+---
+title: Authentication
+description: API authentication methods
+order: 1
+category: api-reference
+lastUpdated: 2026-04-20
+tags:
+  - api-reference
+  - authentication
+---
+
+# Authentication
+
+Learn how to authenticate API requests.
+
+## Overview
+
+This section covers the authentication methods available for the API.
+
+## API Keys
+
+Include your API key in the request header:
+
+```bash
+curl -X GET https://api.example.com/v1/resource \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## Rate Limiting
+
+API requests are rate limited to:
+
+- **100 requests** per minute for free tier
+- **1000 requests** per minute for paid tiers
+
+## Response Codes
+
+| Code | Description |
+|------|-------------|
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 429 | Too Many Requests |
+| 500 | Internal Server Error |
+
+## Next Steps
+
+See [Endpoints](/docs/api-reference/endpoints) for available API endpoints.
