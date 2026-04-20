@@ -1,88 +1,65 @@
-import { siteConfig } from "./site-config";
-
 export const landingConfig = {
   hero: {
-    badge: "Welcome to my portfolio",
-    headline: "Hi, I'm a Full-Stack Developer",
+    badge: "Hướng dẫn sử dụng AI Agent",
+    headline: "Hướng dẫn AI Agent",
     subheadline:
-      "I build exceptional digital experiences with modern technologies. Passionate about clean code, user-centric design, and open source.",
+      "Tìm hiểu cách sử dụng AI Agent để xây dựng website, ứng dụng web, và các dự án lập trình một cách hiệu quả nhất.",
     ctaPrimary: {
-      title: "View My Work",
+      title: "Bắt đầu học",
       href: "/docs",
     },
     ctaSecondary: {
-      title: "Get in Touch",
-      href: "/contact",
+      title: "Đọc ngay",
+      href: "/docs/getting-started/introduction",
     },
   },
   about: {
-    title: "About Me",
-    bio: [
-      "I'm a passionate developer with over 5 years of experience building web applications. I specialize in React, Next.js, Node.js, and cloud technologies.",
-      "I love creating beautiful, functional, and accessible websites that provide great user experiences. When I'm not coding, you'll find me exploring new technologies or contributing to open source projects.",
-    ],
+    title: "Tại sao nên sử dụng AI Agent?",
     highlights: [
-      "5+ years of development experience",
-      "Built 50+ projects",
-      "Open source contributor",
-      "Modern tech stack enthusiast",
+      "Phân tích yêu cầu chi tiết",
+      "Viết code nhanh hơn 10x",
+      "Quy tắc và quy trình chuẩn",
+      "Review tự động",
     ],
   },
   features: [
     {
-      icon: "Code",
-      title: "Clean Code",
-      description:
-        "Writing maintainable, well-documented code that follows best practices and is easy to understand.",
+      icon: "Bot",
+      title: "AI Agent là gì?",
+      description: "Tìm hiểu khái niệm AI Agent, cách hoạt động và tại sao nó thay đổi cách chúng ta lập trình.",
     },
     {
-      icon: "Palette",
-      title: "Beautiful Design",
-      description:
-        "Creating visually stunning interfaces with attention to typography, color, and user experience.",
+      icon: "FileText",
+      title: "Quy tắc viết Prompt",
+      description: "Hướng dẫn cách viết prompt hiệu quả để AI Agent hiểu yêu cầu và sinh code chính xác nhất.",
+    },
+    {
+      icon: "Code",
+      title: "Phân tích Yêu cầu",
+      description: "Cách phân tích yêu cầu nghiệp vụ trước khi bắt đầu code, giúp AI hiểu đúng scope dự án.",
+    },
+    {
+      icon: "Lightbulb",
+      title: "Best Practices",
+      description: "Những bài học và kinh nghiệm thực tế khi sử dụng AI Agent để code trong nhiều năm.",
     },
     {
       icon: "Zap",
-      title: "Fast Performance",
-      description:
-        "Optimizing applications for speed and efficiency, ensuring smooth user interactions.",
+      title: "Tối ưu Workflow",
+      description: "Cách thiết lập quy trình làm việc với AI Agent giúp tăng tốc độ phát triển phần mềm.",
     },
     {
       icon: "Shield",
-      title: "Secure & Reliable",
-      description:
-        "Implementing security best practices and writing robust code that handles edge cases.",
+      title: "Tránh bẫy phổ biến",
+      description: "Những lỗi thường gặp khi dùng AI Agent và cách tránh chúng để có code chất lượng cao.",
     },
-    {
-      icon: "Accessibility",
-      title: "Accessible",
-      description:
-        "Building inclusive applications that work for everyone, following WCAG guidelines.",
-    },
-    {
-      icon: " Globe",
-      title: "Open Source",
-      description:
-        "Contributing to and maintaining open source projects that benefit the community.",
-    },
-  ],
-  stats: [
-    { label: "Years Experience", value: "5+", suffix: "" },
-    { label: "Projects Completed", value: "50+", suffix: "" },
-    { label: "Happy Clients", value: "30+", suffix: "" },
-    { label: "Lines of Code", value: "100K+", suffix: "" },
   ],
   cta: {
-    title: "Let's Work Together",
-    description:
-      "Have a project in mind? I'd love to hear about it. Let's discuss how I can help bring your ideas to life.",
+    title: "Bạn có câu hỏi?",
+    description: "Liên hệ để được hỗ trợ thêm về AI Agent và cách sử dụng.",
     button: {
-      title: "Start a Conversation",
+      title: "Liên hệ",
       href: "/contact",
     },
-  },
-  seo: {
-    title: `${siteConfig.name} - ${siteConfig.description}`,
-    description: siteConfig.description,
   },
 };

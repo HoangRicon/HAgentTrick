@@ -1,38 +1,38 @@
 "use client";
 
-import { Code, Palette, Zap, Shield, Accessibility, Globe } from "lucide-react";
+import { Bot, FileText, Zap, Shield, Lightbulb, Code } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const features = [
   {
-    icon: Code,
-    title: "Clean Code",
-    description: "Writing maintainable, well-documented code that follows best practices and is easy to understand.",
+    icon: Bot,
+    title: "AI Agent là gì?",
+    description: "Tìm hiểu khái niệm AI Agent, cách hoạt động và tại sao nó thay đổi cách chúng ta lập trình.",
   },
   {
-    icon: Palette,
-    title: "Beautiful Design",
-    description: "Creating visually stunning interfaces with attention to typography, color, and user experience.",
+    icon: FileText,
+    title: "Quy tắc viết Prompt",
+    description: "Hướng dẫn cách viết prompt hiệu quả để AI Agent hiểu yêu cầu và sinh code chính xác nhất.",
+  },
+  {
+    icon: Code,
+    title: "Phân tích Yêu cầu",
+    description: "Cách phân tích yêu cầu nghiệp vụ trước khi bắt đầu code, giúp AI hiểu đúng scope dự án.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Best Practices",
+    description: "Những bài học và kinh nghiệm thực tế khi sử dụng AI Agent để code trong nhiều năm.",
   },
   {
     icon: Zap,
-    title: "Fast Performance",
-    description: "Optimizing applications for speed and efficiency, ensuring smooth user interactions.",
+    title: "Tối ưu Workflow",
+    description: "Cách thiết lập quy trình làm việc với AI Agent giúp tăng tốc độ phát triển phần mềm.",
   },
   {
     icon: Shield,
-    title: "Secure & Reliable",
-    description: "Implementing security best practices and writing robust code that handles edge cases.",
-  },
-  {
-    icon: Accessibility,
-    title: "Accessible",
-    description: "Building inclusive applications that work for everyone, following WCAG guidelines.",
-  },
-  {
-    icon: Globe,
-    title: "Open Source",
-    description: "Contributing to and maintaining open source projects that benefit the community.",
+    title: "Tránh bẫy phổ biến",
+    description: "Những lỗi thường gặp khi dùng AI Agent và cách tránh chúng để có code chất lượng cao.",
   },
 ];
 
@@ -43,9 +43,9 @@ export function FeaturesSection() {
     <section ref={ref} className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="max-w-6xl mx-auto">
         <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">What I Do</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Nội dung hướng dẫn</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Building digital products, brands, and experiences
+            Từ cơ bản đến nâng cao, tất cả những gì bạn cần để sử dụng AI Agent hiệu quả
           </p>
         </div>
 

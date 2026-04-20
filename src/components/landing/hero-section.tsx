@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { Sparkles, ArrowRight } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/20" />
 
@@ -17,25 +17,25 @@ export function HeroSection() {
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 animate-fade-in">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-          </span>
-          Welcome to my portfolio
+          <Sparkles className="w-4 h-4" />
+          <span>Hướng dẫn sử dụng AI Agent</span>
         </div>
 
         {/* Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 animate-fade-in-up">
-          Hi, I&apos;m a{" "}
+          Hướng dẫn{" "}
           <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Full-Stack Developer
+            AI Agent
+          </span>
+          <br />
+          <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+            để Code từ A-Z
           </span>
         </h1>
 
         {/* Subheadline */}
-        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-in-up delay-200">
-          I build exceptional digital experiences with modern technologies.
-          Passionate about clean code, user-centric design, and open source.
+        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in-up delay-200">
+          Tìm hiểu cách sử dụng AI Agent để xây dựng website, ứng dụng web, và các dự án lập trình một cách hiệu quả nhất.
         </p>
 
         {/* CTA Buttons */}
@@ -44,16 +44,14 @@ export function HeroSection() {
             href="/docs"
             className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25"
           >
-            <span>View My Work</span>
-            <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
+            <span>Bắt đầu học</span>
+            <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
           <Link
-            href="/contact"
+            href="/docs/getting-started/introduction"
             className="inline-flex items-center justify-center h-12 px-8 rounded-lg border border-input bg-background font-medium hover:bg-accent hover:text-accent-foreground transition-all"
           >
-            Get in Touch
+            Đọc ngay
           </Link>
         </div>
       </div>
