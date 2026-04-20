@@ -1,9 +1,9 @@
 export const siteConfig = {
-  name: "AI Agent Hướng dẫn",
+  name: "HAgentTrick",
   description: "Hướng dẫn sử dụng AI Agent để code từ A-Z",
-  url: "https://example.com",
-  author: "Your Name",
-  email: "hello@example.com",
+  url: "https://htool.app/hagenttrick",
+  author: "Doan Huy Hoang",
+  email: "convitcon12345678@gmail.com",
   location: "Vietnam",
   social: {
     github: "https://github.com/username",

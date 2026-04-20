@@ -1,12 +1,5 @@
-import { HeroSection, AboutSection, FeaturesSection, CtaSection } from "@/components/landing";
+import { VerticalSlider } from "@/components/landing/vertical-slider";
 
 export default function Home() {
-  return (
-    <>
-      <HeroSection />
-      <AboutSection />
-      <FeaturesSection />
-      <CtaSection />
-    </>
-  );
+  return <VerticalSlider />;
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { Header, Footer } from "@/components/layout";
+import { MainLayout } from "@/components/layout/main-layout";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,12 +17,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://htool.app/hagenttrick"),
   title: {
-    default: "AI Agent Hướng dẫn",
-    template: "%s | AI Agent Hướng dẫn",
+    default: "HAgentTrick",
+    template: "%s | HAgentTrick",
   },
-  description: "Hướng dẫn sử dụng AI Agent để code từ A-Z. Tìm hiểu cách phân tích yêu cầu, viết prompt, và xây dựng dự án với AI.",
+  description: "Hướng dẫn sử dụng AI Agent để code từ A-Z. Tìm hiểu cách phân tích yêu cầu, viết prompt, quy tắc code, và xây dựng dự án với AI.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -32,14 +32,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     alternateLocale: ["en_US"],
-    siteName: "AI Agent Hướng dẫn",
-    title: "AI Agent Hướng dẫn",
+    siteName: "HAgentTrick",
+    title: "HAgentTrick — Hướng dẫn AI Agent",
     description: "Hướng dẫn sử dụng AI Agent để code từ A-Z",
     images: [{ url: "/og-image.svg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Agent Hướng dẫn",
+    title: "HAgentTrick — Hướng dẫn AI Agent",
     description: "Hướng dẫn sử dụng AI Agent để code từ A-Z",
     images: ["/og-image.svg"],
   },
@@ -58,11 +58,11 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    name: "AI Agent Hướng dẫn",
+    name: "HAgentTrick",
     description: "Hướng dẫn sử dụng AI Agent để code từ A-Z",
     author: {
       "@type": "Person",
-      name: "Your Name",
+      name: "Doan Huy Hoang",
     },
   };
 
@@ -75,13 +75,11 @@ export default function RootLayout({
         />
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <MainLayout>{children}</MainLayout>
         </ThemeProvider>
       </body>
     </html>

@@ -121,3 +121,189 @@
   .delay-400 { animation-delay: 400ms; }
   .delay-500 { animation-delay: 500ms; }
 }
+
+/* MDX / Prose Custom Styles */
+@layer components {
+  .prose-custom {
+    @apply text-base leading-relaxed space-y-4;
+  }
+
+  .prose-custom h1 {
+    @apply text-3xl font-bold mt-8 mb-4 scroll-mt-20;
+  }
+
+  .prose-custom h2 {
+    @apply text-2xl font-bold mt-8 mb-4 pb-2 border-b scroll-mt-20;
+  }
+
+  .prose-custom h3 {
+    @apply text-xl font-semibold mt-6 mb-3 scroll-mt-20;
+  }
+
+  .prose-custom h4 {
+    @apply text-lg font-semibold mt-4 mb-2 scroll-mt-20;
+  }
+
+  .prose-custom p {
+    @apply text-muted-foreground my-3 leading-relaxed;
+  }
+
+  .prose-custom ul {
+    @apply list-disc list-inside my-3 space-y-1.5;
+  }
+
+  .prose-custom ul li {
+    @apply text-muted-foreground;
+  }
+
+  .prose-custom ol {
+    @apply list-decimal list-inside my-3 space-y-1.5;
+  }
+
+  .prose-custom ol li {
+    @apply text-muted-foreground;
+  }
+
+  .prose-custom strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .prose-custom em {
+    @apply italic;
+  }
+
+  .prose-custom a {
+    @apply text-primary underline-offset-4 hover:underline transition-colors;
+  }
+
+  .prose-custom blockquote {
+    @apply border-l-4 border-primary/30 pl-4 italic text-muted-foreground my-4;
+  }
+
+  .prose-custom blockquote p {
+    @apply my-0;
+  }
+
+  .prose-custom hr {
+    @apply my-8 border-border;
+  }
+
+  .prose-custom table {
+    @apply w-full border-collapse my-4;
+  }
+
+  .prose-custom .doc-table {
+    @apply w-full border-collapse my-4 overflow-hidden rounded-lg border;
+  }
+
+  .prose-custom .doc-table-cell {
+    @apply border border-border px-4 py-2 text-sm;
+  }
+
+  .prose-custom .doc-table-cell:first-child {
+    @apply font-semibold bg-muted/30;
+  }
+
+  /* Inline code */
+  .prose-custom .inline-code {
+    @apply px-1.5 py-0.5 rounded bg-muted text-sm font-mono text-primary;
+  }
+
+  /* Code blocks */
+  .prose-custom .code-block {
+    @apply my-4 rounded-lg border overflow-hidden;
+  }
+
+  .prose-custom .code-header {
+    @apply flex items-center justify-between px-4 py-2 bg-muted/50 border-b text-xs;
+  }
+
+  .prose-custom .code-lang {
+    @apply font-mono text-muted-foreground uppercase tracking-wider;
+  }
+
+  .prose-custom .copy-btn {
+    @apply text-muted-foreground hover:text-foreground transition-colors font-medium px-2 py-1 rounded hover:bg-muted;
+  }
+
+  .prose-custom .code-block pre {
+    @apply p-4 overflow-x-auto bg-muted/20 m-0;
+  }
+
+  .prose-custom .code-block code {
+    @apply font-mono text-sm leading-relaxed;
+  }
+
+  /* Callouts */
+  .prose-custom .callout {
+    @apply my-4 rounded-lg border-l-4 p-4;
+  }
+
+  .prose-custom .callout-header {
+    @apply flex items-center gap-2 mb-2 text-sm font-semibold;
+  }
+
+  .prose-custom .callout-icon {
+    @apply text-base;
+  }
+
+  .prose-custom .callout-type {
+    @apply uppercase tracking-wider text-xs;
+  }
+
+  .prose-custom .callout-body {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .prose-custom .callout-body p {
+    @apply my-1;
+  }
+
+  /* Doc cards */
+  .prose-custom .doc-card {
+    @apply p-4 rounded-lg border bg-card my-4 hover:border-primary/30 transition-colors;
+  }
+
+  .prose-custom .doc-card-title {
+    @apply font-semibold text-base mb-1;
+  }
+
+  .prose-custom .doc-card-desc {
+    @apply text-sm text-muted-foreground mb-2;
+  }
+
+  .prose-custom .doc-card-link {
+    @apply text-sm text-primary font-medium hover:underline no-underline;
+  }
+
+  /* Step items */
+  .prose-custom .step-item {
+    @apply flex items-start gap-3 py-3;
+  }
+
+  .prose-custom .step-num {
+    @apply w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm flex items-center justify-center flex-shrink-0 mt-0.5;
+  }
+
+  .prose-custom .step-content {
+    @apply flex-1;
+  }
+
+  .prose-custom .step-title {
+    @apply font-semibold text-base mb-0.5;
+  }
+
+  .prose-custom .step-desc {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* Doc link */
+  .prose-custom .doc-link {
+    @apply text-primary hover:underline;
+  }
+
+  /* Doc HR */
+  .prose-custom .doc-hr {
+    @apply my-8 border-border;
+  }
+}

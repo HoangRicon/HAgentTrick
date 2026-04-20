@@ -1,4 +1,4 @@
-import { BookOpen, Code, Zap, Users } from "lucide-react";
+import { BookOpen, Code, Zap, Users, FolderOpen } from "lucide-react";
 
 export type NavItem = {
   title: string;
@@ -17,11 +17,15 @@ export type DocCategory = {
 
 export const mainNav: NavItem[] = [
   {
-    title: "Docs",
-    href: "/docs",
+    title: "Trang chủ",
+    href: "/guide",
   },
   {
-    title: "Contact",
+    title: "Tài nguyên",
+    href: "/resources",
+  },
+  {
+    title: "Liên hệ",
     href: "/contact",
   },
 ];

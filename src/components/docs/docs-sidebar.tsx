@@ -9,7 +9,7 @@ export function DocsSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 flex-shrink-0 hidden lg:block">
+    <aside className="w-56 flex-shrink-0 hidden lg:block">
       <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto py-6 pr-4">
         <nav className="space-y-6">
           {docsCategories.map((category) => (
