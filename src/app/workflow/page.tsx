@@ -942,7 +942,7 @@ git commit -m "feat(auth): add User model for authentication
                           <div className="text-[10px] text-muted-foreground leading-relaxed">Mình sẽ làm video thực hiện toàn bộ quy trình trên YouTube. Subscribe channel để nhận thông báo khi có video.</div>
                         </div>
                         <a
-                          href="https://youtube.com"
+                          href="https://www.youtube.com/@hoangcon18nd"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 h-8 px-4 rounded-lg bg-blue-500 text-white font-medium text-xs hover:bg-blue-600 transition-colors flex-shrink-0"
