@@ -24,6 +24,8 @@ import {
   Sparkles,
   Cpu,
   Package,
+  HelpCircle,
+  ChevronDown,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -1181,6 +1183,106 @@ git commit -m "feat(auth): add User model for authentication
               ))}
             </ul>
           </div>
+        </section>
+
+        {/* Q&A Section */}
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold flex items-center gap-2">
+              <MessageSquare className="w-5 h-5 text-primary" />
+              Hỏi &amp; Đáp
+            </h2>
+            <Link
+              href="/qa"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-primary/20 bg-primary/5 text-primary text-sm font-medium hover:bg-primary/10 hover:border-primary/30 transition-all"
+            >
+              <HelpCircle className="w-4 h-4" />
+              Xem tất cả
+            </Link>
+          </div>
+
+            <div className="space-y-3">
+              {[
+                {
+                  q: "Tại sao tôi không thấy bạn nhắc tới Database trong quy trình?",
+                  a: `Tôi thường bỏ qua phần phân tích Database kỹ lưỡng, vì khi đã nắm rõ yêu cầu chức năng, điều tôi cần biết chỉ là: dùng loại Database nào cho phù hợp — SQL hay NoSQL, PostgreSQL hay MongoDB, quy mô thế nào. Thế thôi.
+
+Cấu trúc bên trong tôi sẽ xây dựng theo từng module. Tức là cả Frontend, Backend, Database và test của module đó được build cho tới khi oke, rồi mới đẩy lên git. Tôi không cần làm Database tổng thể trước — vì đằng nào tôi cũng sẽ phát hiện field cần thêm, bảng cần tách, hoặc quan hệ cần điều chỉnh khi code thực tế.
+
+Nói thẳng: thiết kế Database tổng thể từ đầu giống như vẽ bản đồ đầy đủ trước khi khám phá vùng đất mới. Nghe hợp lý, nhưng thực tế bạn sẽ sửa lại rất nhiều khi bắt đầu đặt chân vào từng module cụ thể.`,
+                  icon: Package,
+                  color: "indigo",
+                },
+                {
+                  q: "Làm sao để biết nên dùng model nào cho dự án của tôi?",
+                  a: `Cách đơn giản nhất: bắt đầu với model mạnh nhất bạn có thể chi trả, rồi hạ xuống nếu thấy không cần thiết.
+
+Model mạnh như Claude Opus 4.7 hoặc GPT-4o xử lý được nhiều thứ phức tạp trong một lần giao việc — phân tích kiến trúc, sinh code nhiều files, debug sâu. Model nhẹ hơn như GPT-4o-mini hoặc Haiku phù hợp với task đơn giản, lặp đi lặp lại: viết test, refactor nhỏ, dịch code.
+
+Nguyên tắc tôi dùng: giao task phù hợp với năng lực model — mạnh thì giao nhiều, yếu thì chia nhỏ.`,
+                  icon: Cpu,
+                  color: "cyan",
+                },
+                {
+                  q: "Tôi nên chia nhỏ module như thế nào cho vừa sức AI?",
+                  a: `Mỗi module nên có scope rõ ràng và hoàn thành trong khoảng 1-3 files. Với model mạnh, có thể mở rộng lên 3-5 files nếu chúng liên quan chặt chẽ.
+
+Dấu hiệu module đã quá lớn: AI bắt đầu "hallucinate" — tên function không khớp, import sai, hoặc code không match yêu cầu. Khi thấy dấu hiệu này, chia nhỏ ngay.
+
+Tốt hơn nhiều so với một module lớn thất bại: chia nhỏ thành nhiều module vừa phải, mỗi cái đều chạy đúng từ đầu.`,
+                  icon: Layers,
+                  color: "blue",
+                },
+                {
+                  q: "Quy trình này có áp dụng được cho dự án có sẵn không?",
+                  a: `Hoàn toàn có thể. Với dự án có sẵn, bạn bắt đầu từ bước Resources — kiểm tra xem project đã có convention chưa, structure ra sao, đã có UI kit chưa. Sau đó nhảy thẳng vào Build từ module nhỏ nhất.
+
+Điều khác biệt duy nhất: bạn cần dành thời gian để "giới thiệu" dự án cho AI trước — cho nó đọc structure, convention, và những gì đã có. Đừng nhảy thẳng vào yêu cầu code, vì AI không biết context dự án của bạn.`,
+                  icon: GitBranch,
+                  color: "green",
+                },
+              ].map((item, i) => {
+                const pc = phaseColors[item.color];
+                const Icon = item.icon;
+                return (
+                  <details
+                    key={i}
+                    className="group rounded-2xl border bg-card overflow-hidden transition-all duration-200 open:shadow-lg open:shadow-black/5 open:border-primary/20"
+                  >
+                    {/* Question — clickable header */}
+                    <summary className="flex items-start gap-4 p-5 cursor-pointer select-none list-none hover:bg-muted/20 transition-colors">
+                      <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                        <Icon className={`w-5 h-5 ${pc.text}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest ${pc.badge} ${pc.badgeText}`}>
+                            Câu hỏi
+                          </span>
+                        </div>
+                        <h3 className="text-sm font-bold leading-snug pr-6">{item.q}</h3>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-3 transition-transform duration-200 group-open:rotate-180" />
+                    </summary>
+
+                    {/* Answer */}
+                    <div className="px-5 pb-5 pl-5 sm:pl-[4.5rem]">
+                      <div className="relative">
+                        <div className={`absolute left-0 top-0 bottom-0 w-0.5 rounded-full bg-gradient-to-b ${pc.bg.replace('/10', '')} opacity-60`} />
+                        <div className="pl-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest ${pc.bg} ${pc.text} border ${pc.border}`}>
+                              Trả lời
+                            </span>
+                          </div>
+                          <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{item.a}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                );
+              })}
+            </div>
         </section>
 
         {/* Related links */}

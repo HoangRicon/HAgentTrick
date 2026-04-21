@@ -98,6 +98,10 @@ export function Header() {
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500"
                           : "text-orange-600 dark:text-orange-400 hover:text-orange-500"
+                        : item.href === "/qa"
+                        ? pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-primary"
                         : pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-primary"
                           : "text-muted-foreground"
@@ -164,6 +168,10 @@ export function Header() {
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500 bg-orange-500/10"
                           : "text-orange-600 dark:text-orange-400"
+                        : item.href === "/qa"
+                        ? pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-primary bg-primary/10"
+                          : "text-muted-foreground"
                         : pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-primary bg-primary/10"
                           : "text-muted-foreground"

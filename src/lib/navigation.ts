@@ -34,6 +34,11 @@ export const mainNav: NavItem[] = [
   },
 
   {
+    title: "Q&A",
+    href: "/qa",
+  },
+
+  {
     title: "Liên hệ",
     href: "/contact",
   },
