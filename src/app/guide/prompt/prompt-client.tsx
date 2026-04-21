@@ -15,6 +15,14 @@ import {
   ExternalLink,
   Brain,
   MessageSquare,
+  BrainCircuit,
+  Wand2,
+  Bot,
+  ArrowRight,
+  CheckCircle2,
+  Code2,
+  Refine,
+  Bookmark,
 } from "lucide-react";
 
 const coreComponents = [
@@ -92,9 +100,245 @@ Nghiệp vụ của tôi:
 
 Hãy viết prompt hoàn chỉnh, có template và ví dụ cụ thể.`;
 
+const aiPromptEngineers = [
+  {
+    icon: Wand2,
+    name: "GPT-4o / o3",
+    tagline: "Prompt engineer tổng quát",
+    website: "https://chatgpt.com",
+    color: "green",
+    bg: "bg-green-500/10",
+    border: "border-green-500/30",
+    text: "text-green-600 dark:text-green-400",
+    badge: "Miễn phí / Phổ biến",
+    badgeBg: "bg-green-500",
+    badgeText: "text-white",
+    summary: "GPT-4o/o3 mạnh về reasoning dài, sinh prompt có cấu trúc rõ ràng. Dùng khi cần prompt cho nhiệm vụ phức tạp, nhiều ràng buộc.",
+    strengths: ["Multi-step reasoning", "Complex constraints", "Code generation", "Long context"],
+    techniques: ["Chain-of-Thought", "Few-shot examples", "Structured output", "Meta-prompting"],
+    metaPrompt: `Bạn là một Prompt Engineer chuyên nghiệp. Tôi cần bạn viết một prompt chuẩn cho AI Agent.
+
+## Yêu cầu:
+Prompt phải có đủ 4 thành phần:
+1. **Context** — Bối cảnh, domain, hệ thống hiện tại
+2. **Task** — Nhiệm vụ cụ thể với động từ rõ ràng
+3. **Constraints** — Ràng buộc kỹ thuật, nghiệp vụ, phạm vi
+4. **Expected Output** — Định dạng, tiêu chí hoàn thành
+
+## Nghiệp vụ của tôi:
+*[Mô tả nghiệp vụ cụ thể ở đây]*
+
+## Format đầu ra:
+Xuất ra prompt hoàn chỉnh, theo cấu trúc trên, có ví dụ cụ thể nếu cần.
+
+Hãy viết prompt cho tôi.`,
+  },
+  {
+    icon: Brain,
+    name: "Claude 3.7 / Sonnet",
+    tagline: "Prompt engineer cho phân tích & viết",
+    website: "https://claude.ai",
+    color: "amber",
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/30",
+    text: "text-amber-600 dark:text-amber-400",
+    badge: "Khuyến nghị",
+    badgeBg: "bg-amber-500",
+    badgeText: "text-white",
+    summary: "Claude 3.7 Sonnet nổi bật về writing và analysis. Sinh prompt có logic rõ, phù hợp cho viết code, phân tích, và tài liệu.",
+    strengths: ["Writing & editing", "Analysis", "Long documents", "Nuance understanding"],
+    techniques: ["Role assignment", "Step-by-step", "Self-verification", "Edge case probing"],
+    metaPrompt: `You are an expert Prompt Engineer. Write a high-quality prompt for an AI coding agent based on the following task.
+
+## Required Structure (all 4 parts required):
+1. **Context** — Project background, stack, current state, relevant files
+2. **Task** — Specific action with clear verb + object + scope
+3. **Constraints** — Technical limits, business rules, must-not-do items
+4. **Expected Output** — Format, structure, acceptance criteria
+
+## My Task:
+*[Describe your task here]*
+
+## Additional Context:
+*[Any relevant constraints, examples, or references]*
+
+Write a complete, production-ready prompt that an AI coding agent can execute immediately. Include a concrete example of the expected output format if it helps clarify.`,
+  },
+  {
+    icon: Bot,
+    name: "Gemini 2.5 / Flash",
+    tagline: "Prompt engineer nhanh với real-time search",
+    website: "https://gemini.google.com",
+    color: "cyan",
+    bg: "bg-cyan-500/10",
+    border: "border-cyan-500/30",
+    text: "text-cyan-600 dark:text-cyan-400",
+    badge: "Miễn phí",
+    badgeBg: "bg-cyan-500",
+    badgeText: "text-white",
+    summary: "Gemini 2.5 Flash nhanh, hỗ trợ real-time web search. Phù hợp khi cần prompt kết hợp thông tin từ internet hoặc prompt cho research task.",
+    strengths: ["Real-time search", "Multimodal", "Speed", "Large context"],
+    techniques: ["Web-grounded", "Multimodal prompts", "Thinking budget", "Function calling"],
+    metaPrompt: `Bạn là Prompt Engineer. Viết prompt cho AI Agent dựa trên task sau.
+
+Yêu cầu bắt buộc:
+- Context: mô tả bối cảnh đầy đủ
+- Task: động từ cụ thể + đối tượng + phạm vi
+- Constraints: giới hạn kỹ thuật, nghiệp vụ, KHÔNG ĐƯỢC làm gì
+- Expected Output: định dạng cụ thể
+
+Task: *[Mô tả task]*
+
+Xuất prompt hoàn chỉnh, sẵn sàng dùng ngay.`,
+  },
+];
+
+const promptRefineWorkflow = [
+  {
+    icon: Refine,
+    num: "1",
+    title: "AI sinh prompt ban đầu",
+    desc: "Dùng meta-prompt ở trên, gửi cho AI bất kỳ (ChatGPT, Claude, Gemini) cùng mô tả nghiệp vụ. AI sẽ sinh prompt theo cấu trúc 4 thành phần.",
+    color: "blue",
+  },
+  {
+    icon: BrainCircuit,
+    num: "2",
+    title: "AI đặt câu hỏi làm rõ",
+    desc: "AI sẽ hỏi về edge cases, exception flows, validation, permissions. Trả lời để prompt chính xác hơn.",
+    color: "violet",
+  },
+  {
+    icon: Wand2,
+    num: "3",
+    title: "Refine prompt nhiều vòng",
+    desc: "Dùng 'Hãy cải thiện prompt này thêm...' để AI polish prompt. Lặp lại 2-3 lần cho đến khi prompt đạt yêu cầu.",
+    color: "amber",
+  },
+  {
+    icon: CheckCircle2,
+    num: "4",
+    title: "Test prompt trong thực tế",
+    desc: "Dùng prompt đã refine để giao việc cho AI Agent thật. Quan sát kết quả. Nếu chưa đúng, quay lại bước 3.",
+    color: "green",
+  },
+  {
+    icon: Bookmark,
+    num: "5",
+    title: "Lưu vào thư viện prompt",
+    desc: "Khi prompt đạt yêu cầu, lưu vào thư viện prompt (docs/prompts/). Đặt tên rõ ràng theo task type.",
+    color: "cyan",
+  },
+];
+
 export function PromptGuideClient() {
   return (
     <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+      {/* ========== PHẦN MỚI: DÙNG AI LÀM PROMPT ENGINEER ========== */}
+
+      <section>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0">
+            <BrainCircuit className="w-6 h-6 text-blue-500" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold">Dùng AI làm Prompt Engineer</h2>
+            <p className="text-xs text-muted-foreground">AI sinh prompt chuẩn cho bạn — bạn chỉ cần mô tả nghiệp vụ</p>
+          </div>
+        </div>
+
+        <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+          Thay vì tự viết prompt từ đầu, hãy để AI đóng vai Prompt Engineer. AI sẽ viết prompt theo cấu trúc chuẩn
+          (Context → Task → Constraints → Expected Output), hỏi câu hỏi làm rõ, và refine nhiều vòng cho đến khi
+          prompt hoàn hảo. Bạn chỉ cần mô tả nghiệp vụ — AI làm phần còn lại.
+        </p>
+
+        {/* 5-step workflow */}
+        <div className="grid sm:grid-cols-5 gap-3 mb-8">
+          {promptRefineWorkflow.map((step) => {
+            const c = colorMap[step.color as keyof typeof colorMap] || colorMap.blue;
+            const Icon = step.icon;
+            return (
+              <div key={step.num} className={`flex flex-col items-center gap-2 p-3 rounded-xl border ${c.border} bg-card text-center`}>
+                <div className={`w-9 h-9 rounded-full ${c.bg} border ${c.border} flex items-center justify-center`}>
+                  <span className={`text-xs font-black ${c.text}`}>{step.num}</span>
+                </div>
+                <Icon className={`w-4 h-4 ${c.text}`} />
+                <div className="text-[10px] font-semibold leading-tight">{step.title}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* AI Prompt Engineer cards */}
+        {aiPromptEngineers.map((tool) => {
+          const Icon = tool.icon;
+          return (
+            <div key={tool.name} className={`rounded-2xl border ${tool.border} ${tool.bg} overflow-hidden`}>
+              {/* Header */}
+              <div className="p-6 border-b border-border/50">
+                <div className="flex items-start gap-4">
+                  <div className={`w-14 h-14 rounded-2xl bg-white/50 dark:bg-black/20 border ${tool.border} flex items-center justify-center shrink-0`}>
+                    <Icon className={`w-7 h-7 ${tool.text}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${tool.badgeBg} ${tool.badgeText}`}>{tool.badge}</span>
+                    </div>
+                    <h3 className="text-lg font-bold mb-0.5">{tool.name}</h3>
+                    <p className="text-sm text-muted-foreground italic mb-3">{tool.tagline}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{tool.summary}</p>
+                  </div>
+                  <a href={tool.website} target="_blank" rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-xl ${tool.bg} border ${tool.border} font-medium text-xs ${tool.text} hover:opacity-80 transition-all shrink-0`}>
+                    Truy cập <ChevronRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Strengths & Techniques */}
+              <div className="p-6 border-b border-border/50 grid sm:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Điểm mạnh</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tool.strengths.map((s) => (
+                      <span key={s} className={`text-[10px] px-2 py-0.5 rounded border ${tool.border} ${tool.bg} ${tool.text} font-medium`}>{s}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Kỹ thuật hay dùng</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tool.techniques.map((t) => (
+                      <span key={t} className="text-[10px] px-2 py-0.5 rounded bg-muted text-muted-foreground font-medium">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Meta-prompt */}
+              <div className="p-6">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">Meta-prompt — copy &amp; dán vào {tool.name}</div>
+                <div className={`rounded-xl border ${tool.border} bg-card p-4`}>
+                  <div className="flex justify-end mb-2">
+                    <button
+                      className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+                      onClick={() => navigator.clipboard.writeText(tool.metaPrompt)}
+                    >
+                      <Copy className="w-3.5 h-3.5" /> Copy
+                    </button>
+                  </div>
+                  <pre className="text-[10px] font-mono text-muted-foreground whitespace-pre-wrap leading-relaxed overflow-x-auto">
+                    {tool.metaPrompt}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </section>
+
       {/* 4 Core Components */}
       <section>
         <h2 className="text-xl font-bold mb-5">4 thành phần bắt buộc</h2>
@@ -127,100 +371,46 @@ export function PromptGuideClient() {
         </div>
       </section>
 
-      {/* AI sinh prompt */}
+      {/* AI sinh prompt (nâng cấp) */}
       <section>
-        <h2 className="text-xl font-bold mb-2">Dùng AI sinh prompt cho bạn</h2>
+        <h2 className="text-xl font-bold mb-2">Cách dùng meta-prompt</h2>
         <p className="text-sm text-muted-foreground mb-5">
-          Thay vì tự viết prompt từ đầu, hãy nhờ GPT, Gemini, Claude hoặc bất kỳ AI nào sinh prompt theo cấu trúc chuẩn.
-          Bạn chỉ cần mô tả nghiệp vụ — AI sẽ giúp bạn viết prompt đúng format.
+          Copy meta-prompt từ bên trên, dán vào ChatGPT/Claude/Gemini. Thay phần mô tả nghiệp vụ bằng thông tin của bạn.
+          AI sẽ sinh prompt chuẩn theo 4 thành phần.
         </p>
 
-        {/* AI tool cards */}
-        <div className="grid sm:grid-cols-3 gap-4 mb-6">
+        {/* Tips */}
+        <div className="grid sm:grid-cols-2 gap-3 mb-6">
           {[
-            {
-              name: "ChatGPT",
-              url: "https://chat.openai.com",
-              color: "green",
-              desc: "GPT-4/4o mạnh mẽ cho reasoning phức tạp và sinh prompt chuẩn",
-              strength: "Reasoning dài, multi-step",
-            },
-            {
-              name: "Claude",
-              url: "https://claude.ai",
-              color: "amber",
-              desc: "Claude 3.5 Sonnet viết prompt rõ ràng, cấu trúc logic cao",
-              strength: "Writing, analysis",
-            },
-            {
-              name: "Gemini",
-              url: "https://gemini.google.com",
-              color: "cyan",
-              desc: "Gemini 2.0 Flash hỗ trợ tìm kiếm real-time và multimodal",
-              strength: "Real-time, web search",
-            },
-          ].map((tool) => {
-            const c = colorMap[tool.color];
-            return (
-              <a
-                key={tool.name}
-                href={tool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group flex flex-col p-4 rounded-xl border ${c.border} bg-card hover:shadow-md transition-all`}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className={`w-9 h-9 rounded-lg ${c.iconBg} flex items-center justify-center`}>
-                    <Sparkles className={`w-4 h-4 ${c.text}`} />
-                  </div>
-                  <ExternalLink className={`w-4 h-4 ${c.text} opacity-0 group-hover:opacity-100 transition-opacity`} />
-                </div>
-                <h3 className="font-semibold text-sm mb-1">{tool.name}</h3>
-                <p className="text-xs text-muted-foreground mb-2 leading-relaxed">{tool.desc}</p>
-                <p className="text-xs font-medium mt-auto">{tool.strength}</p>
-              </a>
-            );
-          })}
+            { icon: Zap, text: "Càng mô tả nghiệp vụ rõ, prompt sinh ra càng chính xác" },
+            { icon: Refine, text: "Refine 2-3 vòng: 'Cải thiện prompt này thêm...' cho đến khi đạt" },
+            { icon: MessageSquare, text: "Để AI đặt câu hỏi làm rõ — trả lời để prompt chính xác hơn" },
+            { icon: CheckCircle, text: "Test prompt thực tế với AI Agent. Nếu chưa đúng, refine tiếp" },
+          ].map((tip) => (
+            <div key={tip.text} className="flex items-start gap-2 text-sm text-muted-foreground p-3 rounded-xl border bg-card">
+              <tip.icon className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              {tip.text}
+            </div>
+          ))}
         </div>
 
-        {/* Prompt mẫu */}
-        <div className="rounded-xl border bg-card p-6 space-y-4">
-          <div className="flex items-center gap-2">
-            <Brain className="w-5 h-5 text-primary" />
-            <h3 className="font-semibold text-sm">Prompt mẫu để nhờ AI sinh prompt cho bạn</h3>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Copy prompt bên dưới, dán vào ChatGPT/Gemini/Claude, thay phần in nghiêng bằng mô tả nghiệp vụ:
-          </p>
-
-          <div className="rounded-lg border bg-muted/50 p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-muted-foreground">Prompt để sinh prompt</span>
-              <button
-                className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
-                onClick={() => navigator.clipboard.writeText(aiPromptTemplate)}
-              >
-                <Copy className="w-3.5 h-3.5" />
-                Copy
-              </button>
-            </div>
-            <pre className="text-xs text-muted-foreground font-mono whitespace-pre-wrap leading-relaxed">
-{aiPromptTemplate}
-            </pre>
-          </div>
-
-          {/* Tips */}
-          <div className="grid sm:grid-cols-2 gap-3">
+        {/* Workflow illustration */}
+        <div className="rounded-xl border bg-card p-5">
+          <div className="text-xs font-bold text-muted-foreground mb-3">Workflow đầy đủ</div>
+          <div className="flex flex-wrap items-center gap-2 text-xs">
             {[
-              { icon: Zap, text: "Càng mô tả nghiệp vụ rõ, prompt sinh ra càng chính xác" },
-              { icon: Download, text: "Sau khi có prompt, tải file quy tắc viết prompt về để dùng làm ràng buộc" },
-              { icon: MessageSquare, text: "Dùng AI web để refine prompt nhiều lần cho đến khi đạt yêu cầu" },
-              { icon: CheckCircle, text: "Prompt tốt nhất là prompt bạn đã test và thấy AI trả lời đúng" },
-            ].map((tip) => (
-              <div key={tip.text} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <tip.icon className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                {tip.text}
-              </div>
+              "Mô tả nghiệp vụ",
+              "→ Gửi meta-prompt cho AI",
+              "→ AI sinh prompt chuẩn",
+              "→ AI hỏi câu hỏi làm rõ",
+              "→ Refine 2-3 vòng",
+              "→ Test với AI Agent",
+              "→ Lưu vào thư viện",
+            ].map((step, i) => (
+              <span key={i} className="flex items-center gap-2">
+                <span className="px-2 py-1 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">{step}</span>
+                {i < 6 && <ArrowRight className="w-3 h-3 text-muted-foreground" />}
+              </span>
             ))}
           </div>
         </div>
