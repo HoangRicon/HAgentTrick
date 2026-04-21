@@ -26,6 +26,7 @@ import {
   Package,
   HelpCircle,
   ChevronDown,
+  Lock,
 } from "lucide-react";
 import { PhaseAccordion } from "@/components/workflow/phase-accordion";
 import { SectionAccordion } from "@/components/ui/section-accordion";
@@ -456,35 +457,35 @@ export default function WorkflowPage() {
           const Icon = phaseIconFromName(phases.find(p => p.phase === example.phase)?.iconName || "Lightbulb");
           return (
             <section key={example.phase}>
-              {/* Phase header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
-                  <Icon className={`w-5 h-5 ${pc.text}`} />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md ${pc.badge} ${pc.badgeText} text-xs font-bold`}>
-                      {example.badge}
-                    </span>
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">{example.phase}</span>
+              {/* SectionAccordion wraps EVERYTHING: header + scenario + guide cards + prompts + checklist */}
+              <SectionAccordion id={`phase-${example.phase.toLowerCase()}`} color={example.color} phase={example.phase} defaultOpen={example.phase === "Plan"}>
+                {/* Phase header */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                    <Icon className={`w-5 h-5 ${pc.text}`} />
                   </div>
-                  <h2 className="text-xl font-bold mt-0.5">{example.title}</h2>
-                </div>
-              </div>
-
-              {/* Scenario */}
-              <div className={`rounded-xl border ${pc.border} ${pc.bg} p-5 mb-4`}>
-                <div className="flex items-start gap-2.5">
-                  <BookOpen className={`w-4 h-4 ${pc.text} flex-shrink-0 mt-0.5`} />
                   <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Scenario</span>
-                    <p className="text-sm mt-1 leading-relaxed">{example.scenario}</p>
+                    <div className="flex items-center gap-2">
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md ${pc.badge} ${pc.badgeText} text-xs font-bold`}>
+                        {example.badge}
+                      </span>
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">{example.phase}</span>
+                    </div>
+                    <h2 className="text-xl font-bold mt-0.5">{example.title}</h2>
                   </div>
                 </div>
-              </div>
 
-              {/* Collapsible body */}
-              <SectionAccordion id={`phase-${example.phase.toLowerCase()}`} color={example.color} phase={example.phase} defaultOpen={false}>
+                {/* Scenario */}
+                <div className={`rounded-xl border ${pc.border} ${pc.bg} p-5 mb-4`}>
+                  <div className="flex items-start gap-2.5">
+                    <BookOpen className={`w-4 h-4 ${pc.text} flex-shrink-0 mt-0.5`} />
+                    <div>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Scenario</span>
+                      <p className="text-sm mt-1 leading-relaxed">{example.scenario}</p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Guide cards for each phase */}
                 {example.phase === "Power" ? (
                     <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
@@ -639,69 +640,253 @@ export default function WorkflowPage() {
                     </div>
                   ) : example.phase === "Plan" ? (
                     <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
-                      <div className="flex items-center gap-3 mb-5">
-                        <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
-                          <Lightbulb className={`w-5 h-5 ${pc.text}`} />
-                        </div>
-                        <div>
-                          <div className="text-base font-semibold">Phân tích yêu cầu chức năng — Hướng dẫn chi tiết</div>
-                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Thay vì nhảy thẳng vào code, hãy phân tích yêu cầu trước để xác định đúng actor, entity, ownership và build order. Hướng dẫn chi tiết giải thích cách xác định scope chính xác, tránh over-engineering, và đảm bảo AI đi đúng hướng.</div>
+                      {/* Intro warning */}
+                      <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-4 mb-6">
+                        <div className="flex items-start gap-3">
+                          <AlertCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                          <div>
+                            <div className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-1">Tại sao bước này quan trọng nhất?</div>
+                            <div className="text-xs text-muted-foreground leading-relaxed">
+                              Nhảy thẳng vào code mà không phân tích → AI tự đoán requirement → đoán thì thường sai → sửa lại mất gấp đôi thời gian. Bước phân tích 15 phút đầu tiết kiệm được 2-3 giờ refactor sau. Không ai muốn code xong rồi phát hiện thiết kế sai ở tầng foundation.
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+
+                      {/* Core analysis grid */}
+                      <div className="grid sm:grid-cols-2 gap-3 mb-6">
                         {[
-                          { title: "Viết theo nghiệp vụ trước", desc: "Mô tả bài toán trước, quyết định kỹ thuật sau. Không nhảy thẳng sang giải pháp." },
-                          { title: "Gắn chức năng với actor cụ thể", desc: "Mỗi chức năng phải trả lời: ai dùng, có quyền gì, thao tác trên dữ liệu của ai, bị giới hạn ở đâu." },
-                          { title: "Xác định entity lõi ngay", desc: "Entity là dữ liệu cốt lõi. Với mỗi entity phải rõ: ai tạo, ai xem, ai sửa, ai xóa, ownership thuộc về ai." },
-                          { title: "Phân tích ownership rõ ràng", desc: "Dữ liệu thuộc về ai? Ai được xem toàn bộ? Ai chỉ xem dữ liệu của chính mình?" },
-                          { title: "Tách nhỏ từng chức năng", desc: "Không gộp nhiều hành vi khác nhau. Tách: tạo, xem, cập nhật, xóa, duyệt, hủy thành các dòng riêng." },
-                          { title: "Xác định thứ tự build", desc: "Auth foundation → Entity → Layout → Feature. Ai tạo dữ liệu lõi, ai quyết định permission?" },
-                        ].map((p) => (
-                          <div key={p.title} className="flex items-start gap-2.5 p-3 rounded-lg border bg-card">
-                            <div className={`w-7 h-7 rounded-lg ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
-                              <Sparkles className={`w-3.5 h-3.5 ${pc.text}`} />
+                          {
+                            title: "1. Xác định Actor (Tác nhân)",
+                            icon: Brain,
+                            color: "amber",
+                            desc: "Actor là người hoặc hệ thống tương tác với phần mềm. Mỗi actor có nhu cầu và quyền hạn khác nhau.",
+                            items: [
+                              "Admin — quản lý toàn bộ hệ thống, có quyền cao nhất",
+                              "User (người dùng thường) — chỉ dùng được feature của chính mình",
+                              "Guest (khách) — chưa đăng nhập, chỉ xem được nội dung công khai",
+                              "System (hệ thống khác) — API integrations, cron jobs, webhooks",
+                            ],
+                          },
+                          {
+                            title: "2. Xác định Entity (Thực thể)",
+                            icon: Layers,
+                            color: "orange",
+                            desc: "Entity là dữ liệu cốt lõi. Với mỗi entity phải xác định rõ: tên, thuộc tính, quan hệ với entity khác.",
+                            items: [
+                              "User — id, email, passwordHash, role, createdAt",
+                              "Post — id, title, content, authorId, publishedAt, status",
+                              "Comment — id, content, authorId, postId, parentId (reply)",
+                              "Mối quan hệ: User 1→N Post, Post 1→N Comment",
+                            ],
+                          },
+                          {
+                            title: "3. Xác định Ownership (Sở hữu)",
+                            icon: Shield,
+                            color: "red",
+                            desc: "Ownership xác định dữ liệu thuộc về ai và ai được phép thao tác gì với dữ liệu đó.",
+                            items: [
+                              "Ai tạo dữ liệu? → Chỉ owner và admin được tạo",
+                              "Ai xem được dữ liệu? → Owner xem của mình, admin xem tất cả",
+                              "Ai sửa được? → Chỉ owner sửa của mình, admin sửa tất cả",
+                              "Ai xóa được? → Admin hoặc owner (với điều kiện cụ thể)",
+                            ],
+                          },
+                          {
+                            title: "4. Xác định Permission (Phân quyền)",
+                            icon: Lock,
+                            color: "violet",
+                            desc: "Permission là tập hợp các quy tắc xác định actor nào được thực hiện hành động nào trên entity nào.",
+                            items: [
+                              "CRUD: Create, Read, Update, Delete trên mỗi entity",
+                              "Field-level permission: trường nào ẩn, trường nào readonly",
+                              "Row-level permission: dòng nào được xem dựa trên điều kiện owner",
+                              "Action-level permission: approve, reject, publish, archive...",
+                            ],
+                          },
+                        ].map((card) => (
+                          <div key={card.title} className="rounded-lg border bg-card p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <div className={`w-7 h-7 rounded-lg bg-${card.color}-500/10 border border-${card.color}-500/20 flex items-center justify-center flex-shrink-0`}>
+                                <card.icon className={`w-3.5 h-3.5 text-${card.color}-500`} />
+                              </div>
+                              <div className="text-xs font-semibold">{card.title}</div>
                             </div>
-                            <div>
-                              <div className="text-xs font-semibold mb-0.5">{p.title}</div>
-                              <div className="text-[10px] text-muted-foreground leading-relaxed">{p.desc}</div>
+                            <p className="text-[10px] text-muted-foreground mb-2 leading-relaxed">{card.desc}</p>
+                            <div className="space-y-1">
+                              {card.items.map((item) => (
+                                <div key={item} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                  <CheckCircle2 className="w-2.5 h-2.5 text-amber-400 flex-shrink-0 mt-0.5" />
+                                  {item}
+                                </div>
+                              ))}
                             </div>
                           </div>
                         ))}
                       </div>
-                      <div className="grid sm:grid-cols-2 gap-3 mb-5">
-                        <div className="p-3 rounded-lg bg-red-500/5 border border-red-500/20">
-                          <div className="flex items-center gap-1.5 mb-2">
-                            <XCircle className="w-3.5 h-3.5 text-red-500" />
-                            <span className="text-[10px] font-bold text-red-600 dark:text-red-400 uppercase">Sai</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground italic mb-1.5">"Thêm chức năng login cho tôi"</p>
-                          <p className="text-[10px] text-muted-foreground">Prompt chung chung, không xác định rõ scope, actor, hay yêu cầu cụ thể. AI phải tự đoán nhiều thứ.</p>
+
+                      {/* Build order */}
+                      <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-5 mb-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Layers className="w-4 h-4 text-amber-500" />
+                          <span className="text-sm font-semibold text-amber-600 dark:text-amber-400">5. Thứ tự xây dựng (Build Order)</span>
                         </div>
-                        <div className="p-3 rounded-lg bg-green-500/5 border border-green-500/20">
-                          <div className="flex items-center gap-1.5 mb-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                            <span className="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase">Đúng</span>
-                          </div>
-                          <p className="text-[10px] text-muted-foreground mb-1">Phân tích trước: User tạo account, Admin duyệt user, Guest chỉ xem sản phẩm.</p>
-                          <p className="text-[10px] text-muted-foreground">Build order: Auth → User Entity → Product Entity → Order Entity → Feature flows.</p>
-                        </div>
-                      </div>
-                      <div className="rounded-lg border border-border bg-muted/20 p-4 mb-5">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Cấu trúc file phân tích chuẩn</div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          {["1. Tổng quan dự án", "2. Actor chính", "3. Core entities", "4. Yêu cầu chức năng", "5. Ownership & Permission", "6. Build order", "7. Risk areas", "8. Assumptions"].map((s) => (
-                            <div key={s} className="px-2.5 py-1.5 rounded bg-background/60 border border-border">
-                              <span className="text-[10px] text-muted-foreground">{s}</span>
+                        <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                          Thứ tự xây dựng ảnh hưởng trực tiếp đến kiến trúc. Sai thứ tự → phải refactor foundation → mất thời gian gấp đôi.
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {[
+                            { step: "Auth", desc: "Đăng nhập, đăng ký, quên mật khẩu", color: "amber" },
+                            { step: "Foundation", desc: "Layout, theme, navigation, providers", color: "blue" },
+                            { step: "Entities", desc: "Database schema, CRUD base", color: "violet" },
+                            { step: "Core Flow", desc: "Feature chính của ứng dụng", color: "green" },
+                            { step: "Support Flow", desc: "Notification, search, filter, export", color: "cyan" },
+                            { step: "Polish", desc: "Loading states, error handling, analytics", color: "slate" },
+                          ].map((s, i) => (
+                            <div key={s.step} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/80 border border-border">
+                              <div className={`w-5 h-5 rounded-full bg-${s.color}-500/10 border border-${s.color}-500/30 flex items-center justify-center flex-shrink-0`}>
+                                <span className={`text-[9px] font-black text-${s.color}-600 dark:text-${s.color}-400`}>{i + 1}</span>
+                              </div>
+                              <div>
+                                <div className="text-[10px] font-semibold">{s.step}</div>
+                                <div className="text-[9px] text-muted-foreground">{s.desc}</div>
+                              </div>
                             </div>
                           ))}
                         </div>
                       </div>
+
+                      {/* Right vs wrong comparison */}
+                      <div className="grid sm:grid-cols-2 gap-3 mb-6">
+                        <div className="p-4 rounded-lg bg-red-500/5 border border-red-500/20">
+                          <div className="flex items-center gap-1.5 mb-3">
+                            <XCircle className="w-4 h-4 text-red-500" />
+                            <span className="text-xs font-bold text-red-600 dark:text-red-400 uppercase">Sai cách</span>
+                          </div>
+                          <div className="space-y-2 mb-3">
+                            <div className="text-[10px] font-semibold text-muted-foreground mb-1">Prompt:</div>
+                            <code className="block text-[10px] font-mono text-muted-foreground bg-background/80 rounded px-2 py-1.5">"Thêm chức năng login cho tôi"</code>
+                          </div>
+                          <div className="space-y-1.5">
+                            {[
+                              "AI tự đoán: email hay social login?",
+                              "AI tự đoán: JWT hay session cookie?",
+                              "AI tự đoán: admin có trong hay tách riêng?",
+                              "Kết quả: code không match yêu cầu thực tế",
+                              "Thời gian sửa: 30-60 phút refactor",
+                            ].map((e) => (
+                              <div key={e} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                <XCircle className="w-2.5 h-2.5 text-red-400 flex-shrink-0 mt-0.5" />
+                                {e}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/20">
+                          <div className="flex items-center gap-1.5 mb-3">
+                            <CheckCircle2 className="w-4 h-4 text-green-500" />
+                            <span className="text-xs font-bold text-green-600 dark:text-green-400 uppercase">Đúng cách</span>
+                          </div>
+                          <div className="space-y-2 mb-3">
+                            <div className="text-[10px] font-semibold text-muted-foreground mb-1">Sau khi phân tích kỹ:</div>
+                            <code className="block text-[10px] font-mono text-muted-foreground bg-background/80 rounded px-2 py-1.5">"Thêm chức năng đăng nhập: email + password, JWT httpOnly cookie, middleware bảo vệ /dashboard, không social login"</code>
+                          </div>
+                          <div className="space-y-1.5">
+                            {[
+                              "Đã xác định: email/password (không social)",
+                              "Đã xác định: JWT storage method",
+                              "Đã xác định: route protection scope",
+                              "Kết quả: code đúng ngay từ lần đầu",
+                              "Thời gian: 0 phút sửa, đi thẳng vào build",
+                            ].map((e) => (
+                              <div key={e} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                <CheckCircle2 className="w-2.5 h-2.5 text-green-400 flex-shrink-0 mt-0.5" />
+                                {e}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Analysis template */}
+                      <div className="rounded-lg border border-border bg-muted/20 p-5 mb-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          <FileText className="w-4 h-4 text-muted-foreground" />
+                          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">File phân tích chuẩn — SPEC.md</span>
+                        </div>
+                        <pre className="text-[10px] sm:text-[11px] font-mono text-muted-foreground whitespace-pre-wrap leading-relaxed">{`# SPEC: [Tên dự án]
+
+## 1. Tổng quan
+- Mô tả ngắn gọn dự án
+- Mục tiêu chính
+- MVP scope
+
+## 2. Actor
+- Admin: quản lý toàn bộ...
+- User: dùng feature của mình...
+- Guest: chỉ xem nội dung công khai...
+
+## 3. Entity
+- User: id, email, role, createdAt
+- Post: id, title, content, authorId, status
+- Comment: id, content, authorId, postId
+
+## 4. Ownership & Permission
+- User chỉ sửa post của mình
+- Admin sửa tất cả post
+- Guest không tạo được content
+
+## 5. Build Order
+1. Auth (login/register)
+2. Foundation (layout/theme)
+3. Entities (schema + CRUD)
+4. Core Flow (main feature)
+5. Polish (UX improvements)
+
+## 6. Risk Areas
+- [ ] Validation đầu vào
+- [ ] Permission checks
+- [ ] Edge cases (empty state, error...)
+
+## 7. Assumptions
+- Dùng Next.js 14 App Router
+- Database: PostgreSQL + Prisma
+- Auth: JWT httpOnly cookie`}</pre>
+                      </div>
+
+                      {/* Socratic questions */}
+                      <div className="rounded-lg border border-indigo-500/20 bg-indigo-500/5 p-5 mb-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          <HelpCircle className="w-4 h-4 text-indigo-500" />
+                          <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">Câu hỏi Socratic — Hỏi AI trước khi bắt đầu code</span>
+                        </div>
+                        <div className="grid sm:grid-cols-2 gap-2">
+                          {[
+                            { q: "Actor nào sẽ dùng tính năng này?", hint: "Admin, user thường, hay cả hai?" },
+                            { q: "Entity nào liên quan trong tính năng này?", hint: "Tên, mối quan hệ với entity khác?" },
+                            { q: "Ai được phép thực hiện action này?", hint: "Chỉ owner, hay admin cũng được?" },
+                            { q: "Dữ liệu nào bị ảnh hưởng bởi action này?", hint: "Field nào tạo, sửa, xóa?" },
+                            { q: "Thứ tự xây dựng nào là đúng?", hint: "Foundation trước, hay feature trước?" },
+                            { q: "Edge case nào có thể xảy ra?", hint: "Empty state, error, permission denied..." },
+                          ].map((item) => (
+                            <div key={item.q} className="flex items-start gap-2 p-2 rounded bg-background/60 border border-border">
+                              <HelpCircle className="w-3 h-3 text-indigo-400 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <div className="text-[10px] font-semibold text-muted-foreground">{item.q}</div>
+                                <div className="text-[9px] text-muted-foreground/70 mt-0.5">{item.hint}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Link to detail page */}
                       <Link
                         href="/guide/analysis"
                         className={`inline-flex items-center gap-2 h-10 px-5 rounded-xl ${pc.bg} border ${pc.border} font-medium text-sm hover:opacity-80 transition-all`}
                       >
                         <BookOpen className={`w-4 h-4 ${pc.text}`} />
-                        Xem hướng dẫn phân tích yêu cầu
+                        Xem hướng dẫn phân tích yêu cầu chi tiết
                         <ArrowRight className={`w-4 h-4 ${pc.text}`} />
                       </Link>
                     </div>
@@ -1029,7 +1214,7 @@ git commit -m "feat(auth): add User model for authentication
               )}
               </SectionAccordion>
 
-              {/* Divider between phases */}
+              {/* Divider between phases - OUTSIDE accordion, INSIDE section */}
               {example.phase !== "Ship" && (
                 <div className="flex items-center justify-center pt-6">
                   <div className="flex items-center gap-2 text-muted-foreground/40">
