@@ -41,7 +41,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-              <span className="text-2xl">🤖</span>
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-primary-foreground font-bold text-lg">H</span>
               <span className="hidden sm:inline">HAgentTrick</span>
             </Link>
           </div>
