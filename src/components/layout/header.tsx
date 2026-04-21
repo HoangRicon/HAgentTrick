@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, ChevronDown, Bot } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronDown, Bot, Workflow, Bookmark, BookOpen, AlertTriangle, MessageSquare, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mainNav } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
@@ -33,6 +33,15 @@ export function Header() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const navIcons: Record<string, React.ElementType> = {
+    "/workflow": Workflow,
+    "/resources": Bookmark,
+    "/guide": BookOpen,
+    "/guide/traps": AlertTriangle,
+    "/qa": MessageSquare,
+    "/contact": Mail,
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -91,8 +100,8 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "text-sm font-medium transition-colors hover:text-primary",
-                      item.href === "/workflow"
+                      "flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-primary",
+                      item.href === "/workflow" || item.href === "/resources"
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500"
                           : "text-orange-600 dark:text-orange-400 hover:text-orange-500"
@@ -101,6 +110,10 @@ export function Header() {
                           : "text-muted-foreground"
                     )}
                   >
+                    {(() => {
+                      const Icon = navIcons[item.href];
+                      return Icon ? <Icon className="w-4 h-4" /> : null;
+                    })()}
                     {item.title}
                   </Link>
                 )}
@@ -153,8 +166,8 @@ export function Header() {
                   href={item.href}
                   onClick={closeMenu}
                     className={cn(
-                      "text-sm font-medium transition-colors hover:text-primary p-2 rounded-md",
-                      item.href === "/workflow"
+                      "flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary p-2 rounded-md",
+                      item.href === "/workflow" || item.href === "/resources"
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500 bg-orange-500/10"
                           : "text-orange-600 dark:text-orange-400"
@@ -163,6 +176,10 @@ export function Header() {
                           : "text-muted-foreground"
                     )}
                 >
+                  {(() => {
+                    const Icon = navIcons[item.href];
+                    return Icon ? <Icon className="w-4 h-4" /> : null;
+                  })()}
                   {item.title}
                 </Link>
                 {item.subItems && item.subItems.map((sub) => (
