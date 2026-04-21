@@ -229,8 +229,8 @@ Luôn ghi rõ: "Model này đủ sức làm X. Chỉ làm Y nếu model yếu h�
     color: "blue",
     title: "Từng module một — Không nhảy cóc",
     scenario: "Sau khi design được approve, bạn bắt đầu code từng phần nhỏ. Với model mạnh như Opus 4.7, mỗi module có thể lớn hơn trước (2-5 files thay vì 1-2 files), nhưng vẫn phải giữ scope chặt.",
-    videoTitle: "Mỗi task 2-5 files, có checkpoint",
-    videoDesc: "Agent chia công việc thành các task nhỏ 2-5 phút. Mỗi task có file path chính xác, code hoàn chỉnh, và bước verify. Checkpoint sau mỗi 2-3 task.",
+    videoTitle: "Từng module một — Không nhảy cóc",
+    videoDesc: "Nguyên tắc cốt lõi: mỗi task chỉ 2-5 files, có checkpoint. Review kỹ trước khi tiếp. Video hướng dẫn sắp có.",
     promptExample: {
       label: "Sai: Yêu cầu quá nhiều một lúc",
       code: `Viết toàn bộ chức năng login cho tôi đi`,
@@ -364,7 +364,7 @@ export default function WorkflowPage() {
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl">
             6 bước từ xác định sức mạnh AI đến triển khai sản phẩm. Mỗi bước đều có ví dụ prompt cụ thể,
-            video minh hoạ, và checklist thực tế. Áp dụng ngay vào dự án của bạn.
+            hướng dẫn chi tiết, và checklist thực tế. Áp dụng ngay vào dự án của bạn.
           </p>
         </div>
       </div>
@@ -892,23 +892,64 @@ git commit -m "feat(auth): add User model for authentication
                     </div>
                   ) : (
                     <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className={`w-8 h-8 rounded-lg ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
-                          <Play className={`w-4 h-4 ${pc.text}`} />
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                          <Code2 className={`w-5 h-5 ${pc.text}`} />
                         </div>
                         <div>
-                          <div className="text-sm font-semibold">{example.videoTitle}</div>
-                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{example.videoDesc}</div>
+                          <div className="text-base font-semibold">Từng module một — Không nhảy cóc</div>
+                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Nguyên tắc cốt lõi: mỗi task chỉ 2-5 files, có checkpoint. Review kỹ trước khi tiếp. Không bao giờ yêu cầu AI build cả dự án trong một lần.</div>
                         </div>
                       </div>
-                      <div className="relative rounded-lg overflow-hidden border border-border bg-muted/50 aspect-video flex items-center justify-center group cursor-pointer">
-                        <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-black/40" />
-                        <div className="relative flex flex-col items-center gap-3">
-                          <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-all">
-                            <Play className="w-6 h-6 text-white ml-1" />
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+                        {[
+                          { title: "Nguyên tắc vàng", items: ["Mỗi task chỉ 2-5 files", "Có checkpoint sau mỗi task", "Review kỹ trước khi tiếp task mới", "Dễ rollback nếu sai"] },
+                          { title: "Cách xác định scope task", items: ["1 feature nhỏ = 1 task", "File path chính xác", "Yêu cầu rõ ràng từng dòng", "Không gộp chung nhiều thứ"] },
+                          { title: "Quy trình thực hiện", items: ["Xác định task cần làm", "Yêu cầu AI viết code", "Review chi tiết từng dòng", "Verify → Commit → Task tiếp"] },
+                        ].map((section, si) => (
+                          <div key={si} className="flex flex-col p-3 rounded-lg border bg-card">
+                            <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">{section.title}</div>
+                            <div className="space-y-1.5 flex-1">
+                              {section.items.map((item) => (
+                                <div key={item} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                  <CheckCircle2 className="w-2.5 h-2.5 text-blue-400 flex-shrink-0 mt-0.5" />
+                                  {item}
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                          <span className="text-sm font-medium text-white/80 drop-shadow">Xem video hướng dẫn</span>
+                        ))}
+                      </div>
+                      <div className="rounded-lg border border-border bg-muted/20 p-4 mb-4">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Dấu hiệu task quá lớn</div>
+                        <div className="flex flex-wrap gap-2">
+                          {[
+                            "AI bắt đầu hallucinate — tên function không khớp",
+                            "Import sai file, code không match yêu cầu",
+                            "Review mất hơn 10 phút",
+                            "Nhiều hơn 5 files trong một task",
+                          ].map((sign) => (
+                            <span key={sign} className="inline-flex items-center px-2 py-1 rounded-md bg-red-500/5 border border-red-500/20 text-[10px] text-muted-foreground">
+                              {sign}
+                            </span>
+                          ))}
                         </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-4 rounded-lg border border-blue-500/20 bg-blue-500/5">
+                        <Play className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs font-semibold text-blue-600 dark:text-blue-400 mb-0.5">Video hướng dẫn sắp có</div>
+                          <div className="text-[10px] text-muted-foreground leading-relaxed">Mình sẽ làm video thực hiện toàn bộ quy trình trên YouTube. Subscribe channel để nhận thông báo khi có video.</div>
+                        </div>
+                        <a
+                          href="https://youtube.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 h-8 px-4 rounded-lg bg-blue-500 text-white font-medium text-xs hover:bg-blue-600 transition-colors flex-shrink-0"
+                        >
+                          <Play className="w-3.5 h-3.5" />
+                          YouTube
+                        </a>
                       </div>
                     </div>
                   )}
