@@ -27,16 +27,28 @@ import {
   HelpCircle,
   ChevronDown,
 } from "lucide-react";
+import { PhaseAccordion } from "@/components/workflow/phase-accordion";
 
 export const metadata: Metadata = {
   title: "Quy trình thực chiến",
   description: "Quy trình làm việc với AI Agent từ xác định sức mạnh AI, phân tích yêu cầu đến triển khai sản phẩm hoàn chỉnh",
 };
 
+const phaseIconMap: Record<string, React.ElementType> = {
+  Cpu,
+  Lightbulb,
+  Package,
+  Code2,
+  Shield,
+  Rocket,
+};
+
+const phaseIconFromName = (name: string) => phaseIconMap[name] || Lightbulb;
+
 const phases = [
   {
     phase: "Power",
-    icon: Cpu,
+    iconName: "Cpu",
     color: "cyan",
     title: "Xác định sức mạnh AI",
     subtitle: "AI model khác nhau có năng lực khác nhau. Biết sức mạnh của model đang dùng để phân bổ công việc phù hợp, tránh giao quá sức hoặc lãng phí tiền cho model đắt mà chỉ làm việc đơn giản.",
@@ -49,7 +61,7 @@ const phases = [
   },
   {
     phase: "Plan",
-    icon: Lightbulb,
+    iconName: "Lightbulb",
     color: "amber",
     title: "Phân tích & Viết Prompt tổng",
     subtitle: "Đây là bước quan trọng nhất. Nhiều người nhảy thẳng vào code vì nghĩ bước này mất thời gian — thực ra nó tiết kiệm thời gian gấp nhiều lần về sau.",
@@ -62,7 +74,7 @@ const phases = [
   },
   {
     phase: "Resources",
-    icon: Package,
+    iconName: "Package",
     color: "indigo",
     title: "Chuẩn bị tài nguyên",
     subtitle: "Trước khi bắt đầu build, hãy chuẩn bị sẵn template, UI kit, documentation và các công cụ cần thiết để AI làm việc hiệu quả.",
@@ -75,7 +87,7 @@ const phases = [
   },
   {
     phase: "Build",
-    icon: Code2,
+    iconName: "Code2",
     color: "blue",
     title: "Sinh Code từng Module",
     subtitle: "Mỗi lần chỉ làm một phần nhỏ. Không bao giờ yêu cầu AI build cả dự án trong một lần.",
@@ -88,7 +100,7 @@ const phases = [
   },
   {
     phase: "Review",
-    icon: Shield,
+    iconName: "Shield",
     color: "green",
     title: "AI tự Review & Cải thiện",
     subtitle: "AI có thể tự review chính nó, nhưng bạn vẫn phải verify. Không có hệ thống nào hoàn hảo.",
@@ -101,7 +113,7 @@ const phases = [
   },
   {
     phase: "Ship",
-    icon: Rocket,
+    iconName: "Rocket",
     color: "purple",
     title: "Kiểm thử & Triển khai",
     subtitle: "Commit nhỏ, commit sớm. Mỗi commit là một checkpoint an toàn.",
@@ -377,7 +389,7 @@ export default function WorkflowPage() {
           <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
             {phases.map((p, i) => {
               const pc = phaseColors[p.color];
-              const Icon = p.icon;
+              const Icon = phaseIconFromName(p.iconName);
               return (
                 <div key={p.phase} className="flex items-center gap-2 sm:gap-3">
                   <Link
@@ -440,7 +452,7 @@ export default function WorkflowPage() {
         {/* Real examples for each phase */}
         {realExamples.map((example) => {
           const pc = phaseColors[example.color];
-          const Icon = phases.find(p => p.phase === example.phase)?.icon || Lightbulb;
+          const Icon = phaseIconFromName(phases.find(p => p.phase === example.phase)?.iconName || "Lightbulb");
           return (
             <section key={example.phase} id={`phase-${example.phase.toLowerCase()}`} className="scroll-mt-20">
               {/* Phase header */}
@@ -1040,7 +1052,7 @@ git commit -m "feat(auth): add User model for authentication
             <div className="flex items-center justify-between md:px-4">
               {phases.map((p, i) => {
                 const pc = phaseColors[p.color];
-                const Icon = p.icon;
+                const Icon = phaseIconFromName(p.iconName);
                 return (
                   <div key={p.phase} className="flex flex-col items-center">
                     <div className={`relative w-12 h-12 rounded-2xl ${pc.bg} border-2 ${pc.border} flex items-center justify-center shadow-lg shadow-black/5`}>
@@ -1057,52 +1069,7 @@ git commit -m "feat(auth): add User model for authentication
           </div>
 
           {/* Phase cards */}
-          <div className="space-y-5">
-            {phases.map((phase, i) => {
-              const pc = phaseColors[phase.color];
-              const Icon = phase.icon;
-              return (
-                <div key={phase.phase} id={`overview-${phase.phase.toLowerCase()}`} className="group relative overflow-hidden rounded-2xl border bg-card transition-all duration-300 hover:shadow-xl hover:shadow-black/5 hover:border-opacity-60">
-                  {/* Colored accent bar */}
-                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl bg-gradient-to-b ${pc.bg.replace('/10', '')} to-transparent`} />
-
-                  <div className="pl-6 pr-5 py-5">
-                    {/* Header row */}
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className={`relative w-12 h-12 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0 shadow-md`}>
-                        <Icon className={`w-5 h-5 ${pc.text}`} />
-                        <div className="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-background border-2 ${pc.border.replace('border', 'border-').replace('/30', '')} flex items-center justify-center">
-                          <span className={`text-[9px] font-black ${pc.text}`}>{i + 1}</span>
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-widest ${pc.badge} ${pc.badgeText}`}>
-                            Giai đoạn {i + 1}
-                          </span>
-                          <span className={`text-[10px] font-black uppercase tracking-widest ${pc.text}`}>{phase.phase}</span>
-                        </div>
-                        <h3 className="text-base font-bold leading-tight">{phase.title}</h3>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{phase.subtitle}</p>
-                      </div>
-                    </div>
-
-                    {/* Steps */}
-                    <div className="grid sm:grid-cols-2 gap-2 pl-0 sm:pl-16">
-                      {phase.steps.map((step, si) => (
-                        <div key={si} className={`flex items-start gap-2.5 px-3 py-2 rounded-lg transition-colors ${pc.bg} group-hover:${pc.bg.replace('/10', '/20')}`}>
-                          <div className={`w-5 h-5 rounded-full ${pc.badge} flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                            <CheckCircle2 className={`w-3 h-3 ${pc.badgeText}`} />
-                          </div>
-                          <span className="text-xs text-muted-foreground leading-relaxed">{step}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <PhaseAccordion phases={phases} />
         </section>
 
         {/* Principles */}
