@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, ChevronDown, Bot, Workflow, Bookmark, BookOpen, AlertTriangle, MessageSquare, Mail } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronDown, Bot, Workflow, Bookmark, BookOpen, AlertTriangle, MessageSquare, Mail, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mainNav } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,7 @@ export function Header() {
   const navIcons: Record<string, React.ElementType> = {
     "/workflow": Workflow,
     "/resources": Bookmark,
+    "/projects": Layers,
     "/guide": BookOpen,
     "/guide/traps": AlertTriangle,
     "/qa": MessageSquare,
@@ -105,6 +106,10 @@ export function Header() {
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500"
                           : "text-orange-600 dark:text-orange-400 hover:text-orange-500"
+                        : item.href === "/projects"
+                          ? pathname === item.href
+                            ? "text-violet-500"
+                            : "text-violet-600 dark:text-violet-400 hover:text-violet-500"
                         : pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-primary"
                           : "text-muted-foreground"
@@ -171,6 +176,10 @@ export function Header() {
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500 bg-orange-500/10"
                           : "text-orange-600 dark:text-orange-400"
+                        : item.href === "/projects"
+                          ? pathname === item.href
+                            ? "text-violet-500 bg-violet-500/10"
+                            : "text-violet-600 dark:text-violet-400"
                         : pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-primary bg-primary/10"
                           : "text-muted-foreground"

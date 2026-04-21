@@ -24,6 +24,10 @@ export const mainNav: NavItem[] = [
     href: "/resources",
   },
   {
+    title: "Dự án",
+    href: "/projects",
+  },
+  {
     title: "Bí kíp",
     href: "/guide",
   },
