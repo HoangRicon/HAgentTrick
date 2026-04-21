@@ -17,72 +17,27 @@ import {
 
 export const metadata: Metadata = {
   title: "Hướng dẫn",
-  description: "Các hướng dẫn sử dụng AI Agent hiệu quả: viết prompt chuẩn, phân tích yêu cầu, sử dụng tài nguyên, và quy trình thực chiến.",
+  description: "Các hướng dẫn sử dụng AI Agent: tạo bộ luật với GPT RULES, dùng AI nghiên cứu, phân tích yêu cầu với AI BA, viết prompt chuẩn, quy trình thực chiến, và sử dụng tài nguyên.",
 };
 
 const guideSections = [
   {
     num: "01",
-    icon: FileText,
-    href: "/guide/prompt",
-    color: "blue",
-    title: "Quy tắc viết Prompt",
-    desc: "Cấu trúc prompt chuẩn: Context, Task, Constraints, Output. Bốn thành phần bắt buộc cho mọi prompt.",
+    icon: Wand2,
+    href: "/guide/gpt-rules",
+    color: "amber",
+    title: "Tạo bộ luật riêng với GPT RULES",
+    desc: "Dùng custom GPT RULES để tự động tạo bộ luật code cho bất kỳ dự án nào. Hướng dẫn từ mô tả project đến tích hợp vào AI coding tool.",
     highlights: [
-      "4 thành phần bắt buộc cho mọi prompt",
-      "Kỹ thuật nâng cao: Zero-shot, Few-shot, Chain-of-Thought",
-      "Template chi tiết cho 8 loại nhiệm vụ",
-      "Hướng dẫn spec-driven prompting",
+      "Mở GPT RULES, mô tả dự án, nhận bộ luật hoàn chỉnh",
+      "6 loại luật: code, architecture, folder structure, testing, commits, best practices",
+      "Copy từng phần vào CLAUDE.md, .cursorrules, hoặc file luật khác",
+      "Kết hợp với tài nguyên có sẵn để có bộ đầy đủ",
     ],
-    badge: "Quan trọng",
+    badge: "Mới",
   },
   {
     num: "02",
-    icon: Brain,
-    href: "/guide/analysis",
-    color: "violet",
-    title: "Phân tích yêu cầu",
-    desc: "Xác định actor, entity, ownership, permission và build order trước khi nhờ AI code bất cứ thứ gì.",
-    highlights: [
-      "6 nguyên tắc phân tích yêu cầu",
-      "Xác định actor, entity, ownership rõ ràng",
-      "Quy tắc tách core flow vs support flow",
-      "Cấu trúc file phân tích chuẩn",
-    ],
-    badge: "Nền tảng",
-  },
-  {
-    num: "03",
-    icon: Target,
-    href: "/workflow",
-    color: "emerald",
-    title: "Quy trình thực chiến",
-    desc: "6 bước Power → Plan → Resources → Build → Review → Ship. Từ xác định sức mạnh AI đến triển khai sản phẩm hoàn chỉnh.",
-    highlights: [
-      "Xác định sức mạnh AI trước khi giao việc",
-      "Mỗi module 2-5 files, có checkpoint",
-      "AI tự review theo checklist",
-      "Commit nhỏ, commit sớm — mỗi bước là checkpoint",
-    ],
-    badge: "6 bước",
-  },
-  {
-    num: "04",
-    icon: BookOpen,
-    href: "/guide/resources",
-    color: "amber",
-    title: "Hướng dẫn sử dụng tài nguyên",
-    desc: "Cách lấy tài nguyên (quy tắc code, quy tắc prompt, quy tắc phân tích) từ trang Tài nguyên và tích hợp vào AI Agent.",
-    highlights: [
-      "4 bước lấy tài nguyên từ trang Tài nguyên",
-      "Copy nội dung file .md vào AI Agent",
-      "Tài nguyên theo từng giai đoạn quy trình",
-      "Cách dùng tham chiếu đường dẫn trong prompt",
-    ],
-    badge: "Tài nguyên",
-  },
-  {
-    num: "05",
     icon: Compass,
     href: "/guide/ai-research",
     color: "cyan",
@@ -97,19 +52,64 @@ const guideSections = [
     badge: "Mới",
   },
   {
-    num: "06",
-    icon: Wand2,
-    href: "/guide/gpt-rules",
-    color: "amber",
-    title: "Tạo bộ luật riêng với GPT RULES",
-    desc: "Dùng custom GPT RULES để tự động tạo bộ luật code cho bất kỳ dự án nào. Hướng dẫn từ mô tả project đến tích hợp vào AI coding tool.",
+    num: "03",
+    icon: Brain,
+    href: "/guide/analysis",
+    color: "violet",
+    title: "Phân tích yêu cầu với AI BA",
+    desc: "Dùng AI BA Agent và Plan mode để tạo yêu cầu chức năng hiệu quả. Xác định actor, entity, ownership, permission và build order.",
     highlights: [
-      "Mở GPT RULES, mô tả dự án, nhận bộ luật hoàn chỉnh",
-      "6 loại luật: code, architecture, folder structure, testing, commits, best practices",
-      "Copy từng phần vào CLAUDE.md, .cursorrules, hoặc file luật khác",
-      "Kết hợp với tài nguyên có sẵn để có bộ đầy đủ",
+      "4 AI tool cho BA: Claude, ChatGPT, Cursor Plan, Claude Code Plan",
+      "5-step BA workflow: mô tả → hỏi phản biện → tạo FRD → review → tinh chỉnh",
+      "FRD chuẩn học thuật: actors, entities, use cases, build order",
+      "Kết hợp với quy tắc phân tích yêu cầu trong tài nguyên",
     ],
-    badge: "Mới",
+    badge: "Nâng cấp",
+  },
+  {
+    num: "04",
+    icon: FileText,
+    href: "/guide/prompt",
+    color: "blue",
+    title: "Quy tắc viết Prompt với AI",
+    desc: "Dùng AI làm Prompt Engineer — sinh prompt chuẩn theo 4 thành phần. Meta-prompt cho GPT-4o, Claude, Gemini. Refine nhiều vòng đến khi hoàn hảo.",
+    highlights: [
+      "Dùng AI sinh prompt chuẩn: meta-prompt có sẵn cho 3 tool",
+      "4 thành phần bắt buộc: Context, Task, Constraints, Output",
+      "Kỹ thuật nâng cao: Zero-shot, Few-shot, Chain-of-Thought",
+      "Template chi tiết cho 8 loại nhiệm vụ",
+    ],
+    badge: "Nâng cấp",
+  },
+  {
+    num: "05",
+    icon: Target,
+    href: "/workflow",
+    color: "emerald",
+    title: "Quy trình thực chiến",
+    desc: "6 bước Power → Plan → Resources → Build → Review → Ship. Từ xác định sức mạnh AI đến triển khai sản phẩm hoàn chỉnh.",
+    highlights: [
+      "Xác định sức mạnh AI trước khi giao việc",
+      "Mỗi module 2-5 files, có checkpoint",
+      "AI tự review theo checklist",
+      "Commit nhỏ, commit sớm — mỗi bước là checkpoint",
+    ],
+    badge: "6 bước",
+  },
+  {
+    num: "06",
+    icon: BookOpen,
+    href: "/guide/resources",
+    color: "rose",
+    title: "Hướng dẫn sử dụng tài nguyên",
+    desc: "Cách lấy tài nguyên (quy tắc code, quy tắc prompt, quy tắc phân tích) từ trang Tài nguyên và tích hợp vào AI Agent.",
+    highlights: [
+      "4 bước lấy tài nguyên từ trang Tài nguyên",
+      "Copy nội dung file .md vào AI Agent",
+      "Tài nguyên theo từng giai đoạn quy trình",
+      "Cách dùng tham chiếu đường dẫn trong prompt",
+    ],
+    badge: "Tài nguyên",
   },
 ];
 
@@ -124,7 +124,7 @@ const colorMap: Record<string, { bg: string; text: string; border: string; iconB
   emerald: { bg: "bg-emerald-500/5", text: "text-emerald-600 dark:text-emerald-400", border: "hover:border-emerald-500/40", iconBg: "bg-emerald-500/10", glow: "hover:shadow-emerald-500/10", badge: "bg-emerald-500/10", badgeText: "text-emerald-600 dark:text-emerald-400" },
   amber: { bg: "bg-amber-500/5", text: "text-amber-600 dark:text-amber-400", border: "hover:border-amber-500/40", iconBg: "bg-amber-500/10", glow: "hover:shadow-amber-500/10", badge: "bg-amber-500/10", badgeText: "text-amber-600 dark:text-amber-400" },
   cyan: { bg: "bg-cyan-500/5", text: "text-cyan-600 dark:text-cyan-400", border: "hover:border-cyan-500/40", iconBg: "bg-cyan-500/10", glow: "hover:shadow-cyan-500/10", badge: "bg-cyan-500/10", badgeText: "text-cyan-600 dark:text-cyan-400" },
-  amber: { bg: "bg-amber-500/5", text: "text-amber-600 dark:text-amber-400", border: "hover:border-amber-500/40", iconBg: "bg-amber-500/10", glow: "hover:shadow-amber-500/10", badge: "bg-amber-500/10", badgeText: "text-amber-600 dark:text-amber-400" },
+  rose: { bg: "bg-rose-500/5", text: "text-rose-600 dark:text-rose-400", border: "hover:border-rose-500/40", iconBg: "bg-rose-500/10", glow: "hover:shadow-rose-500/10", badge: "bg-rose-500/10", badgeText: "text-rose-600 dark:text-rose-400" },
 };
 
 const accentGradientMap: Record<string, string> = {
@@ -133,6 +133,7 @@ const accentGradientMap: Record<string, string> = {
   emerald: "from-emerald-600 to-emerald-400",
   amber: "from-amber-600 to-amber-400",
   cyan: "from-cyan-600 to-cyan-400",
+  rose: "from-rose-600 to-rose-400",
 };
 
 export default function GuidePage() {
@@ -155,7 +156,7 @@ export default function GuidePage() {
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
             Các hướng dẫn giúp bạn sử dụng AI Agent hiệu quả hơn.
-            Mỗi phần đều có ví dụ cụ thể, template chi tiết, và checklist thực tế.
+            Bắt đầu từ <strong>Tạo bộ luật</strong> và <strong>Dùng AI nghiên cứu</strong> — hai hướng dẫn mới nhất.
           </p>
         </div>
       </div>
