@@ -230,10 +230,10 @@ export default function TrapsGuidePage() {
     <div className="min-h-screen">
       {/* Header */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-background to-orange-500/5" />
-        <div className="absolute top-0 left-1/4 w-72 h-72 bg-amber-500/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-br from-muted/50 via-background to-muted/50" />
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-muted/30 rounded-full blur-3xl animate-pulse" />
         <div className="relative w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm font-medium mb-4">
             <AlertTriangle className="w-4 h-4" />
             Lưu ý quan trọng
           </div>

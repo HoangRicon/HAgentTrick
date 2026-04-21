@@ -257,8 +257,8 @@ const sections: Slide[] = [
       },
     ],
     cta: { label: "Đọc thêm", href: "/guide/traps", icon: Shield },
-    bg: "from-amber-500/8 via-background to-orange-500/8",
-    accent: "amber",
+    bg: "from-muted/50 via-background to-muted/50",
+    accent: "primary",
   },
   {
     id: "cta",
