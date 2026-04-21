@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -198,7 +199,7 @@ export default function GPTRulesGuidePage() {
           <div className={`rounded-2xl border ${c.border} ${c.bg} overflow-hidden p-6`}>
             <div className="flex items-start gap-4">
               <div className={`w-14 h-14 rounded-2xl bg-white/50 dark:bg-black/20 border ${c.border} flex items-center justify-center shrink-0`}>
-                <whatIcon className={`w-7 h-7 ${c.text}`} />
+                {whatIcon ? React.createElement(whatIcon, { className: `w-7 h-7 ${c.text}` }) : null}
               </div>
               <div className="flex-1 min-w-0">
                 <h2 className="text-xl font-bold mb-2">{whatItDoes.title}</h2>

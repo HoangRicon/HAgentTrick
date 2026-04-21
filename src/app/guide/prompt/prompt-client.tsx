@@ -21,7 +21,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Code2,
-  Refine,
+  PenLine,
   Bookmark,
 } from "lucide-react";
 
@@ -193,9 +193,9 @@ Xuất prompt hoàn chỉnh, sẵn sàng dùng ngay.`,
   },
 ];
 
-const promptRefineWorkflow = [
+const promptPenLineWorkflow = [
   {
-    icon: Refine,
+    icon: PenLine,
     num: "1",
     title: "AI sinh prompt ban đầu",
     desc: "Dùng meta-prompt ở trên, gửi cho AI bất kỳ (ChatGPT, Claude, Gemini) cùng mô tả nghiệp vụ. AI sẽ sinh prompt theo cấu trúc 4 thành phần.",
@@ -211,7 +211,7 @@ const promptRefineWorkflow = [
   {
     icon: Wand2,
     num: "3",
-    title: "Refine prompt nhiều vòng",
+    title: "PenLine prompt nhiều vòng",
     desc: "Dùng 'Hãy cải thiện prompt này thêm...' để AI polish prompt. Lặp lại 2-3 lần cho đến khi prompt đạt yêu cầu.",
     color: "amber",
   },
@@ -256,7 +256,7 @@ export function PromptGuideClient() {
 
         {/* 5-step workflow */}
         <div className="grid sm:grid-cols-5 gap-3 mb-8">
-          {promptRefineWorkflow.map((step) => {
+          {promptPenLineWorkflow.map((step) => {
             const c = colorMap[step.color as keyof typeof colorMap] || colorMap.blue;
             const Icon = step.icon;
             return (
@@ -383,7 +383,7 @@ export function PromptGuideClient() {
         <div className="grid sm:grid-cols-2 gap-3 mb-6">
           {[
             { icon: Zap, text: "Càng mô tả nghiệp vụ rõ, prompt sinh ra càng chính xác" },
-            { icon: Refine, text: "Refine 2-3 vòng: 'Cải thiện prompt này thêm...' cho đến khi đạt" },
+            { icon: PenLine, text: "PenLine 2-3 vòng: 'Cải thiện prompt này thêm...' cho đến khi đạt" },
             { icon: MessageSquare, text: "Để AI đặt câu hỏi làm rõ — trả lời để prompt chính xác hơn" },
             { icon: CheckCircle, text: "Test prompt thực tế với AI Agent. Nếu chưa đúng, refine tiếp" },
           ].map((tip) => (
@@ -403,7 +403,7 @@ export function PromptGuideClient() {
               "→ Gửi meta-prompt cho AI",
               "→ AI sinh prompt chuẩn",
               "→ AI hỏi câu hỏi làm rõ",
-              "→ Refine 2-3 vòng",
+              "→ PenLine 2-3 vòng",
               "→ Test với AI Agent",
               "→ Lưu vào thư viện",
             ].map((step, i) => (
