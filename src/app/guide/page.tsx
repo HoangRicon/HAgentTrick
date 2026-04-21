@@ -55,14 +55,29 @@ const guideSections = [
     href: "/workflow",
     color: "emerald",
     title: "Quy trình thực chiến",
-    desc: "5 bước Power → Plan → Build → Review → Ship. Từ xác định sức mạnh AI đến triển khai sản phẩm hoàn chỉnh.",
+    desc: "6 bước Power → Plan → Resources → Build → Review → Ship. Từ xác định sức mạnh AI đến triển khai sản phẩm hoàn chỉnh.",
     highlights: [
       "Xác định sức mạnh AI trước khi giao việc",
       "Mỗi module 2-5 files, có checkpoint",
       "AI tự review theo checklist",
       "Commit nhỏ, commit sớm — mỗi bước là checkpoint",
     ],
-    badge: "5 bước",
+    badge: "6 bước",
+  },
+  {
+    num: "04",
+    icon: BookOpen,
+    href: "/guide/resources",
+    color: "amber",
+    title: "Hướng dẫn sử dụng tài nguyên",
+    desc: "Cách lấy tài nguyên (quy tắc code, quy tắc prompt, quy tắc phân tích) từ trang Tài nguyên và tích hợp vào AI Agent.",
+    highlights: [
+      "4 bước lấy tài nguyên từ trang Tài nguyên",
+      "Copy nội dung file .md vào AI Agent",
+      "Tài nguyên theo từng giai đoạn quy trình",
+      "Cách dùng tham chiếu đường dẫn trong prompt",
+    ],
+    badge: "Tài nguyên",
   },
 ];
 
@@ -82,6 +97,7 @@ const accentGradientMap: Record<string, string> = {
   blue: "from-blue-600 to-blue-400",
   violet: "from-violet-600 to-violet-400",
   emerald: "from-emerald-600 to-emerald-400",
+  amber: "from-amber-600 to-amber-400",
 };
 
 export default function GuidePage() {

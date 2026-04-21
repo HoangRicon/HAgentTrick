@@ -468,180 +468,448 @@ export default function WorkflowPage() {
                 </div>
               </div>
 
-              {/* Model comparison for Power phase */}
-              {example.phase === "Power" ? (
-                <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
-                      <Cpu className={`w-5 h-5 ${pc.text}`} />
-                    </div>
-                    <div>
-                      <div className="text-base font-semibold">Chọn model phù hợp — Lúc nào dùng, lúc nào tránh</div>
-                      <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Mỗi model có thế mạnh riêng. Dùng đúng model cho đúng task: tiết kiệm token, tăng chất lượng code, giảm hallucination.</div>
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-3 gap-4 mb-6">
-                    {[
-                      {
-                        model: "Claude Opus 4.7",
-                        tier: "Mạnh nhất",
-                        tierColor: "text-orange-600 dark:text-orange-400",
-                        tierBg: "bg-orange-500/10",
-                        tokens: "200K context",
-                        cost: " Cao",
-                        desc: "Model mạnh nhất hiện tại. Reasoning dài, phân tích project lớn, hiểu kiến trúc phức tạp. Đọc được cả codebase 50+ files trong một lần.",
-                        bestFor: [
-                          "Phân tích toàn bộ dự án 50+ files",
-                          "Thiết kế kiến trúc hệ thống lớn",
-                          "Build module phức tạp (auth, payment, admin)",
-                          "Code review sâu, tìm lỗi logic khó",
-                          "Multi-file refactor quy mô lớn",
-                        ],
-                        avoidFor: [
-                          "Sửa typo đơn giản, thay đổi 1-2 dòng",
-                          "Viết comment hoặc format code",
-                          "Task lặp đi lặp lại nhiều lần",
-                          "Viết unit test đơn giản cho 1 file",
-                        ],
-                      },
-                      {
-                        model: "GPT-4o / Claude Sonnet 4",
-                        tier: "Cân bằng",
-                        tierColor: "text-blue-600 dark:text-blue-400",
-                        tierBg: "bg-blue-500/10",
-                        tokens: "128K context",
-                        cost: " Trung bình",
-                        desc: "Cân bằng giữa chi phí và chất lượng. Làm được hầu hết mọi task với thời gian hợp lý. Tốc độ nhanh, không gây thất vọng.",
-                        bestFor: [
-                          "Viết API route, endpoint mới",
-                          "Tạo component UI từ mockup",
-                          "Refactor 2-5 files cùng lúc",
-                          "Debug logic phức tạp vừa phải",
-                          "Viết unit test cho module",
-                        ],
-                        avoidFor: [
-                          "Dự án quá lớn (>20 files cùng lúc)",
-                          "Thiết kế kiến trúc toàn bộ hệ thống",
-                          "Phân tích nghiệp vụ phức tạp, nhiều actor",
-                        ],
-                      },
-                      {
-                        model: "GPT-4o-mini / Haiku",
-                        tier: "Nhẹ & nhanh",
-                        tierColor: "text-emerald-600 dark:text-emerald-400",
-                        tierBg: "bg-emerald-500/10",
-                        tokens: "128K context",
-                        cost: " Thấp",
-                        desc: "Chi phí thấp nhất, tốc độ nhanh nhất. Phù hợp cho task đơn giản, lặp đi lặp lại. Tuy nhiên reasoning ngắn, dễ sai với logic phức tạp.",
-                        bestFor: [
-                          "Sửa lỗi nhỏ, fix typo",
-                          "Viết unit test đơn giản",
-                          "Format, clean code, auto-import",
-                          "Tạo mock data, seed data",
-                          "Inline refactor 1-2 files",
-                        ],
-                        avoidFor: [
-                          "Task phức tạp, nhiều logic nghiệp vụ",
-                          "Thiết kế feature mới",
-                          "Code review có tính kiến trúc",
-                          "Debug lỗi khó, cần reasoning sâu",
-                        ],
-                      },
-                    ].map((m) => (
-                      <div key={m.model} className="flex flex-col rounded-xl border bg-card overflow-hidden">
-                        <div className={`px-4 py-3 border-b border-border ${m.tierBg}`}>
-                          <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Model</span>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${m.tierBg} ${m.tierColor}`}>
-                              {m.tier}
-                            </span>
-                          </div>
-                          <div className="font-bold text-sm">{m.model}</div>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span className="text-[10px] text-muted-foreground">{m.tokens}</span>
-                            <span className="text-[10px] text-muted-foreground">|</span>
-                            <span className="text-[10px] text-muted-foreground">Chi phí{m.cost}</span>
-                          </div>
+                  {/* Guide cards for each phase */}
+                  {example.phase === "Power" ? (
+                    <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                          <Cpu className={`w-5 h-5 ${pc.text}`} />
                         </div>
-                        <div className="p-4 space-y-3 flex-1">
-                          <p className="text-[11px] text-muted-foreground leading-relaxed">{m.desc}</p>
-                          <div>
-                            <div className="text-[9px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1.5 flex items-center gap-1">
-                              <CheckCircle2 className="w-2.5 h-2.5" />
-                              Dùng khi
+                        <div>
+                          <div className="text-base font-semibold">Chọn model phù hợp — Lúc nào dùng, lúc nào tránh</div>
+                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Mỗi model có thế mạnh riêng. Dùng đúng model cho đúng task: tiết kiệm token, tăng chất lượng code, giảm hallucination.</div>
+                        </div>
+                      </div>
+                      <div className="grid sm:grid-cols-3 gap-4 mb-6">
+                        {[
+                          {
+                            model: "Claude Opus 4.7",
+                            tier: "Mạnh nhất",
+                            tierColor: "text-orange-600 dark:text-orange-400",
+                            tierBg: "bg-orange-500/10",
+                            tokens: "200K context",
+                            cost: " Cao",
+                            desc: "Model mạnh nhất hiện tại. Reasoning dài, phân tích project lớn, hiểu kiến trúc phức tạp. Đọc được cả codebase 50+ files trong một lần.",
+                            bestFor: [
+                              "Phân tích toàn bộ dự án 50+ files",
+                              "Thiết kế kiến trúc hệ thống lớn",
+                              "Build module phức tạp (auth, payment, admin)",
+                              "Code review sâu, tìm lỗi logic khó",
+                              "Multi-file refactor quy mô lớn",
+                            ],
+                            avoidFor: [
+                              "Sửa typo đơn giản, thay đổi 1-2 dòng",
+                              "Viết comment hoặc format code",
+                              "Task lặp đi lặp lại nhiều lần",
+                              "Viết unit test đơn giản cho 1 file",
+                            ],
+                          },
+                          {
+                            model: "GPT-4o / Claude Sonnet 4",
+                            tier: "Cân bằng",
+                            tierColor: "text-blue-600 dark:text-blue-400",
+                            tierBg: "bg-blue-500/10",
+                            tokens: "128K context",
+                            cost: " Trung bình",
+                            desc: "Cân bằng giữa chi phí và chất lượng. Làm được hầu hết mọi task với thời gian hợp lý. Tốc độ nhanh, không gây thất vọng.",
+                            bestFor: [
+                              "Viết API route, endpoint mới",
+                              "Tạo component UI từ mockup",
+                              "Refactor 2-5 files cùng lúc",
+                              "Debug logic phức tạp vừa phải",
+                              "Viết unit test cho module",
+                            ],
+                            avoidFor: [
+                              "Dự án quá lớn (>20 files cùng lúc)",
+                              "Thiết kế kiến trúc toàn bộ hệ thống",
+                              "Phân tích nghiệp vụ phức tạp, nhiều actor",
+                            ],
+                          },
+                          {
+                            model: "GPT-4o-mini / Haiku",
+                            tier: "Nhẹ & nhanh",
+                            tierColor: "text-emerald-600 dark:text-emerald-400",
+                            tierBg: "bg-emerald-500/10",
+                            tokens: "128K context",
+                            cost: " Thấp",
+                            desc: "Chi phí thấp nhất, tốc độ nhanh nhất. Phù hợp cho task đơn giản, lặp đi lặp lại. Tuy nhiên reasoning ngắn, dễ sai với logic phức tạp.",
+                            bestFor: [
+                              "Sửa lỗi nhỏ, fix typo",
+                              "Viết unit test đơn giản",
+                              "Format, clean code, auto-import",
+                              "Tạo mock data, seed data",
+                              "Inline refactor 1-2 files",
+                            ],
+                            avoidFor: [
+                              "Task phức tạp, nhiều logic nghiệp vụ",
+                              "Thiết kế feature mới",
+                              "Code review có tính kiến trúc",
+                              "Debug lỗi khó, cần reasoning sâu",
+                            ],
+                          },
+                        ].map((m) => (
+                          <div key={m.model} className="flex flex-col rounded-xl border bg-card overflow-hidden">
+                            <div className={`px-4 py-3 border-b border-border ${m.tierBg}`}>
+                              <div className="flex items-center justify-between mb-1.5">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Model</span>
+                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${m.tierBg} ${m.tierColor}`}>
+                                  {m.tier}
+                                </span>
+                              </div>
+                              <div className="font-bold text-sm">{m.model}</div>
+                              <div className="flex items-center gap-2 mt-1">
+                                <span className="text-[10px] text-muted-foreground">{m.tokens}</span>
+                                <span className="text-[10px] text-muted-foreground">|</span>
+                                <span className="text-[10px] text-muted-foreground">Chi phí{m.cost}</span>
+                              </div>
+                            </div>
+                            <div className="p-4 space-y-3 flex-1">
+                              <p className="text-[11px] text-muted-foreground leading-relaxed">{m.desc}</p>
+                              <div>
+                                <div className="text-[9px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1.5 flex items-center gap-1">
+                                  <CheckCircle2 className="w-2.5 h-2.5" />
+                                  Dùng khi
+                                </div>
+                                <div className="space-y-1">
+                                  {m.bestFor.map((b) => (
+                                    <div key={b} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                                      {b}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              <div>
+                                <div className="text-[9px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400 mb-1.5 flex items-center gap-1">
+                                  <XCircle className="w-2.5 h-2.5" />
+                                  Tránh khi
+                                </div>
+                                <div className="space-y-1">
+                                  {m.avoidFor.map((a) => (
+                                    <div key={a} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                      <XCircle className="w-2.5 h-2.5 text-red-500 flex-shrink-0 mt-0.5" />
+                                      {a}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="rounded-lg border border-border bg-muted/20 p-4">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2 text-center">
+                          Bảng chọn nhanh theo task
+                        </div>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                          {[
+                            { task: "Phân tích project lớn", model: "Opus 4.7", color: "text-orange-500" },
+                            { task: "Thiết kế kiến trúc", model: "Opus 4.7", color: "text-orange-500" },
+                            { task: "Viết API route", model: "GPT-4o / Sonnet", color: "text-blue-500" },
+                            { task: "Tạo component UI", model: "GPT-4o / Sonnet", color: "text-blue-500" },
+                            { task: "Refactor 2-5 files", model: "GPT-4o / Sonnet", color: "text-blue-500" },
+                            { task: "Sửa lỗi nhỏ", model: "GPT-4o-mini", color: "text-emerald-500" },
+                            { task: "Format / clean code", model: "GPT-4o-mini", color: "text-emerald-500" },
+                            { task: "Viết unit test đơn giản", model: "GPT-4o-mini", color: "text-emerald-500" },
+                          ].map((row) => (
+                            <div key={row.task} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-background/60 border border-border">
+                              <span className="text-[10px] text-muted-foreground">{row.task}</span>
+                              <span className={`text-[9px] font-bold ${row.color}`}>{row.model}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : example.phase === "Plan" ? (
+                    <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                          <Lightbulb className={`w-5 h-5 ${pc.text}`} />
+                        </div>
+                        <div>
+                          <div className="text-base font-semibold">Phân tích yêu cầu chức năng — Hướng dẫn chi tiết</div>
+                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Thay vì nhảy thẳng vào code, hãy phân tích yêu cầu trước để xác định đúng actor, entity, ownership và build order. Hướng dẫn chi tiết giải thích cách xác định scope chính xác, tránh over-engineering, và đảm bảo AI đi đúng hướng.</div>
+                        </div>
+                      </div>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+                        {[
+                          { title: "Viết theo nghiệp vụ trước", desc: "Mô tả bài toán trước, quyết định kỹ thuật sau. Không nhảy thẳng sang giải pháp." },
+                          { title: "Gắn chức năng với actor cụ thể", desc: "Mỗi chức năng phải trả lời: ai dùng, có quyền gì, thao tác trên dữ liệu của ai, bị giới hạn ở đâu." },
+                          { title: "Xác định entity lõi ngay", desc: "Entity là dữ liệu cốt lõi. Với mỗi entity phải rõ: ai tạo, ai xem, ai sửa, ai xóa, ownership thuộc về ai." },
+                          { title: "Phân tích ownership rõ ràng", desc: "Dữ liệu thuộc về ai? Ai được xem toàn bộ? Ai chỉ xem dữ liệu của chính mình?" },
+                          { title: "Tách nhỏ từng chức năng", desc: "Không gộp nhiều hành vi khác nhau. Tách: tạo, xem, cập nhật, xóa, duyệt, hủy thành các dòng riêng." },
+                          { title: "Xác định thứ tự build", desc: "Auth foundation → Entity → Layout → Feature. Ai tạo dữ liệu lõi, ai quyết định permission?" },
+                        ].map((p) => (
+                          <div key={p.title} className="flex items-start gap-2.5 p-3 rounded-lg border bg-card">
+                            <div className={`w-7 h-7 rounded-lg ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                              <Sparkles className={`w-3.5 h-3.5 ${pc.text}`} />
+                            </div>
+                            <div>
+                              <div className="text-xs font-semibold mb-0.5">{p.title}</div>
+                              <div className="text-[10px] text-muted-foreground leading-relaxed">{p.desc}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="grid sm:grid-cols-2 gap-3 mb-5">
+                        <div className="p-3 rounded-lg bg-red-500/5 border border-red-500/20">
+                          <div className="flex items-center gap-1.5 mb-2">
+                            <XCircle className="w-3.5 h-3.5 text-red-500" />
+                            <span className="text-[10px] font-bold text-red-600 dark:text-red-400 uppercase">Sai</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground italic mb-1.5">"Thêm chức năng login cho tôi"</p>
+                          <p className="text-[10px] text-muted-foreground">Prompt chung chung, không xác định rõ scope, actor, hay yêu cầu cụ thể. AI phải tự đoán nhiều thứ.</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-green-500/5 border border-green-500/20">
+                          <div className="flex items-center gap-1.5 mb-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                            <span className="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase">Đúng</span>
+                          </div>
+                          <p className="text-[10px] text-muted-foreground mb-1">Phân tích trước: User tạo account, Admin duyệt user, Guest chỉ xem sản phẩm.</p>
+                          <p className="text-[10px] text-muted-foreground">Build order: Auth → User Entity → Product Entity → Order Entity → Feature flows.</p>
+                        </div>
+                      </div>
+                      <div className="rounded-lg border border-border bg-muted/20 p-4 mb-5">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Cấu trúc file phân tích chuẩn</div>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          {["1. Tổng quan dự án", "2. Actor chính", "3. Core entities", "4. Yêu cầu chức năng", "5. Ownership & Permission", "6. Build order", "7. Risk areas", "8. Assumptions"].map((s) => (
+                            <div key={s} className="px-2.5 py-1.5 rounded bg-background/60 border border-border">
+                              <span className="text-[10px] text-muted-foreground">{s}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <Link
+                        href="/guide/analysis"
+                        className={`inline-flex items-center gap-2 h-10 px-5 rounded-xl ${pc.bg} border ${pc.border} font-medium text-sm hover:opacity-80 transition-all`}
+                      >
+                        <BookOpen className={`w-4 h-4 ${pc.text}`} />
+                        Xem hướng dẫn phân tích yêu cầu
+                        <ArrowRight className={`w-4 h-4 ${pc.text}`} />
+                      </Link>
+                    </div>
+                  ) : example.phase === "Resources" ? (
+                    <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                          <Package className={`w-5 h-5 ${pc.text}`} />
+                        </div>
+                        <div>
+                          <div className="text-base font-semibold">Hướng dẫn sử dụng tài nguyên</div>
+                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Cách lấy tài nguyên (quy tắc code, quy tắc prompt, quy tắc phân tích) từ trang Tài nguyên và tích hợp vào AI Agent để tăng cường khả năng làm việc.</div>
+                        </div>
+                      </div>
+                      <div className="grid sm:grid-cols-2 gap-3 mb-5">
+                        {[
+                          { step: 1, title: "Tìm tài nguyên phù hợp", desc: "Truy cập trang Tài nguyên để xem danh sách đầy đủ: quy tắc code, quy tắc prompt, quy tắc phân tích." },
+                          { step: 2, title: "Tải file markdown về máy", desc: "Tải file .md của tài nguyên bạn cần sử dụng. Mỗi tài nguyên đều có nút Tải về ngay trên thẻ." },
+                          { step: 3, title: "Đặt file vào thư mục phù hợp", desc: "Đặt file .md vào thư mục trong project. Ví dụ: docs/rules/ cho quy tắc code, docs/analysis/ cho quy tắc phân tích." },
+                          { step: 4, title: "Copy nội dung vào AI Agent", desc: "Copy toàn bộ nội dung file .md và paste vào cuộc trò chuyện với AI Agent. Hoặc dùng tham chiếu đường dẫn trong prompt." },
+                        ].map((s) => (
+                          <div key={s.step} className="flex items-start gap-3 p-3 rounded-lg border bg-card">
+                            <div className="w-7 h-7 rounded-full bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
+                              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">{s.step}</span>
+                            </div>
+                            <div>
+                              <div className="text-xs font-semibold mb-0.5">{s.title}</div>
+                              <div className="text-[10px] text-muted-foreground leading-relaxed">{s.desc}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="grid sm:grid-cols-3 gap-3 mb-5">
+                        {[
+                          { title: "Duy trì tính nhất quán", desc: "AI Agent follow đúng quy tắc của dự án, không tự ý theo default của nó" },
+                          { title: "Giảm lỗi sinh code", desc: "Nguyên tắc rõ ràng giúp AI hiểu đúng yêu cầu từ lần đầu" },
+                          { title: "Tăng tốc độ", desc: "Không cần giải thích lại quy tắc mỗi lần bắt đầu dự án" },
+                        ].map((b) => (
+                          <div key={b.title} className="flex items-start gap-2 p-3 rounded-lg border bg-card">
+                            <div className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                              <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+                            </div>
+                            <div>
+                              <div className="text-[10px] font-semibold">{b.title}</div>
+                              <div className="text-[9px] text-muted-foreground leading-relaxed">{b.desc}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <Link
+                        href="/guide/resources"
+                        className={`inline-flex items-center gap-2 h-10 px-5 rounded-xl ${pc.bg} border ${pc.border} font-medium text-sm hover:opacity-80 transition-all`}
+                      >
+                        <BookOpen className={`w-4 h-4 ${pc.text}`} />
+                        Xem hướng dẫn sử dụng tài nguyên
+                        <ArrowRight className={`w-4 h-4 ${pc.text}`} />
+                      </Link>
+                    </div>
+                  ) : example.phase === "Review" ? (
+                    <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                          <Shield className={`w-5 h-5 ${pc.text}`} />
+                        </div>
+                        <div>
+                          <div className="text-base font-semibold">AI tự review theo checklist</div>
+                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Sau mỗi lần AI sinh code, bạn review trước khi tiếp tục. Dù model có mạnh đến đâu, review vẫn là bước bắt buộc. Review kỹ giúp phát hiện lỗi sớm, không để tích lũy đến cuối dự án.</div>
+                        </div>
+                      </div>
+
+                      {/* Checklist grid */}
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+                        {[
+                          { icon: CheckCheck, title: "Đúng thiết kế?", pass: "Code match với spec đã approve. Yêu cầu đúng flow, đúng entities, đúng actor đã xác định ở Bước 2." },
+                          { icon: CheckCheck, title: "Logic đúng?", pass: "Flow hoạt động đúng: data validation, error handling, edge cases đều được xử lý. Không có logic bị thiếu." },
+                          { icon: CheckCheck, title: "Type-safe?", pass: "Không có any, types rõ ràng, interface mô tả đầy đủ. TypeScript strict mode không báo lỗi." },
+                          { icon: Shield, title: "Secure?", pass: "Password hashed, JWT httpOnly cookie, input validated, SQL injection prevented, XSS prevented." },
+                          { icon: CheckCircle2, title: "Scope đúng?", pass: "Chỉ sửa đúng phần được yêu cầu. Không thêm feature lạ, không sửa file ngoài scope." },
+                          { icon: CheckCircle2, title: "Test pass?", pass: "Chạy test sau mỗi task. Unit test, integration test đều pass. Không break existing features." },
+                        ].map((item, i) => {
+                          const ItemIcon = item.icon;
+                          return (
+                            <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg border bg-card">
+                              <ItemIcon className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-xs font-semibold">{item.title}</span>
+                                <p className="text-[10px] text-muted-foreground mt-0.5 leading-relaxed">{item.pass}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Prompt for AI review */}
+                      <div className="rounded-lg border border-border bg-muted/20 p-4 mb-5">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Prompt để AI tự review</div>
+                        <pre className="text-[10px] sm:text-[11px] font-mono text-muted-foreground whitespace-pre-wrap leading-relaxed">
+{`Review code vừa sinh theo checklist:
+1. Spec compliance — có đúng thiết kế không?
+2. Code quality — type-safe, clean, secure?
+3. Logic correctness — flow hoạt động đúng?
+4. Edge cases — xử lý được error cases không?
+
+Nếu có critical issue → dừng lại, hỏi tôi trước khi fix.`}</pre>
+                      </div>
+
+                      {/* Error handling */}
+                      <div className="p-4 rounded-lg border bg-red-500/5 border-red-500/20">
+                        <div className="flex items-center gap-2 mb-2">
+                          <XCircle className="w-4 h-4 text-red-500" />
+                          <span className="text-xs font-bold text-red-600 dark:text-red-400">Khi phát hiện lỗi — fix ngay, không để dồn</span>
+                        </div>
+                        <div className="space-y-1.5">
+                          {[
+                            "Phát hiện lỗi ở API route /api/auth/login: Không validate email format",
+                            "Phát hiện lỗi: Không handle wrong password error",
+                            "Yêu cầu AI fix ngay, sau đó verify lại — không tiếp tục sang task tiếp theo",
+                            "Nếu lỗi nghiêm trọng (security, logic sai) → dừng hẳn, fix xong mới đi tiếp",
+                          ].map((e, i) => (
+                            <div key={i} className="flex items-start gap-2 text-[10px] text-muted-foreground">
+                              <XCircle className="w-2.5 h-2.5 text-red-400 flex-shrink-0 mt-0.5" />
+                              {e}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : example.phase === "Ship" ? (
+                    <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                          <Rocket className={`w-5 h-5 ${pc.text}`} />
+                        </div>
+                        <div>
+                          <div className="text-base font-semibold">Commit nhỏ, commit sớm — Mỗi bước là một checkpoint</div>
+                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Sau khi task hoàn tất và verify, bạn commit ngay. Không đợi build xong cả dự án mới commit. Mỗi commit là một điểm rollback an toàn. Không bao giờ mất nhiều hơn 10 phút work.</div>
+                        </div>
+                      </div>
+
+                      {/* Commit rules */}
+                      <div className="grid sm:grid-cols-2 gap-3 mb-5">
+                        {[
+                          { icon: CheckCircle2, title: "Commit khi nào?", items: ["Mỗi task nhỏ hoàn tất và verify xong", "Từng feature nhỏ đã ổn định", "Sau khi chạy test pass", "Trước khi bắt đầu task mới"], color: "green" },
+                          { icon: XCircle, title: "Không nên commit khi?", items: ["Code còn half-done, chưa verify", "Nhiều thay đổi không liên quan cùng lúc", "Chưa chạy test", "Đang giữa task lớn chưa xong"], color: "red" },
+                        ].map((rule) => (
+                          <div key={rule.title} className={`p-3 rounded-lg border ${rule.color === "green" ? "bg-green-500/5 border-green-500/20" : "bg-red-500/5 border-red-500/20"}`}>
+                            <div className="flex items-center gap-1.5 mb-2">
+                              {rule.color === "green" ? (
+                                <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                              ) : (
+                                <XCircle className="w-3.5 h-3.5 text-red-500" />
+                              )}
+                              <span className={`text-[10px] font-bold ${rule.color === "green" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>{rule.title}</span>
                             </div>
                             <div className="space-y-1">
-                              {m.bestFor.map((b) => (
-                                <div key={b} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
-                                  <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500 flex-shrink-0 mt-0.5" />
-                                  {b}
+                              {rule.items.map((item) => (
+                                <div key={item} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                  {rule.color === "green" ? (
+                                    <CheckCircle2 className="w-2.5 h-2.5 text-green-400 flex-shrink-0 mt-0.5" />
+                                  ) : (
+                                    <XCircle className="w-2.5 h-2.5 text-red-400 flex-shrink-0 mt-0.5" />
+                                  )}
+                                  {item}
                                 </div>
                               ))}
                             </div>
                           </div>
-                          <div>
-                            <div className="text-[9px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400 mb-1.5 flex items-center gap-1">
-                              <XCircle className="w-2.5 h-2.5" />
-                              Tránh khi
+                        ))}
+                      </div>
+
+                      {/* Commit message template */}
+                      <div className="rounded-lg border border-border bg-muted/20 p-4 mb-5">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Commit message chuẩn</div>
+                        <pre className="text-[10px] sm:text-[11px] font-mono text-muted-foreground whitespace-pre-wrap leading-relaxed">{`git add prisma/schema.prisma
+git commit -m "feat(auth): add User model for authentication
+
+- Add email (unique) and passwordHash fields
+- Add relation to existing models
+- Validate schema with prisma validate"`}</pre>
+                      </div>
+
+                      {/* PR flow */}
+                      <div className="p-4 rounded-lg border border-purple-500/20 bg-purple-500/5">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Rocket className="w-4 h-4 text-purple-500" />
+                          <span className="text-[10px] font-bold text-purple-600 dark:text-purple-400 uppercase">Sau khi hoàn tất feature</span>
+                        </div>
+                        <div className="space-y-1.5">
+                          {[
+                            "Kiểm tra tests một lần nữa trước khi tạo PR",
+                            "Chạy lint, format, type-check để đảm bảo code sạch",
+                            "Trình bày options: merge trực tiếp / tạo PR / giữ branch / discard",
+                            "Nếu tạo PR: viết mô tả rõ feature gì, đã verify gì, checklist passes",
+                            "Sau khi merge: cleanup workspace, branch cũ xóa nếu không cần",
+                          ].map((step, i) => (
+                            <div key={i} className="flex items-start gap-2 text-[10px] text-muted-foreground">
+                              <Rocket className="w-2.5 h-2.5 text-purple-400 flex-shrink-0 mt-0.5" />
+                              {step}
                             </div>
-                            <div className="space-y-1">
-                              {m.avoidFor.map((a) => (
-                                <div key={a} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
-                                  <XCircle className="w-2.5 h-2.5 text-red-500 flex-shrink-0 mt-0.5" />
-                                  {a}
-                                </div>
-                              ))}
-                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className={`w-8 h-8 rounded-lg ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                          <Play className={`w-4 h-4 ${pc.text}`} />
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold">{example.videoTitle}</div>
+                          <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{example.videoDesc}</div>
+                        </div>
+                      </div>
+                      <div className="relative rounded-lg overflow-hidden border border-border bg-muted/50 aspect-video flex items-center justify-center group cursor-pointer">
+                        <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-black/40" />
+                        <div className="relative flex flex-col items-center gap-3">
+                          <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-all">
+                            <Play className="w-6 h-6 text-white ml-1" />
                           </div>
+                          <span className="text-sm font-medium text-white/80 drop-shadow">Xem video hướng dẫn</span>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                  <div className="rounded-lg border border-border bg-muted/20 p-4">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2 text-center">
-                      Bảng chọn nhanh theo task
                     </div>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                      {[
-                        { task: "Phân tích project lớn", model: "Opus 4.7", color: "text-orange-500" },
-                        { task: "Thiết kế kiến trúc", model: "Opus 4.7", color: "text-orange-500" },
-                        { task: "Viết API route", model: "GPT-4o / Sonnet", color: "text-blue-500" },
-                        { task: "Tạo component UI", model: "GPT-4o / Sonnet", color: "text-blue-500" },
-                        { task: "Refactor 2-5 files", model: "GPT-4o / Sonnet", color: "text-blue-500" },
-                        { task: "Sửa lỗi nhỏ", model: "GPT-4o-mini", color: "text-emerald-500" },
-                        { task: "Format / clean code", model: "GPT-4o-mini", color: "text-emerald-500" },
-                        { task: "Viết unit test đơn giản", model: "GPT-4o-mini", color: "text-emerald-500" },
-                      ].map((row) => (
-                        <div key={row.task} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-background/60 border border-border">
-                          <span className="text-[10px] text-muted-foreground">{row.task}</span>
-                          <span className={`text-[9px] font-bold ${row.color}`}>{row.model}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className={`w-8 h-8 rounded-lg ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
-                      <Play className={`w-4 h-4 ${pc.text}`} />
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold">{example.videoTitle}</div>
-                      <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{example.videoDesc}</div>
-                    </div>
-                  </div>
-                  <div className="relative rounded-lg overflow-hidden border border-border bg-muted/50 aspect-video flex items-center justify-center group cursor-pointer">
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-black/40" />
-                    <div className="relative flex flex-col items-center gap-3">
-                      <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-all">
-                        <Play className="w-6 h-6 text-white ml-1" />
-                      </div>
-                      <span className="text-sm font-medium text-white/80 drop-shadow">Xem video hướng dẫn</span>
-                    </div>
-                  </div>
-                </div>
-              )}
+                  )}
 
               {/* Prompt examples */}
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
@@ -716,40 +984,77 @@ export default function WorkflowPage() {
           );
         })}
 
-        {/* 5 Phases Overview */}
+        {/* 6 Phases Overview — Redesigned */}
         <section>
-          <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
+          <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
             <Layers className="w-5 h-5 text-primary" />
             Tổng quan 6 giai đoạn
           </h2>
-          <div className="flex flex-col gap-3">
+
+          {/* Flow connector line */}
+          <div className="relative mb-8">
+            <div className="hidden md:block absolute top-6 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 via-amber-500 via-indigo-500 via-blue-500 via-green-500 to-purple-500 opacity-20" />
+            <div className="flex items-center justify-between md:px-4">
+              {phases.map((p, i) => {
+                const pc = phaseColors[p.color];
+                const Icon = p.icon;
+                return (
+                  <div key={p.phase} className="flex flex-col items-center">
+                    <div className={`relative w-12 h-12 rounded-2xl ${pc.bg} border-2 ${pc.border} flex items-center justify-center shadow-lg shadow-black/5`}>
+                      <Icon className={`w-5 h-5 ${pc.text}`} />
+                      <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-background border-2 ${pc.border.replace('border', 'border-').replace('/30', '')} flex items-center justify-center">
+                        <span className={`text-[9px] font-black ${pc.text}`}>{i + 1}</span>
+                      </div>
+                    </div>
+                    <span className={`mt-2 text-[10px] font-black uppercase tracking-widest ${pc.text}`}>{p.phase}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Phase cards */}
+          <div className="space-y-5">
             {phases.map((phase, i) => {
               const pc = phaseColors[phase.color];
               const Icon = phase.icon;
               return (
-                <div key={phase.phase} id={`overview-${phase.phase.toLowerCase()}`} className="flex flex-col sm:flex-row gap-3">
-                  <div className={`flex flex-row sm:flex-col items-center sm:items-stretch gap-4 p-4 sm:p-5 rounded-xl ${pc.bg} border ${pc.border} sm:w-72 sm:flex-shrink-0`}>
-                    <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
-                      <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${pc.text}`} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-[10px] font-bold uppercase tracking-widest ${pc.text}`}>{phase.phase}</span>
-                        <span className="text-xs text-muted-foreground">—</span>
-                        <span className="text-xs text-muted-foreground">{phase.title}</span>
+                <div key={phase.phase} id={`overview-${phase.phase.toLowerCase()}`} className="group relative overflow-hidden rounded-2xl border bg-card transition-all duration-300 hover:shadow-xl hover:shadow-black/5 hover:border-opacity-60">
+                  {/* Colored accent bar */}
+                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl bg-gradient-to-b ${pc.bg.replace('/10', '')} to-transparent`} />
+
+                  <div className="pl-6 pr-5 py-5">
+                    {/* Header row */}
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className={`relative w-12 h-12 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0 shadow-md`}>
+                        <Icon className={`w-5 h-5 ${pc.text}`} />
+                        <div className="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-background border-2 ${pc.border.replace('border', 'border-').replace('/30', '')} flex items-center justify-center">
+                          <span className={`text-[9px] font-black ${pc.text}`}>{i + 1}</span>
+                        </div>
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed hidden sm:block">{phase.subtitle}</p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-widest ${pc.badge} ${pc.badgeText}`}>
+                            Giai đoạn {i + 1}
+                          </span>
+                          <span className={`text-[10px] font-black uppercase tracking-widest ${pc.text}`}>{phase.phase}</span>
+                        </div>
+                        <h3 className="text-base font-bold leading-tight">{phase.title}</h3>
+                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{phase.subtitle}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-4 sm:p-5 rounded-xl border bg-card flex items-center">
-                    <ul className="space-y-2 flex-1">
+
+                    {/* Steps */}
+                    <div className="grid sm:grid-cols-2 gap-2 pl-0 sm:pl-16">
                       {phase.steps.map((step, si) => (
-                        <li key={si} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <CheckCircle2 className={`w-4 h-4 ${pc.text} flex-shrink-0 mt-0.5`} />
-                          <span>{step}</span>
-                        </li>
+                        <div key={si} className={`flex items-start gap-2.5 px-3 py-2 rounded-lg transition-colors ${pc.bg} group-hover:${pc.bg.replace('/10', '/20')}`}>
+                          <div className={`w-5 h-5 rounded-full ${pc.badge} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                            <CheckCircle2 className={`w-3 h-3 ${pc.badgeText}`} />
+                          </div>
+                          <span className="text-xs text-muted-foreground leading-relaxed">{step}</span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 </div>
               );

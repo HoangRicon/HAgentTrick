@@ -15,7 +15,6 @@ import {
   Search,
   Network,
   Sparkles,
-  Play,
   Zap,
   ExternalLink,
 } from "lucide-react";
@@ -138,35 +137,76 @@ export default function ResourcesGuidePage() {
       {/* Content */}
       <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
-        {/* Video hướng dẫn */}
+        {/* Hướng dẫn bằng hình */}
         <section>
-          <h2 className="text-xl font-bold mb-5">Video hướng dẫn</h2>
+          <h2 className="text-xl font-bold mb-5">Cách lấy và dùng tài nguyên</h2>
           <div className="rounded-2xl border border-indigo-500/20 overflow-hidden">
-            <div className="relative aspect-video bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center group cursor-pointer">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.1),transparent_70%)]" />
-              <div className="relative flex flex-col items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-indigo-500/20 backdrop-blur-sm border border-indigo-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Play className="w-7 h-7 text-indigo-500 ml-1" />
+            <div className="p-6 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 space-y-5">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="w-5 h-5 text-indigo-500" />
                 </div>
-                <div className="text-center">
-                  <div className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">Xem video hướng dẫn</div>
-                  <div className="text-xs text-muted-foreground mt-1">Cách lấy và sử dụng tài nguyên với AI Agent</div>
+                <div>
+                  <div className="font-semibold text-sm mb-1">Bước 1 — Tìm tài nguyên phù hợp</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Truy cập trang <strong>Tài nguyên</strong> để xem danh sách đầy đủ. Mỗi tài nguyên đều có mô tả rõ ràng, ví dụ, và template sẵn dùng.
+                    Bạn cần tài nguyên nào? Quy tắc code cho project Next.js? Quy tắc phân tích yêu cầu? Hay quy tắc viết prompt?
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                  <Download className="w-5 h-5 text-indigo-500" />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm mb-1">Bước 2 — Tải file markdown về máy</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Nhấn nút <strong>Tải về</strong> trên thẻ tài nguyên. File .md sẽ được tải về. Mỗi tài nguyên chứa quy tắc cụ thể, ví dụ minh hoạ, và template để copy-paste ngay vào prompt.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                  <FolderOpen className="w-5 h-5 text-indigo-500" />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm mb-1">Bước 3 — Đặt file vào thư mục project</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Tạo thư mục <code className="text-xs bg-muted px-1.5 py-0.5 rounded">docs/</code> trong project và đặt file .md vào đó. Ví dụ:
+                    <code className="text-xs bg-muted px-1.5 py-0.5 rounded ml-1">docs/rules/code-rules.md</code>,
+                    <code className="text-xs bg-muted px-1.5 py-0.5 rounded ml-1">docs/analysis/req-analysis.md</code>.
+                    Hoặc đặt ngay cạnh file code đang làm việc.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                  <ClipboardPaste className="w-5 h-5 text-indigo-500" />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm mb-1">Bước 4 — Dùng với AI Agent</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    <strong>Cách 1:</strong> Copy toàn bộ nội dung file .md và paste trực tiếp vào chat của AI Agent ở đầu cuộc trò chuyện.
+                    <br />
+                    <strong>Cách 2:</strong> Dùng tham chiếu đường dẫn trong prompt: <em>"Đọc file docs/rules/code-rules.md trước khi code"</em>.
+                    Khi AI đọc được file, nó sẽ follow đúng quy tắc của dự án thay vì tự ý theo default.
+                  </p>
                 </div>
               </div>
             </div>
             <div className="p-4 bg-card border-t border-border">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-semibold">Hướng dẫn sử dụng tài nguyên</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">Video demo cách tải, cài đặt và dùng tài nguyên với AI Agent</div>
+                  <div className="text-sm font-semibold">Cần tài nguyên cụ thể?</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">Truy cập trang Tài nguyên để xem tất cả file markdown có sẵn.</div>
                 </div>
-                <a
+                <Link
                   href="/resources"
                   className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-600 transition-all shrink-0"
                 >
-                  <Download className="w-4 h-4" />
+                  <Zap className="w-4 h-4" />
                   Tài nguyên
-                </a>
+                </Link>
               </div>
             </div>
           </div>
