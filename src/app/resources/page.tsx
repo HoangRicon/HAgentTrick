@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, Wand2, ExternalLink } from "lucide-react";
 import { ResourcesCards } from "./resources-cards";
 
 export const metadata = {
@@ -213,6 +213,14 @@ export default async function ResourcesPage() {
               <BookOpen className="w-4 h-4" />
               Hướng dẫn sử dụng tài nguyên
               <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href="/guide/gpt-rules"
+              className="inline-flex items-center gap-2 h-10 px-5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 font-medium text-sm hover:bg-amber-500/20 transition-all"
+            >
+              <Wand2 className="w-4 h-4" />
+              Tạo bộ luật riêng
+              <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
