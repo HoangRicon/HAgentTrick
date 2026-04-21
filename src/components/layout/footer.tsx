@@ -10,7 +10,7 @@ export function Footer({ pathname }: FooterProps) {
 
   return (
     <footer className="border-t bg-muted/30">
-      <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2 font-bold">
             <span className="text-xl">🤖</span>

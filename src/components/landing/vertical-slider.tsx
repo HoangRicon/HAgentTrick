@@ -503,7 +503,7 @@ function Section({
       <div className={`absolute left-0 top-0 bottom-0 w-[3px] ${colors.bg} opacity-60`} />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <div className="relative z-10 w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         {/* Badge */}
         <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
           <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${colors.bg} ${colors.text} text-xs sm:text-sm font-semibold`}>

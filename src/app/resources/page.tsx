@@ -191,7 +191,7 @@ export default async function ResourcesPage() {
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-purple-500/5" />
         <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-        <div className="relative max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+        <div className="relative w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             <ArrowRight className="w-4 h-4" />
             Tài nguyên
@@ -219,7 +219,7 @@ export default async function ResourcesPage() {
       </div>
 
       {/* Resources */}
-      <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <ResourcesCards resources={resources} />
       </div>
     </div>

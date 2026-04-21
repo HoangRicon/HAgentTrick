@@ -94,7 +94,7 @@ Hãy viết prompt hoàn chỉnh, có template và ví dụ cụ thể.`;
 
 export function PromptGuideClient() {
   return (
-    <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+    <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
       {/* 4 Core Components */}
       <section>
         <h2 className="text-xl font-bold mb-5">4 thành phần bắt buộc</h2>

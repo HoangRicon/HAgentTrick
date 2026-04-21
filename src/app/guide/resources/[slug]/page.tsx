@@ -89,7 +89,7 @@ export default async function ResourceDetailPage({ params }: PageProps) {
       {/* Header */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-background to-purple-500/5" />
-        <div className="relative max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+        <div className="relative w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <Link
             href="/guide/resources"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 group transition-colors"
@@ -120,7 +120,7 @@ export default async function ResourceDetailPage({ params }: PageProps) {
       </div>
 
       {/* Content */}
-      <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Actions */}
         <div className="flex flex-wrap gap-3">
           <a

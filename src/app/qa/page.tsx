@@ -330,7 +330,7 @@ export default function QAPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         {/* Header */}
         <div className="text-center mb-10">
