@@ -28,6 +28,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { PhaseAccordion } from "@/components/workflow/phase-accordion";
+import { SectionAccordion } from "@/components/ui/section-accordion";
 
 export const metadata: Metadata = {
   title: "Quy trình thực chiến",
@@ -454,7 +455,7 @@ export default function WorkflowPage() {
           const pc = phaseColors[example.color];
           const Icon = phaseIconFromName(phases.find(p => p.phase === example.phase)?.iconName || "Lightbulb");
           return (
-            <section key={example.phase} id={`phase-${example.phase.toLowerCase()}`} className="scroll-mt-20">
+            <section key={example.phase}>
               {/* Phase header */}
               <div className="flex items-center gap-3 mb-6">
                 <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
@@ -482,8 +483,10 @@ export default function WorkflowPage() {
                 </div>
               </div>
 
-                  {/* Guide cards for each phase */}
-                  {example.phase === "Power" ? (
+              {/* Collapsible body */}
+              <SectionAccordion id={`phase-${example.phase.toLowerCase()}`} color={example.color} phase={example.phase} defaultOpen={false}>
+                {/* Guide cards for each phase */}
+                {example.phase === "Power" ? (
                     <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
                       <div className="flex items-center gap-3 mb-5">
                         <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
@@ -1024,6 +1027,7 @@ git commit -m "feat(auth): add User model for authentication
                   </div>
                 </div>
               )}
+              </SectionAccordion>
 
               {/* Divider between phases */}
               {example.phase !== "Ship" && (
