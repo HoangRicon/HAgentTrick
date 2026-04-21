@@ -159,13 +159,29 @@ export default function Home() {
 
           {/* Main title */}
           <div className="text-center mb-6">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-4">
               <span className="bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
-                Ngữ cảnh
+                Ngữ cảnh đủ
               </span>
               <br />
-              <span className="text-foreground">quan trọng hơn Prompt</span>
+              <span className="text-foreground">AI tự làm đúng</span>
             </h1>
+
+            {/* Pain point pills */}
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
+              {[
+                "Prompt 10 lần vẫn sai",
+                "AI tự bịa code",
+                "Debug cả ngày",
+              ].map((pain) => (
+                <span
+                  key={pain}
+                  className="inline-flex items-center px-3 py-1 rounded-full border border-red-500/20 bg-red-500/5 text-red-600 dark:text-red-400 text-xs font-medium"
+                >
+                  {pain}
+                </span>
+              ))}
+            </div>
 
             {/* Decorative line */}
             <div className="flex items-center justify-center gap-3 mt-2 mb-6">
@@ -177,8 +193,8 @@ export default function Home() {
 
           {/* Subtitle */}
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed text-center">
-            HAgentTrick giúp bạn chuẩn bị ngữ cảnh đầy đủ — bộ luật, cấu trúc, quy tắc — để AI hiểu dự án.
-            Viết prompt chuẩn. Review kỹ. Ship nhanh. Biến AI thành đồng nghiệp đáng tin cậy.
+            <strong className="text-foreground">Không phải viết prompt giỏi.</strong> Mà là xây ngữ cảnh đúng — ranh giới, quy tắc, cấu trúc — để AI sinh code đúng từ lần đầu.
+            Không lặp lại. Không debug. Không phải tự sửa lại.
           </p>
 
           {/* CTA Buttons */}
@@ -201,13 +217,13 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Pill highlights */}
+          {/* Pill highlights — giải pháp */}
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              { label: "Hiểu nhanh hơn", icon: Brain },
-              { label: "Chính xác hơn", icon: Target },
-              { label: "Ít lỗi hơn", icon: Shield },
-              { label: "Như kỹ sư thật", icon: Users },
+              { label: "Ngữ cảnh đầy đủ", icon: Brain },
+              { label: "Code đúng từ đầu", icon: Shield },
+              { label: "Review từng bước", icon: Target },
+              { label: "Ship nhanh hơn", icon: Rocket },
             ].map((pill) => (
               <div
                 key={pill.label}
@@ -239,14 +255,14 @@ export default function Home() {
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/15 bg-violet-500/5 text-violet-600 dark:text-violet-400 text-xs font-semibold mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              Tại sao dùng HAgentTrick
+              Thay đổi cách bạn dùng AI
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Chuẩn bị ngữ cảnh — Giúp bạn và AI hiểu nhau hơn 
+              Đừng prompt giỏi hơn. Hãy xây ngữ cảnh đúng.
             </h2>
             <p className="text-base text-muted-foreground max-w-xl mx-auto">
-              Không phải AI thay thế kỹ sư. Mà là kỹ sư chuẩn bị ngữ cảnh tốt để AI sinh code chính xác,
-              nhanh hơn, và ít lỗi hơn. HAgentTrick là bộ công cụ giúp bạn làm điều đó.
+              Vấn đề không phải prompt của bạn dở. Mà là bạn chưa cho AI đủ ngữ cảnh để nó hiểu dự án.
+              HAgentTrick giúp bạn xây bộ ngữ cảnh đầy đủ — AI sinh code đúng ngay từ lần đầu.
             </p>
           </div>
 
@@ -352,11 +368,11 @@ export default function Home() {
             <div className="relative px-8 sm:px-12 py-12 sm:py-16">
               <div className="max-w-2xl">
                 <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-                  Sẵn sàng chuẩn bị ngữ cảnh như kỹ sư?
+                  Ngữ cảnh đầy đủ. Code đúng ngay.
                 </h2>
                 <p className="text-muted-foreground text-sm sm:text-base mb-8 leading-relaxed">
-                  HAgentTrick cung cấp quy trình thực chiến 6 bước, tài nguyên, và hướng dẫn chi tiết
-                  giúp bạn giao việc cho AI Agent hiệu quả hơn.
+                  Thay vì ngồi prompt đi prompt lại, hãy xây ngữ cảnh đúng một lần.
+                  HAgentTrick cung cấp quy trình, tài nguyên và hướng dẫn để bạn bắt đầu ngay hôm nay.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <Link

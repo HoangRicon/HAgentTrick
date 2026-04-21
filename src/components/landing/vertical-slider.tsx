@@ -95,14 +95,13 @@ const sections: Slide[] = [
   {
     id: "welcome",
     badge: "HAgentTrick",
-    title: "Ngữ cảnh là mọi thứ",
+    title: "Ngữ cảnh đủ — AI tự làm đúng",
     subtitle:
-      "Prompt hay thôi chưa đủ. Ngữ cảnh quyết định AI sinh code đúng hay sai, đúng kiến trúc hay tự bịa. HAgentTrick cung cấp bộ tài nguyên giúp bạn xây dựng ngữ cảnh đầy đủ cho AI Agent.",
+      "Prompt hay chưa đủ. Ngữ cảnh quyết định AI sinh code đúng hay sai. HAgentTrick giúp bạn xây bộ ngữ cảnh đầy đủ — ranh giới, quy tắc, cấu trúc — để AI làm đúng từ lần đầu.",
     highlights: [
-      "Quy tắc viết Prompt",
-      "Phân tích yêu cầu",
-      "Quy trình thực chiến",
-      "Lưu ý quan trọng",
+      "Prompt 10 lần vẫn sai?",
+      "Xây ngữ cảnh thay vì prompt giỏi hơn",
+      "Review kỹ từng bước",
     ],
     cta: { label: "Đọc lưu ý quan trọng", href: "/guide/traps", icon: AlertTriangle },
     actions: [
