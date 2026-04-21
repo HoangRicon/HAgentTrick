@@ -92,18 +92,10 @@ export function Header() {
                     href={item.href}
                     className={cn(
                       "text-sm font-medium transition-colors hover:text-primary",
-                      item.href === "/guide/traps"
-                        ? pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-amber-500"
-                          : "text-amber-600 dark:text-amber-400 hover:text-amber-500"
-                        : item.href === "/workflow"
+                      item.href === "/workflow"
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500"
                           : "text-orange-600 dark:text-orange-400 hover:text-orange-500"
-                        : item.href === "/qa"
-                        ? pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-primary"
                         : pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-primary"
                           : "text-muted-foreground"
@@ -162,18 +154,10 @@ export function Header() {
                   onClick={closeMenu}
                     className={cn(
                       "text-sm font-medium transition-colors hover:text-primary p-2 rounded-md",
-                      item.href === "/guide/traps"
-                        ? pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-amber-500 bg-amber-500/10"
-                          : "text-amber-600 dark:text-amber-400"
-                        : item.href === "/workflow"
+                      item.href === "/workflow"
                         ? pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-orange-500 bg-orange-500/10"
                           : "text-orange-600 dark:text-orange-400"
-                        : item.href === "/qa"
-                        ? pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-primary bg-primary/10"
-                          : "text-muted-foreground"
                         : pathname === item.href || pathname.startsWith(item.href + "/")
                           ? "text-primary bg-primary/10"
                           : "text-muted-foreground"

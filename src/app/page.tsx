@@ -14,6 +14,7 @@ import {
   TrendingUp,
   Clock,
   FileSearch,
+  ChevronDown,
   FileText,
   Layers,
 } from "lucide-react";
@@ -237,11 +238,9 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-40">
-          <span className="text-[10px] tracking-widest uppercase font-medium">Scroll</span>
-          <div className="w-5 h-8 rounded-full border border-current flex justify-center pt-1.5">
-            <div className="w-1 h-2 rounded-full bg-current animate-bounce" />
-          </div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-60">
+          <span className="text-[10px] tracking-widest uppercase font-medium">Kéo xuống</span>
+          <ChevronDown className="w-5 h-5 animate-bounce" />
         </div>
       </section>
 
