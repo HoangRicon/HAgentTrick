@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Zap,
   Layers,
+  Compass,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -79,6 +80,21 @@ const guideSections = [
     ],
     badge: "Tài nguyên",
   },
+  {
+    num: "05",
+    icon: Compass,
+    href: "/guide/ai-research",
+    color: "cyan",
+    title: "Dùng AI để nghiên cứu & học tập",
+    desc: "Chọn đúng AI tool cho đúng việc: NotebookLM cho tài liệu, Perplexity cho thông tin thời gian thực, GPT cho sáng tạo. Cộng thêm DeepSeek, Grok, Copilot, Gemini.",
+    highlights: [
+      "4 AI tool chính: NotebookLM, Perplexity, GPT, Claude",
+      "Quy trình chọn tool theo từng trường hợp cụ thể",
+      "Ưu điểm và hạn chế của từng tool",
+      "Prompt mẫu cho mỗi loại tác vụ",
+    ],
+    badge: "Mới",
+  },
 ];
 
 const principles = [
@@ -91,6 +107,7 @@ const colorMap: Record<string, { bg: string; text: string; border: string; iconB
   violet: { bg: "bg-violet-500/5", text: "text-violet-600 dark:text-violet-400", border: "hover:border-violet-500/40", iconBg: "bg-violet-500/10", glow: "hover:shadow-violet-500/10", badge: "bg-violet-500/10", badgeText: "text-violet-600 dark:text-violet-400" },
   emerald: { bg: "bg-emerald-500/5", text: "text-emerald-600 dark:text-emerald-400", border: "hover:border-emerald-500/40", iconBg: "bg-emerald-500/10", glow: "hover:shadow-emerald-500/10", badge: "bg-emerald-500/10", badgeText: "text-emerald-600 dark:text-emerald-400" },
   amber: { bg: "bg-amber-500/5", text: "text-amber-600 dark:text-amber-400", border: "hover:border-amber-500/40", iconBg: "bg-amber-500/10", glow: "hover:shadow-amber-500/10", badge: "bg-amber-500/10", badgeText: "text-amber-600 dark:text-amber-400" },
+  cyan: { bg: "bg-cyan-500/5", text: "text-cyan-600 dark:text-cyan-400", border: "hover:border-cyan-500/40", iconBg: "bg-cyan-500/10", glow: "hover:shadow-cyan-500/10", badge: "bg-cyan-500/10", badgeText: "text-cyan-600 dark:text-cyan-400" },
 };
 
 const accentGradientMap: Record<string, string> = {
@@ -98,6 +115,7 @@ const accentGradientMap: Record<string, string> = {
   violet: "from-violet-600 to-violet-400",
   emerald: "from-emerald-600 to-emerald-400",
   amber: "from-amber-600 to-amber-400",
+  cyan: "from-cyan-600 to-cyan-400",
 };
 
 export default function GuidePage() {
