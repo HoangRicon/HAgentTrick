@@ -102,9 +102,12 @@ const sections: Slide[] = [
       "Quy tắc viết Prompt",
       "Phân tích yêu cầu",
       "Quy trình thực chiến",
-      "Lưu ý bắt buộc",
+      "Lưu ý quan trọng",
     ],
-    cta: { label: "Đọc lưu ý bắt buộc", href: "/guide/traps", icon: AlertTriangle },
+    cta: { label: "Đọc lưu ý quan trọng", href: "/guide/traps", icon: AlertTriangle },
+    actions: [
+      { label: "Xem tài nguyên", href: "/resources", primary: false },
+    ],
     bg: "from-blue-500/8 via-background to-purple-500/8",
     accent: "blue",
   },
@@ -194,7 +197,7 @@ const sections: Slide[] = [
       "Sử dụng git commit nhỏ để dễ rollback nếu cần",
       "Đặt câu hỏi cụ thể, tránh prompt quá chung chung",
     ],
-    cta: { label: "Xem quy trình chi tiết", href: "/guide/workflow", icon: Workflow },
+    cta: { label: "Xem quy trình chi tiết", href: "/workflow", icon: Workflow },
     bg: "from-orange-500/8 via-background to-amber-500/8",
     accent: "orange",
   },
@@ -224,8 +227,8 @@ const sections: Slide[] = [
   },
   {
     id: "traps",
-    badge: "Những lưu ý bắt buộc",
-    title: "Ngữ cảnh quan trọng hơn prompt",
+    badge: "Lưu ý",
+    title: "Lưu ý quan trọng",
     subtitle:
       "Đây không phải tips hay best practices. Đây là những lưu ý bắt buộc phải tuân thủ nếu bạn muốn AI Agent thật sự hữu ích.",
     traps: [
@@ -265,7 +268,7 @@ const sections: Slide[] = [
     subtitle:
       "Giờ bạn đã nắm được những nguyên tắc cơ bản. Hãy đọc tài liệu chi tiết và bắt đầu ứng dụng vào dự án thực tế.",
     actions: [
-      { label: "Sẵn sàng", href: "/guide/workflow", primary: true },
+      { label: "Sẵn sàng", href: "/workflow", primary: true },
       { label: "Đọc lưu ý", href: "/guide/traps", primary: false },
     ],
     bg: "from-primary/10 via-background to-purple-500/10",
@@ -555,22 +558,19 @@ function Section({
         )}
 
         {/* CTA */}
-        {s.cta && (
+        {(s.cta || s.actions) && (
           <div className="flex flex-wrap items-center justify-center gap-3 mt-6 sm:mt-8">
-            <Link
-              href={s.cta.href}
-              className="inline-flex items-center gap-2 h-11 sm:h-12 px-6 sm:px-8 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25 text-sm sm:text-base group"
-            >
-              <s.cta.icon className="w-4 h-4" />
-              <span>{s.cta.label}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        )}
-
-        {s.actions && (
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-6 sm:mt-8">
-            {s.actions.map((action, ai) => (
+            {s.cta && (
+              <Link
+                href={s.cta.href}
+                className="inline-flex items-center gap-2 h-11 sm:h-12 px-6 sm:px-8 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25 text-sm sm:text-base group"
+              >
+                <s.cta.icon className="w-4 h-4" />
+                <span>{s.cta.label}</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            )}
+            {s.actions && s.actions.map((action, ai) => (
               <Link
                 key={ai}
                 href={action.href}
@@ -580,7 +580,8 @@ function Section({
                     : "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
                 }`}
               >
-                {action.label}
+                <BookOpen className="w-4 h-4" />
+                <span>{action.label}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             ))}

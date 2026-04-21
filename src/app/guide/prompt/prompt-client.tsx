@@ -408,7 +408,7 @@ KỲ VỌNG: Tạo src/app/api/auth/[...nextauth]/route.ts`}
         <div className="flex flex-wrap gap-3">
           {[
             { label: "Phân tích yêu cầu", href: "/guide/analysis", desc: "Xác định actor, entity trước khi viết prompt" },
-            { label: "Quy trình thực chiến", href: "/guide/workflow", desc: "Từ phân tích → prompt → code → review" },
+            { label: "Quy trình thực chiến", href: "/workflow", desc: "Từ phân tích → prompt → code → review" },
             { label: "Tài nguyên", href: "/resources", desc: "Tải file quy tắc viết prompt" },
           ].map((item) => (
             <Link key={item.href} href={item.href} className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group">

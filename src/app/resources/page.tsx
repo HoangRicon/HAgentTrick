@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import { ResourcesCards } from "./resources-cards";
 
 export const metadata = {
@@ -205,6 +205,16 @@ export default async function ResourcesPage() {
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
             Kho tài nguyên chứa các file quy tắc (rules) và skill cho AI Agent. Bao gồm quy tắc code Next.js, cấu trúc thư mục, phân tích yêu cầu, viết kế hoạch triển khai, và hướng dẫn sử dụng công cụ code-review-graph. Thêm chúng vào Agent rule để AI hiểu rõ kiến trúc, tuân thủ quy tắc code, và làm việc chính xác hơn theo đúng ý bạn.
           </p>
+          <div className="flex flex-wrap items-center gap-3 mt-5">
+            <a
+              href="/guide/resources"
+              className="inline-flex items-center gap-2 h-10 px-5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-all"
+            >
+              <BookOpen className="w-4 h-4" />
+              Hướng dẫn sử dụng tài nguyên
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </div>
 

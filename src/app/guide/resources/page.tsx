@@ -15,6 +15,9 @@ import {
   Search,
   Network,
   Sparkles,
+  Play,
+  Zap,
+  ExternalLink,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -44,16 +47,16 @@ const resourceSteps = [
     icon: FolderOpen,
     title: "Đặt file vào thư mục phù hợp",
     desc: "Đặt file .md vào thư mục trong project. Ví dụ: docs/rules/ cho quy tắc code, docs/analysis/ cho quy tắc phân tích.",
-    href: "/docs/Chung",
-    hrefLabel: "Xem cấu trúc docs",
+    href: "/resources",
+    hrefLabel: "Xem tài nguyên",
   },
   {
     step: 4,
     icon: ClipboardPaste,
     title: "Copy nội dung vào AI Agent",
     desc: "Copy toàn bộ nội dung file .md và paste vào cuộc trò chuyện với AI Agent. Hoặc tham chiếu đường dẫn tới file trong prompt.",
-    href: null,
-    hrefLabel: null,
+    href: "/resources",
+    hrefLabel: "Lấy tài nguyên",
   },
 ];
 
@@ -135,9 +138,53 @@ export default function ResourcesGuidePage() {
       {/* Content */}
       <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
+        {/* Video hướng dẫn */}
+        <section>
+          <h2 className="text-xl font-bold mb-5">Video hướng dẫn</h2>
+          <div className="rounded-2xl border border-indigo-500/20 overflow-hidden">
+            <div className="relative aspect-video bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center group cursor-pointer">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.1),transparent_70%)]" />
+              <div className="relative flex flex-col items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-indigo-500/20 backdrop-blur-sm border border-indigo-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Play className="w-7 h-7 text-indigo-500 ml-1" />
+                </div>
+                <div className="text-center">
+                  <div className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">Xem video hướng dẫn</div>
+                  <div className="text-xs text-muted-foreground mt-1">Cách lấy và sử dụng tài nguyên với AI Agent</div>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 bg-card border-t border-border">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-semibold">Hướng dẫn sử dụng tài nguyên</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">Video demo cách tải, cài đặt và dùng tài nguyên với AI Agent</div>
+                </div>
+                <a
+                  href="/resources"
+                  className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-600 transition-all shrink-0"
+                >
+                  <Download className="w-4 h-4" />
+                  Tài nguyên
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* 4 bước lấy tài nguyên */}
         <section>
-          <h2 className="text-xl font-bold mb-5">4 bước lấy tài nguyên</h2>
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-xl font-bold">4 bước lấy tài nguyên</h2>
+            <Link
+              href="/resources"
+              className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all"
+            >
+              <Zap className="w-4 h-4" />
+              Tài nguyên
+              <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
+          </div>
           <div className="grid sm:grid-cols-2 gap-4">
             {resourceSteps.map((s) => {
               const Icon = s.icon;
@@ -152,11 +199,9 @@ export default function ResourcesGuidePage() {
                       <h3 className="font-semibold text-sm">{s.title}</h3>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed mb-2">{s.desc}</p>
-                    {s.href && (
-                      <Link href={s.href} className="inline-flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-600 font-medium">
-                        {s.hrefLabel} <ChevronRight className="w-3 h-3" />
-                      </Link>
-                    )}
+                    <Link href={s.href} className="inline-flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-600 font-medium">
+                      {s.hrefLabel} <ChevronRight className="w-3 h-3" />
+                    </Link>
                   </div>
                 </div>
               );
@@ -166,7 +211,16 @@ export default function ResourcesGuidePage() {
 
         {/* Tài nguyên theo quy trình */}
         <section>
-          <h2 className="text-xl font-bold mb-5">Tài nguyên theo quy trình làm việc</h2>
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-xl font-bold">Tài nguyên theo quy trình làm việc</h2>
+            <Link
+              href="/resources"
+              className="inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-border bg-background text-sm font-medium hover:border-primary/30 hover:bg-accent transition-all"
+            >
+              Xem tất cả
+              <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
+          </div>
           <p className="text-sm text-muted-foreground mb-5">
             Mỗi giai đoạn của quy trình thực chiến có tài nguyên phù hợp. Sử dụng đúng tài nguyên
             tại đúng thời điểm giúp AI Agent hiểu rõ yêu cầu và sinh code chính xác hơn.
@@ -200,39 +254,47 @@ export default function ResourcesGuidePage() {
 
         {/* Công cụ hỗ trợ */}
         <section>
-          <h2 className="text-xl font-bold mb-5">Công cụ hỗ trợ</h2>
-          <p className="text-sm text-muted-foreground mb-5">
-            Ngoài các quy tắc, công cụ hỗ trợ giúp AI hiểu code nhanh hơn, giảm token tiêu thụ.
-          </p>
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-xl font-bold">Công cụ hỗ trợ</h2>
+            <Link
+              href="/resources"
+              className="inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-border bg-background text-sm font-medium hover:border-primary/30 hover:bg-accent transition-all"
+            >
+              Xem tất cả
+              <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
+          </div>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
               {
                 icon: Network,
                 name: "Code Review Graph",
                 desc: "Xây dựng knowledge graph của codebase bằng Tree-sitter. AI hiểu cấu trúc mã nguồn trong ~100 tokens thay vì đọc lại toàn bộ code.",
-                href: "/guide/tools/code-review-graph",
+                href: "/resources",
                 color: colorMap.green,
               },
               {
                 icon: Sparkles,
                 name: "Superpowers",
                 desc: "Khung kỹ năng cho coding agent: brainstorming, writing-plans, TDD, subagent-driven development. Hỗ trợ Claude, Cursor, Codex.",
-                href: "/guide/tools",
+                href: "/resources",
                 color: colorMap.blue,
               },
             ].map((tool) => {
               const Icon = tool.icon;
               return (
-                <Link key={tool.name} href={tool.href} className="group flex items-start gap-4 p-5 rounded-xl border bg-card hover:border-primary/20 transition-colors">
-                  <div className={`w-11 h-11 rounded-xl ${tool.color.bg} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform`}>
+                <div key={tool.name} className="group flex items-start gap-4 p-5 rounded-xl border bg-card hover:border-primary/20 transition-colors">
+                  <div className={`w-11 h-11 rounded-xl ${tool.color.bg} flex items-center justify-center flex-shrink-0`}>
                     <Icon className={`w-5 h-5 ${tool.color.text}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-sm group-hover:text-primary transition-colors mb-1">{tool.name}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{tool.desc}</p>
+                    <h3 className="font-semibold text-sm mb-1">{tool.name}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-2">{tool.desc}</p>
+                    <Link href={tool.href} className="inline-flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-600 font-medium">
+                      Xem chi tiết <ChevronRight className="w-3 h-3" />
+                    </Link>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary flex-shrink-0 mt-1" />
-                </Link>
+                </div>
               );
             })}
           </div>
@@ -285,20 +347,46 @@ export default function ResourcesGuidePage() {
         <section>
           <h2 className="text-xl font-bold mb-5">Liên quan</h2>
           <div className="flex flex-wrap gap-3">
-            {[
-              { label: "Tài nguyên", href: "/resources", desc: "Xem và tải tài nguyên" },
-              { label: "Quy trình thực chiến", href: "/guide/workflow", desc: "Áp dụng tài nguyên vào workflow" },
-              { label: "Viết Prompt", href: "/guide/prompt", desc: "Dùng quy tắc prompt cùng tài nguyên" },
-              { label: "Công cụ", href: "/guide/tools", desc: "Xem thêm công cụ hỗ trợ AI Agent" },
-            ].map((item) => (
-              <Link key={item.href} href={item.href} className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group">
-                <div>
-                  <div className="text-sm font-medium group-hover:text-primary transition-colors">{item.label}</div>
-                  <div className="text-xs text-muted-foreground">{item.desc}</div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-              </Link>
-            ))}
+            <Link
+              href="/resources"
+              className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group"
+            >
+              <div>
+                <div className="text-sm font-medium group-hover:text-primary transition-colors">Tài nguyên</div>
+                <div className="text-xs text-muted-foreground">Xem và tải tài nguyên</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+            </Link>
+            <Link
+              href="/resources"
+              className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group"
+            >
+              <div>
+                <div className="text-sm font-medium group-hover:text-primary transition-colors">Quy tắc viết Prompt</div>
+                <div className="text-xs text-muted-foreground">Dùng quy tắc prompt cùng tài nguyên</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+            </Link>
+            <Link
+              href="/resources"
+              className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group"
+            >
+              <div>
+                <div className="text-sm font-medium group-hover:text-primary transition-colors">Quy trình thực chiến</div>
+                <div className="text-xs text-muted-foreground">Áp dụng tài nguyên vào workflow</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+            </Link>
+            <Link
+              href="/resources"
+              className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group"
+            >
+              <div>
+                <div className="text-sm font-medium group-hover:text-primary transition-colors">Phân tích yêu cầu</div>
+                <div className="text-xs text-muted-foreground">Dùng tài nguyên phân tích</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+            </Link>
           </div>
         </section>
       </div>

@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, MenuIcon } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mainNav } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
@@ -14,9 +14,21 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
+  const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     setMounted(true);
+  }, []);
+
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -35,20 +47,66 @@ export function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-4" ref={dropdownRef}>
             {mainNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
-                  pathname === item.href || pathname.startsWith(item.href + "/")
-                    ? "text-primary"
-                    : "text-muted-foreground"
+              <div key={item.href} className="relative">
+                {item.subItems ? (
+                  <>
+                    <button
+                      onClick={() => setOpenDropdown(openDropdown === item.title ? null : item.title)}
+                      className={cn(
+                        "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary",
+                        pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-primary"
+                          : "text-muted-foreground"
+                      )}
+                    >
+                      {item.title}
+                      <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", openDropdown === item.title && "rotate-180")} />
+                    </button>
+                    {openDropdown === item.title && (
+                      <div className="absolute top-full left-0 mt-2 w-56 rounded-lg border bg-background shadow-lg py-1 z-50">
+                        {item.subItems.map((sub) => (
+                          <Link
+                            key={sub.href}
+                            href={sub.href}
+                            onClick={() => setOpenDropdown(null)}
+                            className={cn(
+                              "flex flex-col px-4 py-2.5 hover:bg-accent transition-colors",
+                              pathname === sub.href ? "text-primary bg-primary/5" : "text-muted-foreground"
+                            )}
+                          >
+                            <span className="text-sm font-medium">{sub.title}</span>
+                            {sub.description && (
+                              <span className="text-xs text-muted-foreground mt-0.5">{sub.description}</span>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "text-sm font-medium transition-colors hover:text-primary",
+                      item.href === "/guide/traps"
+                        ? pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-amber-500"
+                          : "text-amber-600 dark:text-amber-400 hover:text-amber-500"
+                        : item.href === "/workflow"
+                        ? pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-orange-500"
+                          : "text-orange-600 dark:text-orange-400 hover:text-orange-500"
+                        : pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-primary"
+                          : "text-muted-foreground"
+                    )}
+                  >
+                    {item.title}
+                  </Link>
                 )}
-              >
-                {item.title}
-              </Link>
+              </div>
             ))}
           </nav>
 
@@ -80,7 +138,7 @@ export function Header() {
               {isMenuOpen ? (
                 <X className="h-5 w-5" />
               ) : (
-                <MenuIcon className="h-5 w-5" />
+                <Menu className="h-5 w-5" />
               )}
             </Button>
           </div>
@@ -90,21 +148,45 @@ export function Header() {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden border-t bg-background">
-          <nav className="flex flex-col p-4 gap-4">
+          <nav className="flex flex-col p-4 gap-1">
             {mainNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={closeMenu}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary p-2 rounded-md",
-                  pathname === item.href || pathname.startsWith(item.href + "/")
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground"
-                )}
-              >
-                {item.title}
-              </Link>
+              <div key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={closeMenu}
+                    className={cn(
+                      "text-sm font-medium transition-colors hover:text-primary p-2 rounded-md",
+                      item.href === "/guide/traps"
+                        ? pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-amber-500 bg-amber-500/10"
+                          : "text-amber-600 dark:text-amber-400"
+                        : item.href === "/workflow"
+                        ? pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-orange-500 bg-orange-500/10"
+                          : "text-orange-600 dark:text-orange-400"
+                        : pathname === item.href || pathname.startsWith(item.href + "/")
+                          ? "text-primary bg-primary/10"
+                          : "text-muted-foreground"
+                    )}
+                >
+                  {item.title}
+                </Link>
+                {item.subItems && item.subItems.map((sub) => (
+                  <Link
+                    key={sub.href}
+                    href={sub.href}
+                    onClick={closeMenu}
+                    className={cn(
+                      "text-sm transition-colors hover:text-primary p-2 pl-8 rounded-md block",
+                      pathname === sub.href
+                        ? "text-primary bg-primary/10"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    {sub.title}
+                  </Link>
+                ))}
+              </div>
             ))}
           </nav>
         </div>

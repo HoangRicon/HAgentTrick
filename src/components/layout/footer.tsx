@@ -5,7 +5,6 @@ interface FooterProps {
 }
 
 export function Footer({ pathname }: FooterProps) {
-  if (pathname === "/") return null;
 
   const currentYear = new Date().getFullYear();
 
@@ -21,7 +20,7 @@ export function Footer({ pathname }: FooterProps) {
           <p className="text-sm text-muted-foreground">
             © {currentYear} HAgentTrick — Một sản phẩm của{" "}
             <a
-              href="https://htool.app"
+              href="https://hoangricon.github.io/in4/"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-primary hover:underline"

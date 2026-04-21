@@ -249,8 +249,8 @@ export default function AnalysisGuidePage() {
           <div className="flex flex-wrap gap-3">
             {[
               { label: "Quy tắc viết Prompt", href: "/guide/prompt", desc: "Dùng phân tích để viết prompt chính xác" },
-              { label: "Quy trình thực chiến", href: "/guide/workflow", desc: "Từ phân tích đến kế hoạch triển khai" },
-              { label: "Quy tắc Code", href: "/guide/rules", desc: "Bộ quy tắc code chuẩn" },
+              { label: "Quy trình thực chiến", href: "/workflow", desc: "Từ phân tích đến kế hoạch triển khai" },
+              
             ].map((item) => (
               <Link key={item.href} href={item.href} className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group">
                 <div>

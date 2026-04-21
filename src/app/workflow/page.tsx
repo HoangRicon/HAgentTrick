@@ -5,8 +5,7 @@ import {
   ArrowDown,
   ArrowRight,
   CheckCircle2,
-  Cpu,
-  Brain,
+  Lightbulb,
   Code2,
   Shield,
   Rocket,
@@ -21,12 +20,15 @@ import {
   Eye,
   Zap,
   BookOpen,
-  FileSearch,
+  Brain,
+  Sparkles,
+  Cpu,
+  Package,
 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Quy trình thực chiến",
-  description: "Quy trình làm việc với AI Agent từ phân tích yêu cầu đến triển khai sản phẩm hoàn chỉnh",
+  description: "Quy trình làm việc với AI Agent từ xác định sức mạnh AI, phân tích yêu cầu đến triển khai sản phẩm hoàn chỉnh",
 };
 
 const phases = [
@@ -35,19 +37,19 @@ const phases = [
     icon: Cpu,
     color: "cyan",
     title: "Xác định sức mạnh AI",
-    subtitle: "Biết model đang dùng mạnh đến đâu, phân bổ công việc phù hợp. Đây là bước đầu tiên nhưng nhiều người bỏ qua.",
+    subtitle: "AI model khác nhau có năng lực khác nhau. Biết sức mạnh của model đang dùng để phân bổ công việc phù hợp, tránh giao quá sức hoặc lãng phí tiền cho model đắt mà chỉ làm việc đơn giản.",
     steps: [
-      "Xác định thế mạnh và hạn chế của model đang dùng",
-      "Phân bổ: Claude cho architecture, GPT cho boilerplate, Cursor cho inline",
-      "Dùng context window hiệu quả — ưu tiên ngữ cảnh quan trọng nhất",
-      "Đặt kỳ vọng đúng: model nào cũng có giới hạn",
+      "Tra cứu thông số model đang dùng (context window, reasoning capability, strengths)",
+      "Phân loại task theo độ khó: simple / moderate / complex / extreme",
+      "Giao task phù hợp với năng lực model — mạnh thì giao nhiều, yếu thì chia nhỏ",
+      "Dùng Claude Opus 4.7 / GPT-4o cho architecture và phân tích project lớn",
     ],
   },
   {
     phase: "Plan",
-    icon: Brain,
+    icon: Lightbulb,
     color: "amber",
-    title: "Phân tích yêu cầu",
+    title: "Phân tích & Viết Prompt tổng",
     subtitle: "Đây là bước quan trọng nhất. Nhiều người nhảy thẳng vào code vì nghĩ bước này mất thời gian — thực ra nó tiết kiệm thời gian gấp nhiều lần về sau.",
     steps: [
       "Đọc và phân tích yêu cầu chức năng",
@@ -57,16 +59,16 @@ const phases = [
     ],
   },
   {
-    phase: "Prepare",
-    icon: FileSearch,
-    color: "violet",
+    phase: "Resources",
+    icon: Package,
+    color: "indigo",
     title: "Chuẩn bị tài nguyên",
-    subtitle: "Trước khi bắt đầu, hãy chuẩn bị ngữ cảnh đầy đủ. Bộ luật, cấu trúc thư mục, quy tắc code — tất cả giúp AI hiểu dự án ngay từ đầu.",
+    subtitle: "Trước khi bắt đầu build, hãy chuẩn bị sẵn template, UI kit, documentation và các công cụ cần thiết để AI làm việc hiệu quả.",
     steps: [
-      "Tải và đặt quy tắc code vào thư mục docs/rules/",
-      "Chuẩn bị cấu trúc thư mục và convention của dự án",
-      "Đặt quy tắc phân tích yêu cầu vào docs/analysis/",
-      "Copy ngữ cảnh vào prompt trước khi bắt đầu",
+      "Chuẩn bị template/project skeleton sẵn có",
+      "Tổng hợp UI kit, component library, icon set",
+      "Gom documentation liên quan (API docs, design specs)",
+      "Xác định convention code: naming, structure, style",
     ],
   },
   {
@@ -112,8 +114,8 @@ const phases = [
 
 const phaseColors: Record<string, { bg: string; text: string; border: string; badge: string; badgeText: string }> = {
   cyan: { bg: "bg-cyan-500/10", text: "text-cyan-600 dark:text-cyan-400", border: "border-cyan-500/30", badge: "bg-cyan-500", badgeText: "text-white" },
-  violet: { bg: "bg-violet-500/10", text: "text-violet-600 dark:text-violet-400", border: "border-violet-500/30", badge: "bg-violet-500", badgeText: "text-white" },
   amber: { bg: "bg-amber-500/10", text: "text-amber-600 dark:text-amber-400", border: "border-amber-500/30", badge: "bg-amber-500", badgeText: "text-white" },
+  indigo: { bg: "bg-indigo-500/10", text: "text-indigo-600 dark:text-indigo-400", border: "border-indigo-500/30", badge: "bg-indigo-500", badgeText: "text-white" },
   blue: { bg: "bg-blue-500/10", text: "text-blue-600 dark:text-blue-400", border: "border-blue-500/30", badge: "bg-blue-500", badgeText: "text-white" },
   green: { bg: "bg-green-500/10", text: "text-green-600 dark:text-green-400", border: "border-green-500/30", badge: "bg-green-500", badgeText: "text-white" },
   purple: { bg: "bg-purple-500/10", text: "text-purple-600 dark:text-purple-400", border: "border-purple-500/30", badge: "bg-purple-500", badgeText: "text-white" },
@@ -124,52 +126,34 @@ const realExamples = [
     phase: "Power",
     badge: "Bước 1",
     color: "cyan",
-    title: "Xác định sức mạnh AI — Chọn model phù hợp",
-    scenario: "Trước khi bắt đầu, hãy biết model đang dùng mạnh đến đâu. Không phải model nào cũng giỏi mọi thứ.",
-    videoTitle: "So sánh Claude, GPT, Cursor",
-    videoDesc: "Mỗi model có thế mạnh riêng. Claude giỏi architecture, GPT giỏi boilerplate, Cursor giỏi inline refactor.",
-    modelComparison: [
-      {
-        model: "Claude 4 Sonnet / Opus",
-        tier: "Mạnh nhất",
-        tierColor: "text-violet-600 dark:text-violet-400",
-        tierBg: "bg-violet-500/10",
-        best: "Kiến trúc phức tạp, thiết kế hệ thống, review sâu",
-        avoid: "Task đơn giản lặp lại nhiều lần",
-      },
-      {
-        model: "GPT-4.5 / o3",
-        tier: "Mạnh",
-        tierColor: "text-blue-600 dark:text-blue-400",
-        tierBg: "bg-blue-500/10",
-        best: "Code generation nhanh, boilerplate, unit test",
-        avoid: "Architecture decisions",
-      },
-      {
-        model: "Cursor / Claude (inline)",
-        tier: "Vừa",
-        tierColor: "text-emerald-600 dark:text-emerald-400",
-        tierBg: "bg-emerald-500/10",
-        best: "Inline refactor, autocomplete, fix lỗi nhỏ",
-        avoid: "Tạo module mới",
-      },
-    ],
+    title: "Xác định sức mạnh AI — Chọn model phù hợp cho từng task",
+    scenario: "Bạn có một dự án Next.js với 50+ files. AI model hiện tại có thể phân tích toàn bộ project trong một lần giao việc. Bạn cần biết model đó mạnh đến đâu để tận dụng.",
+    videoTitle: "Chọn model phù hợp",
+    videoDesc: "Model AI 4.7 Opus có context window rất lớn, có thể đọc và phân tích toàn bộ cấu trúc dự án, hiểu kiến trúc, rồi sinh code cho từng module lớn. Thay vì chia 50 task nhỏ, bạn chỉ cần 5-6 lần giao việc.",
     promptExample: {
-      label: "Sai: Dùng model mạnh cho task nhỏ",
-      code: `Dùng Claude Opus để viết 10 dòng helper function`,
+      label: "Không xác định sức mạnh AI (sai cách)",
+      code: `Viết cho tôi chức năng login`,
     },
     promptBetter: {
-      label: "Đúng: Dùng model phù hợp cho task",
-      code: `Dùng Cursor để viết inline helper, dùng Claude cho architecture`,
+      label: "Xác định sức mạnh AI trước khi giao việc (đúng cách)",
+      code: `Model đang dùng: Claude Opus 4.7 (200K context, mạnh về reasoning dài, phân tích project lớn)
+
+Task hiện tại: Phân tích dự án Next.js 50 files → sinh module auth hoàn chỉnh
+→ Giao: phân tích + thiết kế + code generation (model đủ sức)
+
+Task tiếp theo: viết unit test cho 1 file
+→ Giao: model nhẹ hơn (Sonnet / GPT-4o-mini) cho nhanh và rẻ
+
+Luôn ghi rõ: "Model này đủ sức làm X. Chỉ làm Y nếu model yếu hơn."`,
     },
-    expectedResult: "Tiết kiệm token, chất lượng code cao hơn. Mỗi model làm đúng việc của nó.",
+    expectedResult: "Bạn biết rõ model nào làm gì. Model mạnh làm việc lớn, model nhẹ làm việc nhỏ. Tối ưu chi phí + chất lượng.",
   },
   {
     phase: "Plan",
     badge: "Bước 2",
     color: "amber",
     title: "Phân tích yêu cầu chức năng",
-    scenario: "Bạn cần thêm chức năng vào dự án Next.js có sẵn.",
+    scenario: "Bạn cần thêm chức năng vào dự án Next.js có sẵn. AI model đã được xác định là đủ mạnh. Bước tiếp theo: phân tích kỹ trước khi code.",
     videoTitle: "AI Agent hỏi thiết kế trước khi code",
     videoDesc: "Thay vì nhảy thẳng vào code, agent đặt câu hỏi Socratic để xác định đúng yêu cầu: social login hay email/password? có cần email verification không? quên mật khẩu có cần không?",
     promptExample: {
@@ -207,53 +191,43 @@ const realExamples = [
     expectedResult: "Agent trả lời bằng thiết kế chi tiết: Auth flow, Database schema, API endpoints, rồi đợi bạn xác nhận trước khi code.",
   },
   {
-    phase: "Prepare",
+    phase: "Resources",
     badge: "Bước 3",
-    color: "violet",
-    title: "Chuẩn bị tài nguyên — Ngữ cảnh đầy đủ cho AI",
-    scenario: "Trước khi nhờ AI code, bạn cần cung cấp ngữ cảnh: quy tắc code, cấu trúc thư mục, convention của dự án.",
-    videoTitle: "AI hiểu dự án từ ngữ cảnh đầy đủ",
-    videoDesc: "Thay vì giải thích lại kiến trúc, quy tắc cho mỗi cuộc trò chuyện, agent có sẵn ngữ cảnh — hiểu ngay từ đầu.",
-    resources: [
-      { name: "Quy tắc code Next.js", file: "docs/Next.js fullstack/Quy tắc code.md", desc: "6 layer kiến trúc, API design, database schema" },
-      { name: "Cấu trúc thư mục", file: "docs/Next.js fullstack/Cấu trúc thư mục.md", desc: "Route groups, API routes, components, lib" },
-      { name: "Quy tắc phân tích yêu cầu", file: "docs/Chung/Quy tắc viết phân tích yêu cầu chức năng.md", desc: "Actor, entity, ownership, permission, build order" },
-    ],
+    color: "indigo",
+    title: "Chuẩn bị tài nguyên cho dự án mới",
+    scenario: "Trước khi bắt đầu build, bạn cần tập hợp mọi thứ AI cần: project skeleton, UI kit, documentation, convention. Chuẩn bị càng kỹ, code càng ít lỗi.",
+    videoTitle: "Tổ chức workspace để AI hiểu dự án",
+    videoDesc: "Agent tổ chức workspace rõ ràng: folder structure, convention docs, UI kit đã có sẵn. AI đọc qua trước khi bắt đầu code.",
     promptExample: {
-      label: "Sai: Không có ngữ cảnh",
-      code: `Viết cho tôi một trang login`,
+      label: "Không chuẩn bị tài nguyên (sai cách)",
+      code: `Code cho tôi một trang dashboard đẹp`,
     },
     promptBetter: {
-      label: "Đúng: Có ngữ cảnh đầy đủ",
-      code: `Viết trang login cho dự án Next.js 14 App Router.
+      label: "Chuẩn bị tài nguyên đầy đủ (đúng cách)",
+      code: `Chuẩn bị trước khi code:
 
-**Ngữ cảnh dự án:**
-- Framework: Next.js 14 App Router, TypeScript, Tailwind CSS
-- Database: Prisma + PostgreSQL (schema đính kèm)
-- UI: shadcn/ui components, dark mode có sẵn
-- Auth hiện tại: Chưa có, mock user trong lib/mock.ts
+**Project skeleton:** Next.js 14 App Router, Tailwind CSS, TypeScript
+**UI Kit đã có:** shadcn/ui components
+**Icon set:** Lucide React
+**Convention docs:** src/CONVENTIONS.md (naming, structure)
 
-**Quy tắc code (theo docs/rules/code.md):**
-- 6 layer: UI → actions → api → service → repository → db
-- API trả JSON, không render ở API route
-- Dùng Zod cho validation
+**Yêu cầu:** Thêm trang dashboard sử dụng components có sẵn từ shadcn/ui. Không viết lại components đã tồn tại.
 
-**Cấu trúc thư mục (theo docs/structure/folder.md):**
-- app/(auth)/login/page.tsx
-- actions/auth.ts
-- app/api/auth/login/route.ts
-
-**Yêu cầu:** Form login email/password, validate client + server.`,
+**Checklist:**
+- [ ] Dashboard page: src/app/dashboard/page.tsx
+- [ ] Sử dụng Card, Table, Badge từ shadcn/ui
+- [ ] Responsive, dark mode support
+- [ ] Không thêm dependency mới`,
     },
-    expectedResult: "Agent hiểu ngay cấu trúc, quy tắc, và convention — không cần giải thích thêm.",
+    expectedResult: "AI biết rõ project structure, dùng đúng components có sẵn, tuân thủ convention. Code xuất ra gọn gàng, không thừa.",
   },
   {
     phase: "Build",
     badge: "Bước 4",
     color: "blue",
     title: "Từng module một — Không nhảy cóc",
-    scenario: "Sau khi design được approve, bạn bắt đầu code từng phần nhỏ.",
-    videoTitle: "Mỗi task chỉ 1-2 files, có checkpoint",
+    scenario: "Sau khi design được approve, bạn bắt đầu code từng phần nhỏ. Với model mạnh như Opus 4.7, mỗi module có thể lớn hơn trước (2-5 files thay vì 1-2 files), nhưng vẫn phải giữ scope chặt.",
+    videoTitle: "Mỗi task 2-5 files, có checkpoint",
     videoDesc: "Agent chia công việc thành các task nhỏ 2-5 phút. Mỗi task có file path chính xác, code hoàn chỉnh, và bước verify. Checkpoint sau mỗi 2-3 task.",
     promptExample: {
       label: "Sai: Yêu cầu quá nhiều một lúc",
@@ -279,7 +253,7 @@ const realExamples = [
     badge: "Bước 5",
     color: "green",
     title: "Review từng dòng — Không skip",
-    scenario: "Sau mỗi lần AI sinh code, bạn review trước khi tiếp tục.",
+    scenario: "Sau mỗi lần AI sinh code, bạn review trước khi tiếp tục. Dù model có mạnh đến đâu, review vẫn là bước bắt buộc.",
     videoTitle: "AI tự review theo checklist",
     videoDesc: "Agent tự chạy qua checklist: spec compliance (đúng thiết kế không?), code quality (type-safe, clean, secure?). Critical issues block progress.",
     checklist: [
@@ -315,7 +289,7 @@ Yêu cầu AI fix ngay, sau đó verify lại. Không để dồn.`,
     badge: "Bước 6",
     color: "purple",
     title: "Commit nhỏ, commit sớm — Mỗi bước là một checkpoint",
-    scenario: "Sau khi task hoàn tất và verify, bạn commit ngay.",
+    scenario: "Sau khi task hoàn tất và verify, bạn commit ngay. Không đợi build xong cả dự án mới commit.",
     videoTitle: "Git commit theo từng task nhỏ",
     videoDesc: "Mỗi commit là một checkpoint. Không commit 500 dòng thay đổi. Commit 10-20 dòng, commit sớm khi phần đó đã ổn.",
     promptExample: {
@@ -354,21 +328,21 @@ const comparisonData = {
       "AI tự đoán → thường sai spec",
     ],
   },
-  after: {
-    title: "Workflow có quy trình (Power → Plan → Chuẩn bị → Build → Review → Ship)",
+    after: {
+    title: "Workflow có quy trình (Power → Plan → Resources → Build → Review → Ship)",
     color: "green",
     items: [
-      "Xác định sức mạnh AI, chọn model phù hợp",
+      "Xác định sức mạnh AI trước khi giao việc",
       "Phân tích kỹ trước khi nhờ AI code",
-      "Chuẩn bị tài nguyên, ngữ cảnh đầy đủ",
-      "Mỗi lần chỉ code 1-2 files",
+      "Chuẩn bị tài nguyên (template, UI kit, convention) trước khi code",
+      "Mỗi lần chỉ code 2-5 files",
       "Lỗi được phát hiện và fix ngay",
       "Commit nhỏ, mỗi commit là checkpoint",
     ],
   },
 };
 
-export default function WorkflowGuidePage() {
+export default function WorkflowPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -387,8 +361,8 @@ export default function WorkflowGuidePage() {
             </span>
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-            Đây không phải lý thuyết. 6 giai đoạn, mỗi bước đều có ví dụ prompt cụ thể, video minh hoạ, và checklist thực tế.
-            Áp dụng ngay vào dự án của bạn.
+            6 bước từ xác định sức mạnh AI đến triển khai sản phẩm. Mỗi bước đều có ví dụ prompt cụ thể,
+            video minh hoạ, và checklist thực tế. Áp dụng ngay vào dự án của bạn.
           </p>
         </div>
       </div>
@@ -396,7 +370,32 @@ export default function WorkflowGuidePage() {
       {/* Content */}
       <div className="max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
-        {/* Comparison — at the top */}
+        {/* Quick nav timeline */}
+        <section>
+          <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+            {phases.map((p, i) => {
+              const pc = phaseColors[p.color];
+              const Icon = p.icon;
+              return (
+                <div key={p.phase} className="flex items-center gap-2 sm:gap-3">
+                  <Link
+                    href={`#phase-${p.phase.toLowerCase()}`}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl ${pc.bg} border ${pc.border} hover:shadow-md transition-all group`}
+                  >
+                    <Icon className={`w-4 h-4 ${pc.text} flex-shrink-0`} />
+                    <span className="text-sm font-semibold">{p.phase}</span>
+                    <span className="text-xs text-muted-foreground hidden sm:inline">{p.title}</span>
+                  </Link>
+                  {i < phases.length - 1 && (
+                    <ArrowRight className="w-3.5 h-3.5 text-muted-foreground/40 flex-shrink-0 hidden sm:block" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Comparison */}
         <section>
           <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
             <Zap className="w-5 h-5 text-primary" />
@@ -436,35 +435,10 @@ export default function WorkflowGuidePage() {
           </div>
         </section>
 
-        {/* Quick nav timeline */}
-        <section>
-          <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
-            {phases.map((p, i) => {
-              const pc = phaseColors[p.color];
-              const Icon = p.icon;
-              return (
-                <div key={p.phase} className="flex items-center gap-2 sm:gap-3">
-                  <Link
-                    href={`#phase-${p.phase.toLowerCase()}`}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl ${pc.bg} border ${pc.border} hover:shadow-md transition-all group`}
-                  >
-                    <Icon className={`w-4 h-4 ${pc.text} flex-shrink-0`} />
-                    <span className="text-sm font-semibold">{p.phase}</span>
-                    <span className="text-xs text-muted-foreground hidden sm:inline">{p.title}</span>
-                  </Link>
-                  {i < phases.length - 1 && (
-                    <ArrowRight className="w-3.5 h-3.5 text-muted-foreground/40 flex-shrink-0 hidden sm:block" />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
         {/* Real examples for each phase */}
         {realExamples.map((example) => {
           const pc = phaseColors[example.color];
-          const Icon = phases.find(p => p.phase === example.phase)?.icon || Cpu;
+          const Icon = phases.find(p => p.phase === example.phase)?.icon || Lightbulb;
           return (
             <section key={example.phase} id={`phase-${example.phase.toLowerCase()}`} className="scroll-mt-20">
               {/* Phase header */}
@@ -495,34 +469,158 @@ export default function WorkflowGuidePage() {
               </div>
 
               {/* Model comparison for Power phase */}
-              {example.modelComparison && (
-                <div className="grid sm:grid-cols-3 gap-3 mb-4">
-                  {example.modelComparison.map((m, mi) => (
-                    <div key={mi} className="flex flex-col rounded-xl border bg-card overflow-hidden">
-                      <div className={`px-4 py-3 border-b border-border ${m.tierBg}`}>
-                        <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Model</span>
-                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${m.tierBg} ${m.tierColor}`}>{m.tier}</span>
-                        </div>
-                        <div className="text-xs font-bold">{m.model}</div>
-                      </div>
-                      <div className="p-3 space-y-2">
-                        <div>
-                          <div className="text-[9px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-0.5">Tốt nhất khi</div>
-                          <div className="text-[11px] text-muted-foreground leading-relaxed">{m.best}</div>
-                        </div>
-                        <div>
-                          <div className="text-[9px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400 mb-0.5">Tránh khi</div>
-                          <div className="text-[11px] text-muted-foreground leading-relaxed">{m.avoid}</div>
-                        </div>
-                      </div>
+              {example.phase === "Power" ? (
+                <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className={`w-10 h-10 rounded-xl ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
+                      <Cpu className={`w-5 h-5 ${pc.text}`} />
                     </div>
-                  ))}
+                    <div>
+                      <div className="text-base font-semibold">Chọn model phù hợp — Lúc nào dùng, lúc nào tránh</div>
+                      <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Mỗi model có thế mạnh riêng. Dùng đúng model cho đúng task: tiết kiệm token, tăng chất lượng code, giảm hallucination.</div>
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-3 gap-4 mb-6">
+                    {[
+                      {
+                        model: "Claude Opus 4.7",
+                        tier: "Mạnh nhất",
+                        tierColor: "text-orange-600 dark:text-orange-400",
+                        tierBg: "bg-orange-500/10",
+                        tokens: "200K context",
+                        cost: " Cao",
+                        desc: "Model mạnh nhất hiện tại. Reasoning dài, phân tích project lớn, hiểu kiến trúc phức tạp. Đọc được cả codebase 50+ files trong một lần.",
+                        bestFor: [
+                          "Phân tích toàn bộ dự án 50+ files",
+                          "Thiết kế kiến trúc hệ thống lớn",
+                          "Build module phức tạp (auth, payment, admin)",
+                          "Code review sâu, tìm lỗi logic khó",
+                          "Multi-file refactor quy mô lớn",
+                        ],
+                        avoidFor: [
+                          "Sửa typo đơn giản, thay đổi 1-2 dòng",
+                          "Viết comment hoặc format code",
+                          "Task lặp đi lặp lại nhiều lần",
+                          "Viết unit test đơn giản cho 1 file",
+                        ],
+                      },
+                      {
+                        model: "GPT-4o / Claude Sonnet 4",
+                        tier: "Cân bằng",
+                        tierColor: "text-blue-600 dark:text-blue-400",
+                        tierBg: "bg-blue-500/10",
+                        tokens: "128K context",
+                        cost: " Trung bình",
+                        desc: "Cân bằng giữa chi phí và chất lượng. Làm được hầu hết mọi task với thời gian hợp lý. Tốc độ nhanh, không gây thất vọng.",
+                        bestFor: [
+                          "Viết API route, endpoint mới",
+                          "Tạo component UI từ mockup",
+                          "Refactor 2-5 files cùng lúc",
+                          "Debug logic phức tạp vừa phải",
+                          "Viết unit test cho module",
+                        ],
+                        avoidFor: [
+                          "Dự án quá lớn (>20 files cùng lúc)",
+                          "Thiết kế kiến trúc toàn bộ hệ thống",
+                          "Phân tích nghiệp vụ phức tạp, nhiều actor",
+                        ],
+                      },
+                      {
+                        model: "GPT-4o-mini / Haiku",
+                        tier: "Nhẹ & nhanh",
+                        tierColor: "text-emerald-600 dark:text-emerald-400",
+                        tierBg: "bg-emerald-500/10",
+                        tokens: "128K context",
+                        cost: " Thấp",
+                        desc: "Chi phí thấp nhất, tốc độ nhanh nhất. Phù hợp cho task đơn giản, lặp đi lặp lại. Tuy nhiên reasoning ngắn, dễ sai với logic phức tạp.",
+                        bestFor: [
+                          "Sửa lỗi nhỏ, fix typo",
+                          "Viết unit test đơn giản",
+                          "Format, clean code, auto-import",
+                          "Tạo mock data, seed data",
+                          "Inline refactor 1-2 files",
+                        ],
+                        avoidFor: [
+                          "Task phức tạp, nhiều logic nghiệp vụ",
+                          "Thiết kế feature mới",
+                          "Code review có tính kiến trúc",
+                          "Debug lỗi khó, cần reasoning sâu",
+                        ],
+                      },
+                    ].map((m) => (
+                      <div key={m.model} className="flex flex-col rounded-xl border bg-card overflow-hidden">
+                        <div className={`px-4 py-3 border-b border-border ${m.tierBg}`}>
+                          <div className="flex items-center justify-between mb-1.5">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Model</span>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${m.tierBg} ${m.tierColor}`}>
+                              {m.tier}
+                            </span>
+                          </div>
+                          <div className="font-bold text-sm">{m.model}</div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[10px] text-muted-foreground">{m.tokens}</span>
+                            <span className="text-[10px] text-muted-foreground">|</span>
+                            <span className="text-[10px] text-muted-foreground">Chi phí{m.cost}</span>
+                          </div>
+                        </div>
+                        <div className="p-4 space-y-3 flex-1">
+                          <p className="text-[11px] text-muted-foreground leading-relaxed">{m.desc}</p>
+                          <div>
+                            <div className="text-[9px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1.5 flex items-center gap-1">
+                              <CheckCircle2 className="w-2.5 h-2.5" />
+                              Dùng khi
+                            </div>
+                            <div className="space-y-1">
+                              {m.bestFor.map((b) => (
+                                <div key={b} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                  <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                                  {b}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-[9px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400 mb-1.5 flex items-center gap-1">
+                              <XCircle className="w-2.5 h-2.5" />
+                              Tránh khi
+                            </div>
+                            <div className="space-y-1">
+                              {m.avoidFor.map((a) => (
+                                <div key={a} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                                  <XCircle className="w-2.5 h-2.5 text-red-500 flex-shrink-0 mt-0.5" />
+                                  {a}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="rounded-lg border border-border bg-muted/20 p-4">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2 text-center">
+                      Bảng chọn nhanh theo task
+                    </div>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                      {[
+                        { task: "Phân tích project lớn", model: "Opus 4.7", color: "text-orange-500" },
+                        { task: "Thiết kế kiến trúc", model: "Opus 4.7", color: "text-orange-500" },
+                        { task: "Viết API route", model: "GPT-4o / Sonnet", color: "text-blue-500" },
+                        { task: "Tạo component UI", model: "GPT-4o / Sonnet", color: "text-blue-500" },
+                        { task: "Refactor 2-5 files", model: "GPT-4o / Sonnet", color: "text-blue-500" },
+                        { task: "Sửa lỗi nhỏ", model: "GPT-4o-mini", color: "text-emerald-500" },
+                        { task: "Format / clean code", model: "GPT-4o-mini", color: "text-emerald-500" },
+                        { task: "Viết unit test đơn giản", model: "GPT-4o-mini", color: "text-emerald-500" },
+                      ].map((row) => (
+                        <div key={row.task} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-background/60 border border-border">
+                          <span className="text-[10px] text-muted-foreground">{row.task}</span>
+                          <span className={`text-[9px] font-bold ${row.color}`}>{row.model}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              )}
-
-              {/* Video placeholder (not for Power phase) */}
-              {!example.modelComparison && (
+              ) : (
                 <div className={`rounded-xl border ${pc.border} ${pc.bg} p-6 mb-4`}>
                   <div className="flex items-center gap-2 mb-4">
                     <div className={`w-8 h-8 rounded-lg ${pc.bg} border ${pc.border} flex items-center justify-center flex-shrink-0`}>
@@ -533,7 +631,6 @@ export default function WorkflowGuidePage() {
                       <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{example.videoDesc}</div>
                     </div>
                   </div>
-                  {/* Video embed placeholder */}
                   <div className="relative rounded-lg overflow-hidden border border-border bg-muted/50 aspect-video flex items-center justify-center group cursor-pointer">
                     <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-black/40" />
                     <div className="relative flex flex-col items-center gap-3">
@@ -542,36 +639,6 @@ export default function WorkflowGuidePage() {
                       </div>
                       <span className="text-sm font-medium text-white/80 drop-shadow">Xem video hướng dẫn</span>
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Resources for Prepare phase */}
-              {example.resources && (
-                <div className={`rounded-xl border ${pc.border} ${pc.bg} p-5 mb-4`}>
-                  <div className="flex items-center gap-2 mb-4">
-                    <BookOpen className={`w-4 h-4 ${pc.text}`} />
-                    <span className="text-sm font-semibold">Tài nguyên cần chuẩn bị</span>
-                  </div>
-                  <div className="space-y-2.5">
-                    {example.resources.map((r, ri) => (
-                      <div key={ri} className="flex items-start gap-3">
-                        <CheckCircle2 className={`w-4 h-4 ${pc.text} flex-shrink-0 mt-0.5`} />
-                        <div>
-                          <div className="text-sm font-medium">{r.name}</div>
-                          <div className="text-xs text-muted-foreground mt-0.5">{r.desc}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4">
-                    <Link
-                      href="/resources"
-                      className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-all"
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      Tải tài nguyên
-                    </Link>
                   </div>
                 </div>
               )}
@@ -649,7 +716,7 @@ export default function WorkflowGuidePage() {
           );
         })}
 
-        {/* 4 Phases Overview */}
+        {/* 5 Phases Overview */}
         <section>
           <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
             <Layers className="w-5 h-5 text-primary" />
@@ -698,7 +765,7 @@ export default function WorkflowGuidePage() {
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: CheckCircle2, title: "Incremental Development", desc: "Chia nhỏ dự án thành nhiều bước. Mỗi lần chỉ thay đổi 1-2 files, test kỹ trước khi tiếp tục.", color: "emerald" as const },
+              { icon: CheckCircle2, title: "Incremental Development", desc: "Chia nhỏ dự án thành nhiều bước. Mỗi lần chỉ thay đổi 2-5 files, test kỹ trước khi tiếp tục.", color: "emerald" as const },
               { icon: CheckCircle2, title: "Specification First", desc: "Luôn viết spec/requirement trước khi code. Spec là kim chỉ nam giúp bạn và AI cùng hướng.", color: "blue" as const },
               { icon: CheckCircle2, title: "Zero Tolerance", desc: "Dọn code thường xuyên. AI có xu hướng sinh code dư thừa — hãy tỉ mỉ review và loại bỏ.", color: "purple" as const },
               { icon: CheckCircle2, title: "Human-in-the-Loop", desc: "AI hỗ trợ nhưng quyết định cuối cùng vẫn thuộc về bạn. Hiểu rõ code do AI sinh ra.", color: "orange" as const },
@@ -819,9 +886,9 @@ export default function WorkflowGuidePage() {
           </h2>
           <div className="flex flex-wrap gap-3">
             {[
-              { label: "Hướng dẫn", href: "/guide", desc: "Xem chi tiết từng bước trong quy trình" },
-              { label: "Tài nguyên", href: "/resources", desc: "Tải quy tắc code, cấu trúc, phân tích" },
               { label: "Quy tắc viết Prompt", href: "/guide/prompt", desc: "Dùng prompt đúng cách trong workflow" },
+              { label: "Phân tích nghiệp vụ", href: "/guide/analysis", desc: "Bước tiếp theo của quy trình" },
+              { label: "Lưu ý & Bẫy", href: "/guide/traps", desc: "Tránh những sai lầm phổ biến" },
             ].map((item) => (
               <Link key={item.href} href={item.href} className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group">
                 <div>

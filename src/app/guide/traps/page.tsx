@@ -6,15 +6,14 @@ import {
   CheckCircle2,
   Lightbulb,
   BookOpen,
-  Download,
-  ArrowRight,
   Shield,
-  XCircle,
+  BrainCircuit,
+  Target,
 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Những lưu ý bắt buộc",
-  description: "Ngữ cảnh quan trọng hơn prompt. Những lưu ý bắt buộc khi dùng AI Agent để code.",
+  description: "Ngữ cảnh quan trọng hơn prompt. Phân tích yêu cầu trước khi code. Đánh giá sức mạnh AI trước khi giao việc. Review cẩn thận mọi thứ AI sinh ra.",
 };
 
 const coreRules = [
@@ -27,7 +26,8 @@ const coreRules = [
     sections: [
       {
         subtitle: "Tại sao ngữ cảnh quan trọng hơn?",
-        content: "Một prompt tuyệt vời nhưng thiếu ngữ cảnh sẽ cho kết quả tệ hơn một prompt đơn giản nhưng có đầy đủ ngữ cảnh. AI Agent hoạt động dựa trên ngữ cảnh mà nó đã đọc được trong session. Prompt chỉ là cách bạn kích hoạt ngữ cảnh đó thành hành động.",
+        content:
+          "Một prompt tuyệt vời nhưng thiếu ngữ cảnh sẽ cho kết quả tệ hơn một prompt đơn giản nhưng có đầy đủ ngữ cảnh. AI Agent hoạt động dựa trên ngữ cảnh mà nó đã đọc được trong session. Prompt chỉ là cách bạn kích hoạt ngữ cảnh đó thành hành động.",
       },
       {
         subtitle: "Ngữ cảnh đầy đủ giúp AI hiểu được:",
@@ -51,14 +51,119 @@ const coreRules = [
         ],
       },
     ],
-    keyTakeaway: "Cung cấp ngữ cảnh đầy đủ cho AI Agent trước khi đưa ra bất kỳ yêu cầu nào. Đây là bước bắt buộc, không phải tùy chọn.",
+    keyTakeaway:
+      "Cung cấp ngữ cảnh đầy đủ cho AI Agent trước khi đưa ra bất kỳ yêu cầu nào. Đây là bước bắt buộc, không phải tùy chọn.",
+  },
+  {
+    icon: BrainCircuit,
+    color: "cyan",
+    num: "02",
+    title: "Phải đánh giá sức mạnh AI trước khi giao việc",
+    summary:
+      "AI mạnh thì giao nhiều, AI yếu thì giao ít. Biết giới hạn của model mình dùng để phân bổ công việc phù hợp.",
+    sections: [
+      {
+        subtitle: "Tại sao phải đánh giá sức mạnh AI?",
+        content:
+          "Mỗi AI model có năng lực khác nhau. Model mạnh (Claude Opus, GPT-4, Gemini Ultra) có thể xử lý nhiều bước phức tạp trong một lần. Model yếu hơn (GPT-3.5, Gemini Flash) cần chia nhỏ hơn, review kỹ hơn. Giao sai mức độ → hoặc là AI quên context, hoặc là lãng phí tiền cho model đắt mà chỉ làm việc đơn giản.",
+      },
+      {
+        subtitle: "Phân loại task theo độ khó:",
+        items: [
+          "Task đơn giản: sửa lỗi typo, thêm comment, format code, viết unit test đơn giản — AI nào cũng làm được.",
+          "Task trung bình: viết API route, tạo component UI, refactor 1-2 files, debug logic — GPT-3.5 trở lên.",
+          "Task phức tạp: thiết kế kiến trúc, xây dựng feature nhiều layer, tối ưu performance — cần model mạnh.",
+          "Task cực kỳ phức tạp: xây dựng hệ thống lớn, migration phức tạp, security audit — cần model mạnh nhất + human-in-the-loop liên tục.",
+        ],
+      },
+      {
+        subtitle: "Nguyên tắc giao việc theo sức mạnh AI:",
+        items: [
+          "AI mạnh: giao nhiều bước một lần, trust the process nhưng vẫn verify kỹ.",
+          "AI trung bình: chia task nhỏ vừa đủ, checkpoint sau mỗi 2-3 task.",
+          "AI yếu: mỗi task chỉ 1-2 files, review sát sao từng dòng.",
+          "Luôn giữ context window trong tầm kiểm soát — nếu conversation quá dài, AI bắt đầu quên.",
+          "Model tốt nhất cho project: Claude Opus 4 / GPT-4o cho architecture, GPT-4o-mini / Claude Sonnet cho implementation.",
+        ],
+      },
+      {
+        subtitle: "Nhận biết khi nào AI đang gặp giới hạn:",
+        items: [
+          "Code bắt đầu inconsistent (đặt tên không nhất quán, style thay đổi giữa chừng)",
+          "AI hỏi lại những thứ đã nói ở đầu session",
+          "Logic bắt đầu tự mâu thuẫn giữa các file",
+          "AI bỏ qua những constraint đã đặt ra ở prompt đầu tiên",
+          "Khi gặp những dấu hiệu này → commit/checkpoint, bắt đầu session mới với context summary",
+        ],
+      },
+    ],
+    keyTakeaway:
+      "Biết sức mạnh AI rồi mới giao việc. Model tốt giao nhiều hơn, model yếu chia nhỏ hơn. Không giao quá sức AI — kết quả sẽ là thảm họa.",
+  },
+  {
+    icon: Target,
+    color: "orange",
+    num: "03",
+    title: "Phải phân tích trước khi code & kiểm soát scope chặt chẽ",
+    summary:
+      "Nhảy thẳng vào code mà không có spec là cách nhanh nhất để build sai hệ thống. AI dễ dàng thêm tính năng không được yêu cầu — bạn phải kiểm soát.",
+    sections: [
+      {
+        subtitle: "Tại sao phải phân tích trước?",
+        content:
+          "Khi không phân tích, AI sẽ tự đoán. Và đoán thì thường sai. AI không biết bạn muốn gì nếu bạn không nói rõ. Spec là cách bạn truyền tải chính xác nhất ý định của mình.",
+      },
+      {
+        subtitle: "File phân tích phải có:",
+        items: [
+          "Actor: ai dùng hệ thống, quyền của họ là gì",
+          "Entity: dữ liệu cốt lõi nào, ai tạo, ai xem, ai sửa, ai xóa",
+          "Chức năng: tách nhỏ từng action cụ thể",
+          "Ownership: dữ liệu thuộc về ai, ai được truy cập",
+          "Build order: thứ tự xây dựng hợp lý",
+          "Assumptions: giả định nếu đầu vào chưa đủ rõ",
+        ],
+      },
+      {
+        subtitle: "Thứ tự build bắt buộc:",
+        items: [
+          "Auth foundation: đăng nhập, role, session, middleware",
+          "Entity foundation: database schema, migration, repository",
+          "Layout foundation: app layout, navigation, protected routes",
+          "Feature foundation: core features theo build order",
+          "Support features: analytics, export, notifications",
+        ],
+      },
+      {
+        subtitle: "Dấu hiệu scope đang bị creep:",
+        items: [
+          "AI tự ý thêm file mà không được yêu cầu",
+          "AI sửa file không liên quan đến task hiện tại",
+          "AI đề xuất tính năng mới trong quá trình code",
+          "Kết quả có nhiều thứ không nằm trong spec ban đầu",
+        ],
+      },
+      {
+        subtitle: "Cách kiểm soát scope:",
+        items: [
+          "Mỗi task chỉ có 1 mục tiêu rõ ràng, không lan man",
+          "Nói rõ AI chỉ được sửa những file nào",
+          "Không cho AI quyền tự ý thêm tính năng",
+          "Nếu AI đề xuất thêm gì, đánh dấu lại và làm sau",
+          "Mỗi lần giao tiếp chỉ xử lý 1-2 files",
+        ],
+      },
+    ],
+    keyTakeaway:
+      "Spec rõ ràng + scope chặt chẽ = code đúng. Không spec → prompt mơ hồ → code lệch scope. Scope creep là kẻ thù của tiến độ.",
   },
   {
     icon: Shield,
     color: "red",
-    num: "02",
-    title: "Phải verify code từ AI",
-    summary: "AI có thể sinh code sai logic, thiếu edge case, hoặc không đúng spec. Không có hệ thống nào hoàn hảo 100%.",
+    num: "04",
+    title: "Phải verify code từ AI & không phụ thuộc hoàn toàn",
+    summary:
+      "AI có thể sinh code sai logic, thiếu edge case, hoặc không đúng spec. Không có hệ thống nào hoàn hảo 100%. Biết AI đang làm gì, tại sao, và kiểm tra kết quả.",
     sections: [
       {
         subtitle: "Những gì AI thường sai:",
@@ -84,45 +189,6 @@ const coreRules = [
           "Type đúng chưa?",
         ],
       },
-    ],
-    keyTakeaway: "Review cẩn thận từng dòng code trước khi commit. Khi AI sinh code xong, đó mới là lúc bạn bắt đầu làm việc chứ không phải kết thúc.",
-  },
-  {
-    icon: AlertTriangle,
-    color: "orange",
-    num: "03",
-    title: "Phải kiểm soát scope chặt chẽ",
-    summary: "AI dễ dàng thêm tính năng mà không hỏi. Bạn cần kiểm soát scope từng task, từng lần giao tiếp.",
-    sections: [
-      {
-        subtitle: "Dấu hiệu scope đang bị creep:",
-        items: [
-          "AI tự ý thêm file mà không được yêu cầu",
-          "AI sửa file không liên quan đến task hiện tại",
-          "AI đề xuất tính năng mới trong quá trình code",
-          "Kết quả có nhiều thứ không nằm trong spec ban đầu",
-        ],
-      },
-      {
-        subtitle: "Cách kiểm soát scope:",
-        items: [
-          "Mỗi task chỉ có 1 mục tiêu rõ ràng, không lan man",
-          "Nói rõ AI chỉ được sửa những file nào",
-          "Không cho AI quyền tự ý thêm tính năng",
-          "Nếu AI đề xuất thêm gì, đánh dấu lại và làm sau",
-          "Mỗi lần giao tiếp chỉ xử lý 1-2 files",
-        ],
-      },
-    ],
-    keyTakeaway: "Scope creep là kẻ thù của tiến độ. Mỗi task chỉ 1 mục tiêu. Mọi thứ thêm vào phải được ghi lại và làm sau, không nhảy cóc.",
-  },
-  {
-    icon: XCircle,
-    color: "purple",
-    num: "04",
-    title: "Không phụ thuộc hoàn toàn vào AI",
-    summary: "Biết AI đang làm gì, tại sao, và kiểm tra kết quả. Khi có bug, bạn phải hiểu đủ để fix được.",
-    sections: [
       {
         subtitle: "Rủi ro khi quá phụ thuộc AI:",
         items: [
@@ -144,61 +210,8 @@ const coreRules = [
         ],
       },
     ],
-    keyTakeaway: "AI là công cụ, không phải bộ não. Bạn vẫn phải hiểu code. Kỹ năng debug và phân tích vẫn cần thiết.",
-  },
-  {
-    icon: CheckCircle2,
-    color: "green",
-    num: "05",
-    title: "Phải phân tích trước khi code",
-    summary: "Nhảy thẳng vào code mà không có spec là cách nhanh nhất để build sai hệ thống.",
-    sections: [
-      {
-        subtitle: "Tại sao phải phân tích trước?",
-        content: "Khi không phân tích, AI sẽ tự đoán. Và đoán thì thường sai. AI không biết bạn muốn gì nếu bạn không nói rõ. Spec là cách bạn truyền tải chính xác nhất ý định của mình.",
-      },
-      {
-        subtitle: "File phân tích phải có:",
-        items: [
-          "Actor: ai dùng hệ thống, quyền của họ là gì",
-          "Entity: dữ liệu cốt lõi nào, ai tạo, ai xem, ai sửa, ai xóa",
-          "Chức năng: tách nhỏ từng action cụ thể",
-          "Ownership: dữ liệu thuộc về ai, ai được truy cập",
-          "Build order: thứ tự xây dựng hợp lý",
-          "Assumptions: giả định nếu đầu vào chưa đủ rõ",
-        ],
-      },
-    ],
-    keyTakeaway: "Spec rõ ràng là kim chỉ nam cho cả bạn và AI. Không spec → prompt mơ hồ → code lệch scope.",
-  },
-  {
-    icon: BookOpen,
-    color: "teal",
-    num: "06",
-    title: "Phải dựng nền tảng trước",
-    summary: "Auth → Entity → Layout → Feature. Đừng nhảy cóc. Mỗi layer phải hoàn thiện trước khi sang layer tiếp theo.",
-    sections: [
-      {
-        subtitle: "Thứ tự build bắt buộc:",
-        items: [
-          "Auth foundation: đăng nhập, role, session, middleware",
-          "Entity foundation: database schema, migration, repository",
-          "Layout foundation: app layout, navigation, protected routes",
-          "Feature foundation: core features theo build order",
-          "Support features: analytics, export, notifications",
-        ],
-      },
-      {
-        subtitle: "Vì sao không được nhảy cóc?",
-        items: [
-          "Nếu chưa có auth mà code feature → phải sửa lại toàn bộ",
-          "Nếu chưa có entity mà code API → contract sẽ sai",
-          "Nếu chưa có layout mà code page → phải refactor lại toàn bộ",
-          "Tech debt tích lũy nhanh hơn bạn tưởng",
-        ],
-      },
-    ],
-    keyTakeaway: "Foundation vững → feature nhanh. Foundation sai → sửa lại mất gấp đôi thời gian.",
+    keyTakeaway:
+      "Review cẩn thận từng dòng code trước khi commit. Khi AI sinh code xong, đó mới là lúc bạn bắt đầu làm việc chứ không phải kết thúc. AI là công cụ, không phải bộ não.",
   },
 ];
 
@@ -209,12 +222,8 @@ const colorMap: Record<string, { bg: string; text: string; border: string; light
   purple: { bg: "bg-purple-500/10", text: "text-purple-600 dark:text-purple-400", border: "border-purple-500/20", lightBg: "bg-purple-500/5" },
   green: { bg: "bg-green-500/10", text: "text-green-600 dark:text-green-400", border: "border-green-500/20", lightBg: "bg-green-500/5" },
   teal: { bg: "bg-teal-500/10", text: "text-teal-600 dark:text-teal-400", border: "border-teal-500/20", lightBg: "bg-teal-500/5" },
+  cyan: { bg: "bg-cyan-500/10", text: "text-cyan-600 dark:text-cyan-400", border: "border-cyan-500/20", lightBg: "bg-cyan-500/5" },
 };
-
-const downloads = [
-  { file: "docs/Chung/Quy%20t%E1%BA%AFc%20vi%E1%BA%BFt%20ph%C3%A2n%20t%C3%ADch%20y%C3%AAu%20c%E1%BA%A7u%20ch%E1%BB%A9c%20n%C4%83ng.md", label: "Quy tắc viết phân tích yêu cầu chức năng" },
-  { file: "docs/Chung/Quy%20t%E1%BA%AFc%20vi%E1%BA%BFt%20prompt.md", label: "Quy tắc viết prompt" },
-];
 
 export default function TrapsGuidePage() {
   return (
@@ -226,7 +235,7 @@ export default function TrapsGuidePage() {
         <div className="relative max-w-[60%] sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-sm font-medium mb-4">
             <AlertTriangle className="w-4 h-4" />
-            Những lưu ý bắt buộc
+            Lưu ý quan trọng
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight">
             Ngữ cảnh quan trọng hơn{" "}
@@ -263,7 +272,7 @@ export default function TrapsGuidePage() {
           </div>
         </div>
 
-        {/* 6 rules */}
+        {/* 4 rules */}
         {coreRules.map((rule) => {
           const c = colorMap[rule.color];
           const Icon = rule.icon;
@@ -322,9 +331,9 @@ export default function TrapsGuidePage() {
           <h2 className="text-xl font-bold mb-5">Liên quan</h2>
           <div className="flex flex-wrap gap-3">
             {[
-              { label: "Phân tích nghiệp vụ", href: "/guide/analysis", desc: "Lưu ý 05: phân tích trước khi code" },
+              { label: "Phân tích nghiệp vụ", href: "/guide/analysis", desc: "Lưu ý 03: phân tích trước khi code & kiểm soát scope" },
               { label: "Quy tắc viết Prompt", href: "/guide/prompt", desc: "Cấu trúc prompt chuẩn" },
-              { label: "Quy trình thực chiến", href: "/guide/workflow", desc: "Workflow đúng cách" },
+              { label: "Quy trình thực chiến", href: "/workflow", desc: "Workflow đúng cách: Power → Plan → Build → Review → Ship" },
             ].map((item) => (
               <Link key={item.href} href={item.href} className="flex items-center gap-2 px-4 py-3 rounded-xl border bg-card hover:border-primary/30 hover:shadow-sm transition-all group">
                 <div>

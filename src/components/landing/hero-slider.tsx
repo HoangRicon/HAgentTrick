@@ -193,7 +193,7 @@ export function HeroSlider() {
               transform,
               opacity,
               zIndex,
-              pointerEvents,
+              pointerEvents: pointerEvents as "auto" | "none",
             }}
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${s.bgGradient}`} />
