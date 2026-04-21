@@ -34,41 +34,6 @@ export const metadata: Metadata = {
   description: "Hướng dẫn lấy tài nguyên từ trang Tài nguyên và bỏ vào AI Agent để tăng cường khả năng làm việc.",
 };
 
-const resourceSteps = [
-  {
-    step: 1,
-    icon: BookOpen,
-    title: "Tìm tài nguyên phù hợp",
-    desc: "Truy cập trang Tài nguyên để xem danh sách đầy đủ các tài nguyên: quy tắc code, quy tắc prompt, quy tắc phân tích, quy tắc kế hoạch, và công cụ hỗ trợ.",
-    href: "/resources",
-    hrefLabel: "Truy cập Tài nguyên",
-  },
-  {
-    step: 2,
-    icon: Download,
-    title: "Tải file markdown về máy",
-    desc: "Tải file .md của tài nguyên bạn cần sử dụng. Mỗi tài nguyên đều có nút Tải về ngay trên thẻ.",
-    href: "/resources",
-    hrefLabel: "Tải tài nguyên",
-  },
-  {
-    step: 3,
-    icon: FolderOpen,
-    title: "Đặt file vào thư mục phù hợp",
-    desc: "Đặt file .md vào thư mục trong project. Ví dụ: docs/rules/ cho quy tắc code, docs/analysis/ cho quy tắc phân tích.",
-    href: "/resources",
-    hrefLabel: "Xem tài nguyên",
-  },
-  {
-    step: 4,
-    icon: ClipboardPaste,
-    title: "Copy nội dung vào AI Agent",
-    desc: "Copy toàn bộ nội dung file .md và paste vào cuộc trò chuyện với AI Agent. Hoặc tham chiếu đường dẫn tới file trong prompt.",
-    href: "/resources",
-    hrefLabel: "Lấy tài nguyên",
-  },
-];
-
 const workflowResources = [
   {
     phase: "Phân tích",
@@ -535,43 +500,6 @@ export default function ResourcesGuidePage() {
                 </Link>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* 4 bước lấy tài nguyên */}
-        <section>
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="text-xl font-bold">4 bước lấy tài nguyên</h2>
-            <Link
-              href="/resources"
-              className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all"
-            >
-              <Zap className="w-4 h-4" />
-              Tài nguyên
-              <ExternalLink className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {resourceSteps.map((s) => {
-              const Icon = s.icon;
-              return (
-                <div key={s.step} className="flex items-start gap-4 p-5 rounded-xl border bg-card hover:border-primary/20 transition-colors">
-                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-indigo-600 dark:text-indigo-400 font-bold text-lg">{s.step}</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Icon className="w-4 h-4 text-indigo-500" />
-                      <h3 className="font-semibold text-sm">{s.title}</h3>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed mb-2">{s.desc}</p>
-                    <Link href={s.href} className="inline-flex items-center gap-1 text-xs text-indigo-500 hover:text-indigo-600 font-medium">
-                      {s.hrefLabel} <ChevronRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </section>
 
