@@ -1,43 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, CheckCircle2, Cpu, Lightbulb, Package, Code2, Shield, Rocket } from "lucide-react";
+import { ChevronDown, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-interface Phase {
-  phase: string;
-  iconName: string;
-  color: string;
-  title: string;
-  subtitle: string;
-  steps: string[];
-}
-
-const iconMap: Record<string, React.ElementType> = {
-  Cpu,
-  Lightbulb,
-  Package,
-  Code2,
-  Shield,
-  Rocket,
-};
-
-const phaseColors: Record<string, { bg: string; text: string; border: string; badge: string; badgeText: string }> = {
-  cyan: { bg: "bg-cyan-500/10", text: "text-cyan-600 dark:text-cyan-400", border: "border-cyan-500/30", badge: "bg-cyan-500", badgeText: "text-white" },
-  amber: { bg: "bg-amber-500/10", text: "text-amber-600 dark:text-amber-400", border: "border-amber-500/30", badge: "bg-amber-500", badgeText: "text-white" },
-  indigo: { bg: "bg-indigo-500/10", text: "text-indigo-600 dark:text-indigo-400", border: "border-indigo-500/30", badge: "bg-indigo-500", badgeText: "text-white" },
-  blue: { bg: "bg-blue-500/10", text: "text-blue-600 dark:text-blue-400", border: "border-blue-500/30", badge: "bg-blue-500", badgeText: "text-white" },
-  green: { bg: "bg-green-500/10", text: "text-green-600 dark:text-green-400", border: "border-green-500/30", badge: "bg-green-500", badgeText: "text-white" },
-  purple: { bg: "bg-purple-500/10", text: "text-purple-600 dark:text-purple-400", border: "border-purple-500/30", badge: "bg-purple-500", badgeText: "text-white" },
-};
+import { phases, phaseColors, phaseIconMap } from "@/lib/workflow-phases";
 
 interface PhaseAccordionProps {
-  phases: Phase[];
+  phasesOverride?: typeof phases;
+  defaultOpenAll?: boolean;
 }
 
-export function PhaseAccordion({ phases }: PhaseAccordionProps) {
+export function PhaseAccordion({ phasesOverride, defaultOpenAll = true }: PhaseAccordionProps) {
+  const phaseList = phasesOverride || phases;
   const [openPhases, setOpenPhases] = useState<Set<string>>(
-    new Set(phases.map((p) => p.phase))
+    defaultOpenAll ? new Set(phaseList.map((p) => p.phase)) : new Set()
   );
 
   const toggle = (phase: string) => {
@@ -54,15 +30,15 @@ export function PhaseAccordion({ phases }: PhaseAccordionProps) {
 
   return (
     <div className="space-y-3">
-      {phases.map((phase, i) => {
+      {phaseList.map((phase, i) => {
         const pc = phaseColors[phase.color];
-        const Icon = iconMap[phase.iconName] || Cpu;
+        const Icon = phaseIconMap[phase.iconName] || phaseIconMap.Cpu;
         const isOpen = openPhases.has(phase.phase);
 
         return (
           <div
             key={phase.phase}
-            id={`overview-${phase.phase.toLowerCase()}`}
+            id={`phase-${phase.phase.toLowerCase()}`}
             className={cn(
               "group relative overflow-hidden rounded-2xl border bg-card transition-all duration-300",
               isOpen
