@@ -12,6 +12,7 @@ import {
   Zap,
   Layers,
   Compass,
+  Wand2,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -95,6 +96,21 @@ const guideSections = [
     ],
     badge: "Mới",
   },
+  {
+    num: "06",
+    icon: Wand2,
+    href: "/guide/gpt-rules",
+    color: "amber",
+    title: "Tạo bộ luật riêng với GPT RULES",
+    desc: "Dùng custom GPT RULES để tự động tạo bộ luật code cho bất kỳ dự án nào. Hướng dẫn từ mô tả project đến tích hợp vào AI coding tool.",
+    highlights: [
+      "Mở GPT RULES, mô tả dự án, nhận bộ luật hoàn chỉnh",
+      "6 loại luật: code, architecture, folder structure, testing, commits, best practices",
+      "Copy từng phần vào CLAUDE.md, .cursorrules, hoặc file luật khác",
+      "Kết hợp với tài nguyên có sẵn để có bộ đầy đủ",
+    ],
+    badge: "Mới",
+  },
 ];
 
 const principles = [
@@ -108,6 +124,7 @@ const colorMap: Record<string, { bg: string; text: string; border: string; iconB
   emerald: { bg: "bg-emerald-500/5", text: "text-emerald-600 dark:text-emerald-400", border: "hover:border-emerald-500/40", iconBg: "bg-emerald-500/10", glow: "hover:shadow-emerald-500/10", badge: "bg-emerald-500/10", badgeText: "text-emerald-600 dark:text-emerald-400" },
   amber: { bg: "bg-amber-500/5", text: "text-amber-600 dark:text-amber-400", border: "hover:border-amber-500/40", iconBg: "bg-amber-500/10", glow: "hover:shadow-amber-500/10", badge: "bg-amber-500/10", badgeText: "text-amber-600 dark:text-amber-400" },
   cyan: { bg: "bg-cyan-500/5", text: "text-cyan-600 dark:text-cyan-400", border: "hover:border-cyan-500/40", iconBg: "bg-cyan-500/10", glow: "hover:shadow-cyan-500/10", badge: "bg-cyan-500/10", badgeText: "text-cyan-600 dark:text-cyan-400" },
+  amber: { bg: "bg-amber-500/5", text: "text-amber-600 dark:text-amber-400", border: "hover:border-amber-500/40", iconBg: "bg-amber-500/10", glow: "hover:shadow-amber-500/10", badge: "bg-amber-500/10", badgeText: "text-amber-600 dark:text-amber-400" },
 };
 
 const accentGradientMap: Record<string, string> = {
