@@ -178,11 +178,10 @@ export function MarkdownViewer({
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-        <div className="fixed inset-2 sm:inset-auto sm:fixed sm:inset-0 z-50 flex sm:items-center sm:justify-center sm:p-4">
-          <Dialog.Content className="absolute sm:relative bottom-0 sm:bottom-auto left-0 sm:left-auto right-0 sm:right-auto w-full sm:w-auto sm:max-w-4xl max-h-[90vh] sm:max-h-[85vh] rounded-t-2xl sm:rounded-2xl border bg-card shadow-2xl flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-bottom-0 data-[state=open]:slide-in-from-bottom-0">
-            <div className="sm:hidden w-12 h-1.5 bg-border rounded-full mx-auto mt-3 mb-1 flex-shrink-0" />
+        <Dialog.Content className="fixed z-50 bg-card shadow-2xl border flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 rounded-t-2xl sm:rounded-2xl w-full sm:w-auto sm:max-w-4xl max-h-[90vh] sm:max-h-[85vh] inset-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:mx-auto">
+          <div className="sm:hidden w-12 h-1.5 bg-border rounded-full mx-auto mt-3 mb-1 flex-shrink-0" />
 
-            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 border-b flex-shrink-0">
+          <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 border-b flex-shrink-0">
               <div className="flex items-center gap-3 min-w-0 flex-1">
                 <div
                   className={cn(
@@ -239,7 +238,6 @@ export function MarkdownViewer({
               )}
             </div>
           </Dialog.Content>
-        </div>
       </Dialog.Portal>
     </Dialog.Root>
   );
