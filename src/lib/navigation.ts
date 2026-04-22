@@ -16,7 +16,7 @@ export type DocCategory = {
 
 export const mainNav: NavItem[] = [
   {
-    title: "Quy trình thực chiến",
+    title: "Quy trình",
     href: "/workflow",
   },
   {
@@ -30,18 +30,47 @@ export const mainNav: NavItem[] = [
   {
     title: "Bí kíp",
     href: "/guide",
+    subItems: [
+      {
+        title: "Tất cả hướng dẫn",
+        href: "/guide",
+      },
+      {
+        title: "Phân tích yêu cầu",
+        href: "/guide/analysis",
+        description: "Xác định actor, entity, ownership",
+      },
+      {
+        title: "Viết Prompt chuẩn",
+        href: "/guide/prompt",
+        description: "4 thành phần bắt buộc, template",
+      },
+      {
+        title: "Superpowers",
+        href: "/guide/superpowers",
+        description: "Khung kỹ năng Agent",
+      },
+      {
+        title: "Lưu ý quan trọng",
+        href: "/guide/traps",
+        description: "Những bẫy khi dùng AI",
+      },
+      {
+        title: "Dùng AI nghiên cứu",
+        href: "/guide/ai-research",
+        description: "Chọn đúng tool cho đúng việc",
+      },
+      {
+        title: "GPT RULES",
+        href: "/guide/gpt-rules",
+        description: "Tạo bộ luật tự động",
+      },
+    ],
   },
-
-  {
-    title: "Lưu ý quan trọng",
-    href: "/guide/traps",
-  },
-
   {
     title: "Q&A",
     href: "/qa",
   },
-
   {
     title: "Liên hệ",
     href: "/contact",

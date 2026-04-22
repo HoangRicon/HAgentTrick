@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, ChevronDown, Bot, Workflow, Bookmark, BookOpen, AlertTriangle, MessageSquare, Mail, Layers } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronDown, Bot, Workflow, Bookmark, BookOpen, Layers, MessageSquare, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mainNav } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
@@ -38,8 +38,6 @@ export function Header() {
     "/workflow": Workflow,
     "/resources": Bookmark,
     "/projects": Layers,
-    "/guide": BookOpen,
-    "/guide/traps": AlertTriangle,
     "/qa": MessageSquare,
     "/contact": Mail,
   };
@@ -59,7 +57,7 @@ export function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-4" ref={dropdownRef}>
+          <nav className="hidden md:flex items-center gap-1" ref={dropdownRef}>
             {mainNav.map((item) => (
               <div key={item.href} className="relative">
                 {item.subItems ? (
@@ -67,17 +65,17 @@ export function Header() {
                     <button
                       onClick={() => setOpenDropdown(openDropdown === item.title ? null : item.title)}
                       className={cn(
-                        "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary",
+                        "flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition-colors",
                         pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-primary"
-                          : "text-muted-foreground"
+                          ? "text-primary bg-primary/5"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
                       )}
                     >
                       {item.title}
                       <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", openDropdown === item.title && "rotate-180")} />
                     </button>
                     {openDropdown === item.title && (
-                      <div className="absolute top-full left-0 mt-2 w-56 rounded-lg border bg-background shadow-lg py-1 z-50">
+                      <div className="absolute top-full left-0 mt-1 w-64 rounded-lg border bg-background shadow-lg py-1 z-50">
                         {item.subItems.map((sub) => (
                           <Link
                             key={sub.href}
@@ -101,18 +99,10 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-primary",
-                      item.href === "/workflow" || item.href === "/resources"
-                        ? pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-orange-500"
-                          : "text-orange-600 dark:text-orange-400 hover:text-orange-500"
-                        : item.href === "/projects"
-                          ? pathname === item.href
-                            ? "text-violet-500"
-                            : "text-violet-600 dark:text-violet-400 hover:text-violet-500"
-                        : pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-primary"
-                          : "text-muted-foreground"
+                      "flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition-colors",
+                      pathname === item.href || pathname.startsWith(item.href + "/")
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     )}
                   >
                     {(() => {
@@ -170,26 +160,23 @@ export function Header() {
                 <Link
                   href={item.href}
                   onClick={closeMenu}
-                    className={cn(
-                      "flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary p-2 rounded-md",
-                      item.href === "/workflow" || item.href === "/resources"
-                        ? pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-orange-500 bg-orange-500/10"
-                          : "text-orange-600 dark:text-orange-400"
-                        : item.href === "/projects"
-                          ? pathname === item.href
-                            ? "text-violet-500 bg-violet-500/10"
-                            : "text-violet-600 dark:text-violet-400"
-                        : pathname === item.href || pathname.startsWith(item.href + "/")
-                          ? "text-primary bg-primary/10"
-                          : "text-muted-foreground"
-                    )}
+                  className={cn(
+                    "flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary p-2 rounded-md",
+                    pathname === item.href || pathname.startsWith(item.href + "/")
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground"
+                  )}
                 >
                   {(() => {
                     const Icon = navIcons[item.href];
                     return Icon ? <Icon className="w-4 h-4" /> : null;
                   })()}
                   {item.title}
+                  {item.href === "/guide/superpowers" && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-teal-500 text-white animate-pulse">
+                      HOT
+                    </span>
+                  )}
                 </Link>
                 {item.subItems && item.subItems.map((sub) => (
                   <Link

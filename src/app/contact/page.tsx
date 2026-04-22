@@ -136,6 +136,34 @@ export default function ContactPage() {
       {/* Content */}
       <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
+        {/* About */}
+        <section>
+          <div className="rounded-2xl border bg-gradient-to-br from-primary/5 via-violet-500/5 to-pink-500/5 p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <Heart className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold mb-3">Ý nghĩa của trang web này</h2>
+                <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+                  <p>
+                    HAgentTrick bắt đầu từ một câu hỏi đơn giản: <strong className="text-foreground">"Tại sao dùng AI code mà vẫn chậm?"</strong> Sau nhiều lần AI sinh code sai spec, debug cả ngày, và phải viết lại từ đầu — mình nhận ra vấn đề không nằm ở prompt.
+                  </p>
+                  <p>
+                    Vấn đề nằm ở <strong className="text-foreground">ngữ cảnh</strong>. AI không hiểu dự án, không biết ranh giới, không có quy tắc. Khi đó, dù prompt có hay đến đâu, code sinh ra vẫn sai — hoặc vừa sai vừa đẹp, khiến mình càng khó phát hiện.
+                  </p>
+                  <p>
+                    HAgentTrick là nơi mình tổng hợp lại <strong className="text-foreground">quy trình, tài nguyên và hướng dẫn</strong> giúp tận dụng tốt AI Agent. Không phải công thức magic. Mà là cách xây ngữ cảnh đúng — để AI sinh code đúng từ lần đầu.
+                  </p>
+                  <p>
+                    Tất cả nội dung đều <strong className="text-foreground">miễn phí</strong>. Mình làm vì đam mê và muốn đóng góp cho cộng đồng. Nếu thấy hữu ích, bạn có thể ủng hộ mình qua VPBANK hoặc ủng hộ qua YouTube.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Social Links */}
         <section>
           <h2 className="text-lg font-bold mb-5 flex items-center gap-2">
