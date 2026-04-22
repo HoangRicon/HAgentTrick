@@ -2,52 +2,246 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { BookOpen, ArrowLeft, Download, ChevronRight, Clock } from "lucide-react";
-import matter from "gray-matter";
+import { BookOpen, ArrowLeft, Download, ChevronRight, CheckCircle2, Copy, ArrowRight } from "lucide-react";
+import { MarkdownViewer } from "./markdown-viewer";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-const resourceFiles: Record<string, { file: string; name: string }> = {
+const resourceMeta: Record<string, {
+  file: string;
+  name: string;
+  category: string;
+  iconName: string;
+  iconBg: string;
+  textColor: string;
+  border: string;
+  color: string;
+  overview: string;
+  highlights: string[];
+  usage: string[];
+  usageSteps: string[];
+}> = {
   "quy-tac-prompt": {
     file: "docs/Chung/Quy tắc viết prompt.md",
     name: "Quy tắc viết prompt cho AI Agent",
+    category: "Quy tắc",
+    iconName: "FileText",
+    iconBg: "bg-indigo-500/10",
+    textColor: "text-indigo-600 dark:text-indigo-400",
+    border: "border-indigo-500/20",
+    color: "from-indigo-500/10 to-violet-500/10",
+    overview: "Nguyên tắc và template viết prompt chuẩn để giao tiếp với AI Agent hiệu quả nhất. Bao gồm 4 thành phần bắt buộc, kỹ thuật nâng cao, và template chi tiết cho từng loại nhiệm vụ.",
+    highlights: [
+      "4 thành phần bắt buộc: Context, Task, Constraints, Expected Output",
+      "Template chi tiết cho 6 loại nhiệm vụ: code mới, fix bug, review, viết docs, phân tích, refactor",
+      "Kỹ thuật nâng cao: Zero-shot, Few-shot, Chain-of-Thought, Iterative prompting",
+      "Hướng dẫn spec-driven prompting và structured output",
+    ],
+    usage: [
+      "Ghi rõ context: mô tả dự án, framework, những gì đã có",
+      "Đặt constraints: giới hạn scope, convention, những gì KHÔNG làm",
+      "Mô tả expected output: định dạng, cấu trúc, tiêu chí đánh giá",
+      "Dùng template phù hợp với loại task (code mới, fix bug, review...)",
+    ],
+    usageSteps: [
+      "Mở file quy tắc prompt.md",
+      "Copy phần template phù hợp với task hiện tại",
+      "Điền Context (dự án, framework, ngữ cảnh)",
+      "Điền Task (yêu cầu cụ thể)",
+      "Điền Constraints (giới hạn, convention)",
+      "Điền Expected Output (kết quả mong muốn)",
+      "Paste vào AI Agent và gửi",
+    ],
   },
   "quy-tac-code": {
     file: "docs/Next.js fullstack/Quy tắc code.md",
     name: "Quy tắc code Next.js fullstack",
+    category: "Quy tắc",
+    iconName: "Code2",
+    iconBg: "bg-violet-500/10",
+    textColor: "text-violet-600 dark:text-violet-400",
+    border: "border-violet-500/20",
+    color: "from-violet-500/10 to-purple-500/10",
+    overview: "Bộ quy tắc code chuẩn cho dự án Next.js fullstack với TypeScript, Prisma, Tailwind CSS, và App Router. Định nghĩa rõ ranh giới giữa các layer: route, UI, business, data, auth, validation — giúp Agent luôn đi đúng kiến trúc.",
+    highlights: [
+      "6 layer kiến trúc rõ ràng: route, UI, business, data, auth, validation",
+      "Quy tắc cho API design, database schema, và contract",
+      "Giữ nguyên intent nghiệp vụ, không tự ý mở rộng scope",
+      "Quy tắc sửa đúng chỗ thay vì workaround tạm",
+    ],
+    usage: [
+      "Đặt file quy tắc vào thư mục docs/rules/ trong project",
+      "Copy toàn bộ nội dung quy tắc code vào prompt của AI Agent",
+      "Hoặc dùng tham chiếu đường dẫn: 'Đọc file docs/rules/quy-tac-code.md trước khi bắt đầu'",
+      "Agent sẽ tuân thủ kiến trúc layer, đặt code đúng vị trí, và không vi phạm convention",
+    ],
+    usageSteps: [
+      "Tải file quy tắc code.md",
+      "Đặt vào thư mục docs/rules/ trong project",
+      "Copy nội dung và paste vào prompt Agent",
+      "Bắt đầu code — Agent sẽ tự follow quy tắc",
+    ],
   },
   "cau-truc-thu-muc": {
     file: "docs/Next.js fullstack/Cấu trúc thư mục.md",
     name: "Cấu trúc thư mục Next.js fullstack",
-  },
-  "quy-tac-phan-tich": {
-    file: "docs/Chung/Quy tắc viết phân tích yêu cầu chức năng.md",
-    name: "Quy tắc viết phân tích yêu cầu chức năng",
+    category: "Cấu trúc thư mục",
+    iconName: "FolderTree",
+    iconBg: "bg-blue-500/10",
+    textColor: "text-blue-600 dark:text-blue-400",
+    border: "border-blue-500/20",
+    color: "from-blue-500/10 to-cyan-500/10",
+    overview: "Quy ước tổ chức thư mục chuẩn cho dự án Next.js fullstack. Định nghĩa cấu trúc route groups, cách đặt API routes, components, lib, types, và phân chia app/(public) vs app/(auth) vs app/(dashboard).",
+    highlights: [
+      "Cấu trúc route groups: public, auth, dashboard",
+      "Quy ước đặt tên file và thư mục",
+      "Tổ chức components, lib, types, hooks rõ ràng",
+      "Hướng dẫn phân chia server/client components",
+    ],
+    usage: [
+      "Dùng làm template cấu trúc khi bắt đầu dự án mới",
+      "Copy cấu trúc thư mục vào prompt để Agent biết đặt file ở đâu",
+      "Tham khảo khi tổ chức lại project có sẵn",
+    ],
+    usageSteps: [
+      "Tải file cấu trúc thư mục.md",
+      "Dùng làm blueprint khi tạo project mới",
+      "Copy phần cấu trúc vào prompt để Agent follow",
+    ],
   },
   "quy-tac-ke-hoach": {
     file: "docs/Chung/Quy tắc viết kế hoạch triển khai.md",
     name: "Quy tắc viết kế hoạch triển khai",
+    category: "Quy tắc",
+    iconName: "FileText",
+    iconBg: "bg-amber-500/10",
+    textColor: "text-amber-600 dark:text-amber-400",
+    border: "border-amber-500/20",
+    color: "from-amber-500/10 to-orange-500/10",
+    overview: "Hướng dẫn cách chuyển file phân tích yêu cầu thành thứ tự thực thi rõ ràng. Xác định phase triển khai, dependency giữa các phần, mức ưu tiên, và checkpoint kiểm tra cho từng giai đoạn.",
+    highlights: [
+      "Tách phase triển khai theo dependency rõ ràng",
+      "Xác định build order: foundation → core → support",
+      "Checkpoint kiểm tra sau mỗi phase",
+      "Không bịa thêm feature khi viết kế hoạch",
+    ],
+    usage: [
+      "Sau khi hoàn thành phân tích yêu cầu (bước 2 của workflow)",
+      "Dùng quy tắc này để chuyển spec thành kế hoạch triển khai",
+      "Mỗi phase có dependency rõ ràng, không nhảy cóc",
+    ],
+    usageSteps: [
+      "Hoàn thành file phân tích yêu cầu",
+      "Dùng quy tắc này để viết kế hoạch",
+      "Xác định từng phase và dependency",
+      "Đặt checkpoint sau mỗi phase",
+    ],
+  },
+  "quy-tac-phan-tich": {
+    file: "docs/Chung/Quy tắc viết phân tích yêu cầu chức năng.md",
+    name: "Quy tắc viết phân tích yêu cầu chức năng",
+    category: "Quy tắc",
+    iconName: "Search",
+    iconBg: "bg-emerald-500/10",
+    textColor: "text-emerald-600 dark:text-emerald-400",
+    border: "border-emerald-500/20",
+    color: "from-emerald-500/10 to-green-500/10",
+    overview: "Nguyên tắc phân tích yêu cầu trước khi viết prompt, trước khi code. Xác định actor, entity, ownership, permission, và build order ngay từ đầu để Agent không đi sai hướng.",
+    highlights: [
+      "Xác định actor: ai dùng, họ cần làm gì, quyền đến đâu",
+      "Xác định entity: dữ liệu liên quan, ownership, ràng buộc",
+      "Quy tắc phân biệt must-have, nice-to-have, out-of-scope",
+      "Xác định build order từ đầu",
+    ],
+    usage: [
+      "Là bước đầu tiên trước khi viết prompt cho dự án mới",
+      "Copy vào prompt để Agent hỏi đúng câu hỏi trước khi code",
+      "Kết hợp với quy tắc viết kế hoạch để hoàn thiện workflow",
+    ],
+    usageSteps: [
+      "Đọc quy tắc phân tích yêu cầu",
+      "Áp dụng framework Actor → Entity → Ownership → Permission",
+      "Viết file SPEC.md theo template có sẵn",
+      "Dùng kết quả để viết kế hoạch triển khai",
+    ],
   },
   "code-review-graph": {
     file: "docs/Chung/code-review-graph.md",
     name: "Code Review Graph",
+    category: "Skill",
+    iconName: "GitBranch",
+    iconBg: "bg-pink-500/10",
+    textColor: "text-pink-600 dark:text-pink-400",
+    border: "border-pink-500/20",
+    color: "from-pink-500/10 to-rose-500/10",
+    overview: "Công cụ code-review-graph giúp xây dựng bản đồ cấu trúc codebase bằng Tree-sitter, giúp AI hiểu nhanh mã nguồn mà không cần đọc lại toàn bộ code. Giảm ~8.2x token khi code review và tới 49x khi làm việc hàng ngày.",
+    highlights: [
+      "Cài đặt: Python 3.10+, pip install code-review-graph",
+      "Cấu trúc thư mục: docs/, rules/, graph/, output/",
+      "Cách khởi tạo, chạy parse, và query codebase",
+      "Query thực tế: function calls, imports, tests, dead code",
+    ],
+    usage: [
+      "Cài đặt code-review-graph trước khi bắt đầu dự án lớn",
+      "Parse codebase một lần, query nhiều lần — tiết kiệm token đáng kể",
+      "Dùng khi cần hiểu cấu trúc project, tìm dead code, phân tích dependencies",
+    ],
+    usageSteps: [
+      "Cài đặt: pip install code-review-graph",
+      "Chạy code-review-graph init để khởi tạo cấu trúc",
+      "Chạy parse để phân tích codebase",
+      "Dùng query để trích xuất thông tin cần thiết",
+    ],
+  },
+  "superpowers": {
+    file: "docs/Chung/Superpowers.md",
+    name: "Superpowers — Khung kỹ năng Agent",
+    category: "Skill",
+    iconName: "Sparkles",
+    iconBg: "bg-teal-500/10",
+    textColor: "text-teal-600 dark:text-teal-400",
+    border: "border-teal-500/20",
+    color: "from-teal-500/10 to-cyan-500/10",
+    overview: "Khung kỹ năng hoàn chỉnh cho coding agent, hoạt động trên Claude, Cursor, Codex, OpenCode, Gemini, Copilot. Bao gồm quy trình brainstorming → viết kế hoạch → implement → review. Skills trigger tự động, không cần gõ lệnh.",
+    highlights: [
+      "Hỗ trợ: Claude Code, Cursor, Codex, OpenCode, Gemini CLI, Copilot CLI",
+      "Skills tự động trigger: brainstorming, writing-plans, TDD, subagent-driven development",
+      "RED-GREEN-REFACTOR cycle: test trước, code sau, refactor sau",
+      "161k stars trên GitHub, MIT license",
+    ],
+    usage: [
+      "Cài đặt Superpowers plugin vào tool bạn đang dùng",
+      "Agent sẽ tự trigger đúng skill khi cần",
+      "Kết hợp với các quy tắc khác để tăng hiệu quả",
+    ],
+    usageSteps: [
+      "Truy cập https://github.com/obra/superpowers",
+      "Cài đặt theo hướng dẫn cho tool bạn dùng",
+      "Copy skills vào cấu hình Agent",
+      "Bắt đầu code — skills trigger tự động",
+    ],
   },
 };
 
 export function generateStaticParams() {
-  return Object.keys(resourceFiles).map((slug) => ({ slug }));
+  return Object.keys(resourceMeta).map((slug) => ({ slug }));
 }
 
-function getReadingTime(content: string): number {
-  const words = content.split(/\s+/).length;
-  return Math.ceil(words / 200);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const resource = resourceMeta[slug as keyof typeof resourceMeta];
+  if (!resource) return { title: "Tài nguyên không tồn tại" };
+  return {
+    title: resource.name,
+    description: resource.overview,
+  };
 }
 
 export default async function ResourceDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const resource = resourceFiles[slug as keyof typeof resourceFiles];
+  const resource = resourceMeta[slug as keyof typeof resourceMeta];
 
   if (!resource) {
     return (
@@ -59,7 +253,7 @@ export default async function ResourceDetailPage({ params }: PageProps) {
           <h1 className="text-2xl font-bold mb-2">Tài nguyên không tồn tại</h1>
           <p className="text-muted-foreground mb-6">Tài nguyên bạn đang tìm không có trong hệ thống.</p>
           <Link
-            href="/guide/resources"
+            href="/resources"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -76,22 +270,19 @@ export default async function ResourceDetailPage({ params }: PageProps) {
 
   try {
     const fileContent = fs.readFileSync(fullPath, "utf-8");
-    const { content: rawContent } = matter(fileContent);
-    content = rawContent;
+    content = fileContent;
   } catch {
     error = true;
   }
-
-  const readingTime = getReadingTime(content);
 
   return (
     <div className="min-h-screen">
       {/* Header */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-background to-purple-500/5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-purple-500/5" />
         <div className="relative w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <Link
-            href="/guide/resources"
+            href="/resources"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 group transition-colors"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -99,21 +290,18 @@ export default async function ResourceDetailPage({ params }: PageProps) {
           </Link>
 
           <div className="flex items-start gap-5">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
-              <BookOpen className="w-7 h-7 sm:w-8 sm:h-8 text-indigo-600 dark:text-indigo-400" />
+            <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center flex-shrink-0 ${resource.iconBg}`}>
+              <BookOpen className={`w-7 h-7 sm:w-8 sm:h-8 ${resource.textColor}`} />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 leading-tight">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className={`text-xs px-2 py-1 rounded-full ${resource.iconBg} ${resource.textColor} font-medium`}>
+                  {resource.category}
+                </span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
                 {resource.name}
               </h1>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  {readingTime} phút đọc
-                </span>
-                <span className="text-muted-foreground/50">|</span>
-                <span>Markdown</span>
-              </div>
             </div>
           </div>
         </div>
@@ -121,323 +309,146 @@ export default async function ResourceDetailPage({ params }: PageProps) {
 
       {/* Content */}
       <div className="w-full sm:max-w-[60%] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Actions */}
-        <div className="flex flex-wrap gap-3">
-          <a
-            href={`/api/download/doc?file=${encodeURIComponent(resource.file)}`}
-            download
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-500 text-white font-medium text-sm hover:bg-indigo-600 transition-colors"
-          >
-            <Download className="w-4 h-4" />
-            Tải file .md
-          </a>
-          <Link
-            href="/guide/resources"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-input bg-background font-medium text-sm hover:bg-muted transition-colors"
-          >
-            <ChevronRight className="w-4 h-4" />
-            Tài nguyên khác
-          </Link>
-        </div>
 
-        {/* Content */}
-        {error || !content ? (
-          <div className="p-8 text-center rounded-xl border bg-muted/30">
-            <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">Tài liệu đang được cập nhật.</p>
+        {/* Tổng quan */}
+        <section className="rounded-2xl border bg-card p-6">
+          <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
+            <BookOpen className={`w-5 h-5 ${resource.textColor}`} />
+            Tổng quan
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            {resource.overview}
+          </p>
+        </section>
+
+        {/* Nội dung chính */}
+        <section className="rounded-2xl border bg-card p-6">
+          <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <CheckCircle2 className={`w-5 h-5 ${resource.textColor}`} />
+            Nội dung chính
+          </h2>
+          <div className="space-y-3">
+            {resource.highlights.map((h, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${resource.textColor.replace("text-", "bg-")}`} />
+                <span className="text-sm leading-relaxed">{h}</span>
+              </div>
+            ))}
           </div>
-        ) : (
-          <div className="prose-custom">
-            <MarkdownRenderer content={content} />
+        </section>
+
+        {/* Hướng dẫn sử dụng */}
+        <section className="rounded-2xl border bg-card p-6">
+          <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <ArrowRight className={`w-5 h-5 ${resource.textColor}`} />
+            Cách sử dụng
+          </h2>
+
+          {/* Usage notes */}
+          <div className="grid sm:grid-cols-2 gap-3 mb-6">
+            {resource.usage.map((u, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
+                <CheckCircle2 className={`w-4 h-4 ${resource.textColor} flex-shrink-0 mt-0.5`} />
+                <span className="text-sm text-muted-foreground leading-relaxed">{u}</span>
+              </div>
+            ))}
           </div>
-        )}
+
+          {/* Steps */}
+          <div className="space-y-2">
+            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Các bước thực hiện</h3>
+            {resource.usageSteps.map((step, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div className={`w-6 h-6 rounded-full ${resource.iconBg} border ${resource.border} flex items-center justify-center flex-shrink-0`}>
+                  <span className={`text-xs font-bold ${resource.textColor}`}>{i + 1}</span>
+                </div>
+                <span className="text-sm leading-relaxed pt-1">{step}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Xem nội dung file */}
+        <MarkdownViewer
+          content={content}
+          error={error}
+          file={resource.file}
+          filePath={resource.file}
+          textColor={resource.textColor}
+          iconBg={resource.iconBg}
+          border={resource.border}
+        />
+
+        {/* File info & Download */}
+        <section className="rounded-2xl border bg-card p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Copy className="w-4 h-4 text-muted-foreground" />
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">File tài nguyên</h2>
+          </div>
+          <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border mb-4">
+            <span className="text-sm text-muted-foreground font-mono text-xs break-all">{resource.file}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <a
+              href={`/api/download/doc?file=${encodeURIComponent(resource.file)}`}
+              download
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Tải file .md
+            </a>
+            <Link
+              href="/resources"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-input bg-background font-medium text-sm hover:bg-muted transition-colors"
+            >
+              <ChevronRight className="w-4 h-4" />
+              Tài nguyên khác
+            </Link>
+          </div>
+        </section>
+
+        {/* Kết hợp với workflow */}
+        <section className="rounded-2xl border bg-gradient-to-br from-primary/5 to-purple-500/5 p-6">
+          <h2 className="text-lg font-bold mb-3">Kết hợp với workflow</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+            File tài nguyên này nằm trong quy trình làm việc với AI Agent. Dùng kết hợp với các bước khác để đạt hiệu quả cao nhất.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/guide/analysis"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-background border font-medium text-sm hover:bg-muted transition-colors"
+            >
+              Phân tích yêu cầu
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+            <Link
+              href="/guide/resources"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-background border font-medium text-sm hover:bg-muted transition-colors"
+            >
+              Hướng dẫn sử dụng tài nguyên
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+            <Link
+              href="/workflow"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-background border font-medium text-sm hover:bg-muted transition-colors"
+            >
+              Xem quy trình
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </section>
 
         {/* Footer nav */}
-        <div className="flex items-center justify-between pt-8 border-t">
+        <div className="flex items-center justify-between pt-4 border-t">
           <Link
-            href="/guide/resources"
+            href="/resources"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Quay về danh sách tài nguyên
           </Link>
-          <a
-            href={`/api/download/doc?file=${encodeURIComponent(resource.file)}`}
-            download
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Download className="w-4 h-4" />
-            Tải file
-          </a>
         </div>
       </div>
     </div>
   );
-}
-
-function MarkdownRenderer({ content }: { content: string }) {
-  const lines = content.split("\n");
-  const elements: React.ReactNode[] = [];
-  let i = 0;
-  let key = 0;
-
-  while (i < lines.length) {
-    const line = lines[i];
-
-    // Heading 1
-    if (line.startsWith("# ")) {
-      elements.push(
-        <h1 key={key++} className="text-3xl font-bold mt-10 mb-4 first:mt-0 pb-2 border-b">
-          {parseInline(line.slice(2))}
-        </h1>
-      );
-      i++;
-      continue;
-    }
-
-    // Heading 2
-    if (line.startsWith("## ")) {
-      elements.push(
-        <h2 key={key++} className="text-2xl font-bold mt-8 mb-4 pb-2 border-b">
-          {parseInline(line.slice(3))}
-        </h2>
-      );
-      i++;
-      continue;
-    }
-
-    // Heading 3
-    if (line.startsWith("### ")) {
-      elements.push(
-        <h3 key={key++} className="text-xl font-semibold mt-6 mb-3">
-          {parseInline(line.slice(4))}
-        </h3>
-      );
-      i++;
-      continue;
-    }
-
-    // Heading 4
-    if (line.startsWith("#### ")) {
-      elements.push(
-        <h4 key={key++} className="text-lg font-semibold mt-4 mb-2">
-          {parseInline(line.slice(5))}
-        </h4>
-      );
-      i++;
-      continue;
-    }
-
-    // Horizontal rule
-    if (line.trim() === "---" || line.trim() === "***" || line.trim() === "___") {
-      elements.push(<hr key={key++} className="my-8 border-border" />);
-      i++;
-      continue;
-    }
-
-    // Unordered list
-    if (line.startsWith("- ") || line.startsWith("* ")) {
-      const listItems: string[] = [];
-      while (i < lines.length && (lines[i].startsWith("- ") || lines[i].startsWith("* "))) {
-        listItems.push(lines[i].slice(2));
-        i++;
-      }
-      elements.push(
-        <ul key={key++} className="list-disc list-inside space-y-2 my-4 ml-4">
-          {listItems.map((item, idx) => (
-            <li key={idx} className="text-muted-foreground leading-relaxed">
-              {parseInline(item)}
-            </li>
-          ))}
-        </ul>
-      );
-      continue;
-    }
-
-    // Ordered list
-    if (/^\d+\.\s/.test(line)) {
-      const listItems: { num: string; text: string }[] = [];
-      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-        const match = lines[i].match(/^(\d+)\.\s(.*)$/);
-        if (match) listItems.push({ num: match[1], text: match[2] });
-        i++;
-      }
-      elements.push(
-        <ol key={key++} className="list-decimal list-inside space-y-2 my-4 ml-4">
-          {listItems.map((item, idx) => (
-            <li key={idx} className="text-muted-foreground leading-relaxed">
-              {parseInline(item.text)}
-            </li>
-          ))}
-        </ol>
-      );
-      continue;
-    }
-
-    // Code block
-    if (line.startsWith("```")) {
-      const lang = line.slice(3).trim();
-      const codeLines: string[] = [];
-      i++;
-      while (i < lines.length && !lines[i].startsWith("```")) {
-        codeLines.push(lines[i]);
-        i++;
-      }
-      elements.push(
-        <div key={key++} className="my-4 rounded-lg overflow-hidden border">
-          {lang && (
-            <div className="px-4 py-2 bg-muted text-xs font-mono text-muted-foreground border-b">
-              {lang}
-            </div>
-          )}
-          <pre className="p-4 bg-muted/50 overflow-x-auto">
-            <code className="text-sm font-mono">{codeLines.join("\n")}</code>
-          </pre>
-        </div>
-      );
-      i++;
-      continue;
-    }
-
-    // Blockquote
-    if (line.startsWith("> ")) {
-      const quoteLines: string[] = [];
-      while (i < lines.length && lines[i].startsWith("> ")) {
-        quoteLines.push(lines[i].slice(2));
-        i++;
-      }
-      elements.push(
-        <blockquote key={key++} className="my-4 pl-4 border-l-4 border-indigo-500/50 italic text-muted-foreground">
-          {quoteLines.map((q, idx) => (
-            <p key={idx} className="mb-1">{parseInline(q)}</p>
-          ))}
-        </blockquote>
-      );
-      continue;
-    }
-
-    // Table (simple support)
-    if (line.startsWith("|")) {
-      const tableLines: string[] = [];
-      while (i < lines.length && lines[i].startsWith("|")) {
-        tableLines.push(lines[i]);
-        i++;
-      }
-      elements.push(<TableRenderer key={key++} lines={tableLines} />);
-      continue;
-    }
-
-    // Empty line
-    if (line.trim() === "") {
-      i++;
-      continue;
-    }
-
-    // Regular paragraph
-    elements.push(
-      <p key={key++} className="text-muted-foreground leading-relaxed my-4">
-        {parseInline(line)}
-      </p>
-    );
-    i++;
-  }
-
-  return <>{elements}</>;
-}
-
-function TableRenderer({ lines }: { lines: string[] }) {
-  if (lines.length < 2) return null;
-
-  const rows = lines
-    .filter((l) => !l.replace(/\|/g, "").replace(/-/g, "").replace(/\s/g, ""))
-    .map((l) =>
-      l
-        .split("|")
-        .slice(1, -1)
-        .map((cell) => cell.trim())
-    );
-
-  if (rows.length < 2) return null;
-
-  const header = rows[0];
-  const body = rows.slice(1);
-
-  return (
-    <div className="my-4 overflow-x-auto">
-      <table className="w-full text-sm border-collapse">
-        <thead>
-          <tr className="border-b">
-            {header.map((cell, idx) => (
-              <th key={idx} className="text-left font-semibold px-3 py-2 text-foreground">
-                {parseInline(cell)}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {body.map((row, rowIdx) => (
-            <tr key={rowIdx} className="border-b last:border-0">
-              {row.map((cell, cellIdx) => (
-                <td key={cellIdx} className="px-3 py-2 text-muted-foreground">
-                  {parseInline(cell)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function parseInline(text: string): React.ReactNode {
-  if (!text) return text;
-  const parts: React.ReactNode[] = [];
-  let remaining = text;
-  let key = 0;
-
-  while (remaining.length > 0) {
-    // Inline code (must check first)
-    const codeMatch = remaining.match(/`([^`]+)`/);
-    if (codeMatch && codeMatch.index !== undefined) {
-      if (codeMatch.index > 0) {
-        parts.push(remaining.slice(0, codeMatch.index));
-      }
-      parts.push(
-        <code key={key++} className="px-1.5 py-0.5 rounded bg-muted text-primary text-sm font-mono">
-          {codeMatch[1]}
-        </code>
-      );
-      remaining = remaining.slice(codeMatch.index + codeMatch[0].length);
-      continue;
-    }
-
-    // Bold
-    const boldMatch = remaining.match(/\*\*([^*]+)\*\*/);
-    if (boldMatch && boldMatch.index !== undefined) {
-      if (boldMatch.index > 0) {
-        parts.push(remaining.slice(0, boldMatch.index));
-      }
-      parts.push(<strong key={key++} className="font-semibold">{boldMatch[1]}</strong>);
-      remaining = remaining.slice(boldMatch.index + boldMatch[0].length);
-      continue;
-    }
-
-    // Italic
-    const italicMatch = remaining.match(/\*([^*]+)\*/);
-    if (italicMatch && italicMatch.index !== undefined) {
-      if (italicMatch.index > 0) {
-        parts.push(remaining.slice(0, italicMatch.index));
-      }
-      parts.push(<em key={key++}>{italicMatch[1]}</em>);
-      remaining = remaining.slice(italicMatch.index + italicMatch[0].length);
-      continue;
-    }
-
-    // No more matches, push rest
-    parts.push(remaining);
-    break;
-  }
-
-  return parts.length === 1 ? parts[0] : <>{parts}</>;
 }
