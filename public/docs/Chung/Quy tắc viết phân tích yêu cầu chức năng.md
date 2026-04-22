@@ -496,3 +496,225 @@ Nguyên tắc viết file phân tích yêu cầu chức năng là:
 File này là nền để AI code đúng.
 Nếu file phân tích mơ hồ, prompt sẽ mơ hồ.
 Nếu prompt mơ hồ, code sẽ lệch scope, lệch quyền, lệch kiến trúc.
+
+---
+
+## 22. TEMPLATE THỰC HÀNH — VIẾT THEO FORMAT NÀY
+
+Đây là template bắt buộc. Dùng đúng cấu trúc này để không phải tự suy nghĩ format.
+
+```markdown
+# [Tên dự án]
+
+## 1. Tổng quan dự án
+Mô tả ngắn gọn: cái gì, cho ai, giải quyết vấn đề gì.
+Loại dự án: [web app / static site / API / CLI / mobile / ...]
+Tech stack gợi ý: [nếu đã biết, ghi sơ bộ]
+
+## 2. Scope
+### 2.1 Trong phạm vi (In Scope)
+Liệt kê những gì CÓ trong dự án.
+
+### 2.2 Ngoài phạm vi (Out of Scope)
+Liệt kê những gì KHÔNG làm. Quan trọng hơn cả "có gì".
+
+## 3. Actor chính
+### 3.1 [Tên Actor]
+- Mô tả: ai, vai trò gì
+- Quyền: liệt kê cụ thể
+- Flow chính: 3-5 bước
+
+## 4. Core Entities
+### 4.1 [Entity 1]
+- Mô tả: cái gì
+- Thuộc tính: field chính
+- Ai tạo / ai xem / ai sửa / ai xóa
+- Trạng thái chính
+
+## 5. Yêu cầu chức năng theo Actor
+### 5.1 [Actor] - [Module]
+| ID | Yêu cầu | Mô tả chi tiết |
+|----|----------|----------------|
+| XX-01 | [Mô tả ngắn] | [Actor] [action] [object] — kết quả mong đợi |
+
+**Luôn format:** [Actor] [động từ nghiệp vụ] [object] — [kết quả]
+
+## 6. Yêu cầu phi chức năng
+| ID | Yêu cầu | Tiêu chí đo lường |
+|----|----------|-------------------|
+| NF-01 | [Mô tả] | [concrete metric] |
+
+**BẮT BUỘC tách riêng bảng này với bảng yêu cầu chức năng. KHÔNG gộp chung.**
+
+## 7. Ownership và Permission
+| Entity | Ownership | Ai được xem | Ai được sửa |
+|--------|-----------|-------------|-------------|
+| [tên] | [ai sở hữu] | [ai xem] | [ai sửa] |
+
+Access Control:
+- Public: [routes không cần auth]
+- Protected: [routes cần auth]
+- Admin-only: [routes cần role admin]
+
+## 8. Actor Priority cho triển khai
+| Priority | Actor | Lý do |
+|----------|-------|-------|
+| 1 | [actor] | [vì sao trước] |
+| 2 | [actor] | [vì sao sau] |
+
+## 9. Build Order đề xuất
+1. Phase 1: [tên phase] — [mô tả]
+2. Phase 2: [tên phase] — [mô tả]
+
+## 10. Risk Areas
+| Risk | Mức độ | Mitigation |
+|------|--------|------------|
+| [mô tả rủi ro] | Low/Med/High | [cách giảm thiểu] |
+
+## 11. Assumptions
+| # | Assumption | Ghi chú |
+|---|-----------|---------|
+| 1 | [giả định] | [tại sao giả định] |
+
+## 12. Completion Criteria
+- [ ] [Tiêu chí 1]
+- [ ] [Tiêu chí 2]
+```
+
+---
+
+## 23. CHECKLIST ENFORCEABLE — TÁCH CHỨC NĂNG VÀ PHI CHỨC NĂNG
+
+Dùng checklist này sau khi viết xong, trước khi chuyển sang viết prompt.
+
+### Yêu cầu chức năng — mỗi row phải thỏa mãn TẤT CẢ:
+
+- [ ] **Format đúng:** `[Actor] [động từ] [object] — [kết quả]`
+  - ✅ "Admin tạo sản phẩm — sản phẩm xuất hiện trong danh sách"
+  - ❌ "Quản lý sản phẩm" (thiếu actor, thiếu kết quả)
+- [ ] **Có ID duy nhất** theo pattern: `[Actor]-[Module]-[số]`
+  - ✅ G-LP-01, A-PR-02, U-OR-03
+- [ ] **Mô tả đủ rõ để viết prompt từ đó** — nếu đọc mô tả mà không biết cần build gì = chưa đủ
+- [ ] **Có happy path + error path** — hoặc ghi rõ "chỉ có happy path"
+
+### Yêu cầu phi chức năng — mỗi row phải thỏa mãn TẤT CẢ:
+
+- [ ] **Có metric cụ thể** — không phải mô tả chung
+  - ✅ "API response time < 200ms với 1000 concurrent users"
+  - ❌ "Hệ thống phải nhanh" (không đo được)
+- [ ] **Nằm trong bảng riêng** — KHÔNG gộp chung với bảng chức năng
+- [ ] **Có category rõ** — Performance / Security / Accessibility / Scalability / UX
+
+### Lỗi thường gặp:
+
+| Lỗi | Cách phát hiện | Cách fix |
+|------|---------------|---------|
+| Gộp non-functional vào bảng functional | Có row "Scroll Animation" trong bảng Guest-Landing | Tách ra bảng riêng, ghi metric |
+| "Quản lý X" quá rộng | Không biết bao gồm những action nào | Tách thành nhiều row nhỏ |
+| Không có error path | Luôn nghĩ "thành công" | Thêm row riêng cho error cases |
+| Thiếu kết quả mong đợi | Không biết làm sao là "đúng" | Thêm "hệ thống trả về..." |
+
+---
+
+## 24. ADAPTATION CHO DỰ ÁN NHỎ / ĐƠN GIẢN
+
+Không phải dự án nào cũng cần đầy đủ 12 sections. Dùng guide này để biết giản lược thế nào cho phù hợp.
+
+### Loại dự án 1: Static Site / Docs / Landing Page
+
+(Không có auth, không có database, chỉ hiển thị content)
+
+**Có đủ:**
+- [x] Section 1: Tổng quan
+- [x] Section 2: Scope
+- [x] Section 3: Actors (thường chỉ có Guest + Admin đơn giản)
+- [x] Section 5: Requirements (theo actor)
+- [x] Section 9: Build Order
+
+**Có thể bỏ hoặc giản lược:**
+- [~] Section 4 (Entities) — chỉ cần entity "Page" và "Content" nếu cần
+- [~] Section 7 (Ownership) — chỉ cần 2 dòng: Guest đọc, Admin sửa qua code
+- [~] Section 8 (Actor Priority) — thường chỉ có 1 actor, không cần
+- [ ] Section 10 (Risks) — bỏ hẳn nếu dự án quá đơn giản
+- [ ] Section 11 (Assumptions) — bỏ nếu mọi thứ đã rõ ràng từ đầu
+- [ ] Section 6 (Non-functional) — giản lược chỉ còn 2-3 tiêu chí quan trọng
+
+**Cấu trúc tối thiểu cho static site:**
+```
+1. Tổng quan
+2. Scope (in/out)
+3. Actors (Guest + Admin)
+5. Requirements theo actor
+9. Build Order
+12. Completion Criteria
+```
+
+### Loại dự án 2: API / Backend Service
+
+(Có data, có logic, có nhiều endpoints)
+
+**Có đủ TẤT CẢ 12 sections** — không giản lược gì cả. Nhất là:
+- [x] Section 4 (Entities) — PHẢI CÓ, rất quan trọng cho contract
+- [x] Section 7 (Ownership) — PHẢI CÓ, dễ sai permission nhất
+- [x] Section 6 (Non-functional) — PHẢI CÓ, đặc biệt là performance/security
+
+### Loại dự án 3: Web App có Frontend + Backend
+
+**Có đủ:** Tất cả 12 sections
+
+**Đặc biệt chú ý:**
+- Section 4 (Entities) — cả BE entities lẫn FE data models
+- Section 7 (Ownership) — cả API permission lẫn FE route guards
+- Section 8 (Actor Priority) — quyết định thứ tự build rất quan trọng
+
+### Decision tree — Dùng cái nào?
+
+```
+Dự án là gì?
+├─ Static site / Docs / Landing
+│   └─ Dùng "Static Site" checklist → 6 sections tối thiểu
+├─ API / Backend Service
+│   └─ Dùng "API" checklist → 12 sections đầy đủ
+└─ Web App (FE + BE)
+    └─ Dùng "Web App" checklist → 12 sections đầy đủ
+```
+
+---
+
+## 25. KHI NÀO ĐƯỢC PHÉP BỎ QUA / GIẢN LƯỢC
+
+### LUÔN LUÔN PHẢI CÓ (không được bỏ)
+
+- [x] **Section 2 — Scope** — Bỏ = scope creep. Luôn viết cả "In Scope" và "Out of Scope".
+- [x] **Section 3 — Actors** — Bỏ = không biết ai dùng. Luôn xác định actor trước.
+- [x] **Section 5 — Requirements theo actor** — Bỏ = miss requirements. Đây là phần quan trọng nhất.
+- [x] **Section 9 — Build Order** — Bỏ = build lung tung. Luôn có thứ tự rõ ràng.
+
+### ĐƯỢC PHÉP BỎ hoặc GIẢN LƯỢC (tùy dự án)
+
+| Section | Khi nào được bỏ | Khi nào được giản lược | Khi nào phải đầy đủ |
+|---------|-----------------|----------------------|---------------------|
+| **4. Entities** | Static site không có data model phức tạp | Chỉ cần 1-2 entity chính | API / app có nhiều model |
+| **6. Non-functional** | Dự án cá nhân < 1 tuần | Chỉ 2-3 tiêu chí quan trọng | Có khách hàng / stakeholder |
+| **7. Ownership** | Public-only, không có permission | Guest/Admin 2 dòng đơn giản | Có multiple roles / ownership phức tạp |
+| **8. Actor Priority** | Chỉ có 1 actor duy nhất | 2 actors, lý do đơn giản | Nhiều actors, phụ thuộc lẫn nhau |
+| **10. Risks** | Dự án quen thuộc, công nghệ đã biết | 2-3 risks chính | Công nghệ mới / team mới |
+| **11. Assumptions** | Mọi thứ đã rõ ràng từ spec | 2-3 assumptions chính | Đầu vào mơ hồ, nhiều thứ phải đoán |
+| **12. Completion** | Dự án nhỏ, tự làm | Chỉ 5 tiêu chí chính | Có stakeholder cần验收 |
+
+### Nguyên tắc quyết định
+
+**Bỏ khi:**
+- Dự án < 1 tuần
+- Không có stakeholder bên ngoài
+- Công nghệ và scope đã quen thuộc
+- Mọi thứ rõ ràng từ đầu, không cần assumption
+
+**Không bỏ khi:**
+- Dự án > 1 tuần
+- Có người khác review / contribute
+- Công nghệ mới hoặc chưa quen
+- Nhiều actors và permissions phức tạp
+
+**Nguyên tắc vàng:**
+> Nếu bạn không biết có nên bỏ hay không — **ĐỪNG BỎ**. Giản lược bao giờ cũng tốt hơn thiếu.
