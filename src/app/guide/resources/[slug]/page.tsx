@@ -264,7 +264,10 @@ export default async function ResourceDetailPage({ params }: PageProps) {
     );
   }
 
-  const fullPath = path.join(process.cwd(), resource.file);
+  const resourceFile = resource.file.startsWith("docs/")
+    ? resource.file.slice(5)
+    : resource.file;
+  const fullPath = path.join(process.cwd(), "public", "docs", resourceFile);
   let content = "";
   let error = false;
 

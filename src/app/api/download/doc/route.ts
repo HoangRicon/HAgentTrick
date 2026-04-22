@@ -10,14 +10,17 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Missing file parameter" }, { status: 400 });
   }
 
-  // Decode the file path
   const filePath = decodeURIComponent(fileParam);
 
-  // Security: ensure the file is within the project
-  const projectRoot = path.join(process.cwd());
-  const fullPath = path.join(projectRoot, filePath);
+  // Strip "docs/" prefix if present (URLs use "docs/..." but files are at public/docs/...)
+  const relativeFile = filePath.startsWith("docs/")
+    ? filePath.slice(5)
+    : filePath;
 
-  // Prevent directory traversal
+  // Serve from public/docs/ directory (works on both localhost and Vercel)
+  const projectRoot = path.join(process.cwd(), "public");
+  const fullPath = path.join(projectRoot, "docs", relativeFile);
+
   if (!fullPath.startsWith(projectRoot)) {
     return NextResponse.json({ error: "Invalid file path" }, { status: 403 });
   }
@@ -29,7 +32,6 @@ export async function GET(request: NextRequest) {
   const content = fs.readFileSync(fullPath);
   const filename = path.basename(fullPath);
 
-  // RFC 5987: percent-encode filename for ASCII-safe Content-Disposition header
   const asciiFilename = encodeURIComponent(filename);
 
   return new NextResponse(content, {
