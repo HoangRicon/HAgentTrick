@@ -269,33 +269,19 @@ export function MarkdownViewer({
 
   return (
     <div className="rounded-2xl border bg-card overflow-hidden">
-      {/* Header - luôn hiển thị */}
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="w-full px-6 py-4 border-b flex items-center justify-between hover:bg-muted/30 transition-colors text-left"
-      >
-        <div className="flex items-center gap-3">
-          <FileText className={cn("w-5 h-5", textColor)} />
-          <div>
+      {/* Header */}
+      <div className="px-6 py-4 border-b flex items-center justify-between gap-4">
+        <button
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="flex items-center gap-3 hover:bg-muted/30 transition-colors text-left flex-1 min-w-0"
+        >
+          <FileText className={cn("w-5 h-5 flex-shrink-0", textColor)} />
+          <div className="min-w-0">
             <h2 className="font-bold text-base">Nội dung file</h2>
-            <p className="text-xs text-muted-foreground font-mono">{filePath}</p>
+            <p className="text-xs text-muted-foreground font-mono truncate">{filePath}</p>
           </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <a
-            href={`/api/download/doc?file=${encodeURIComponent(file)}`}
-            download
-            className={cn(
-              "inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors",
-              "bg-primary text-primary-foreground hover:bg-primary/90"
-            )}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Download className="w-4 h-4" />
-            Tải file
-          </a>
           <div className={cn(
-            "flex items-center gap-1 px-3 py-2 rounded-lg border text-sm font-medium transition-colors",
+            "flex items-center gap-1 px-3 py-2 rounded-lg border text-sm font-medium transition-colors flex-shrink-0",
             isOpen ? "border-primary/30 bg-primary/5 text-primary" : "border-input bg-background text-muted-foreground"
           )}>
             {isOpen ? (
@@ -310,8 +296,21 @@ export function MarkdownViewer({
               </>
             )}
           </div>
-        </div>
-      </button>
+        </button>
+
+        {/* Download button — outside the <button> to avoid nested interactive element */}
+        <a
+          href={`/api/download/doc?file=${encodeURIComponent(file)}`}
+          download
+          className={cn(
+            "inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors flex-shrink-0",
+            "bg-primary text-primary-foreground hover:bg-primary/90"
+          )}
+        >
+          <Download className="w-4 h-4" />
+          Tải file
+        </a>
+      </div>
 
       {/* Body - chỉ hiện khi bấm */}
       {isOpen && (
