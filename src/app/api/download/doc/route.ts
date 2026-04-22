@@ -29,10 +29,13 @@ export async function GET(request: NextRequest) {
   const content = fs.readFileSync(fullPath);
   const filename = path.basename(fullPath);
 
+  // RFC 5987: percent-encode filename for ASCII-safe Content-Disposition header
+  const asciiFilename = encodeURIComponent(filename);
+
   return new NextResponse(content, {
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
-      "Content-Disposition": `attachment; filename="${filename}"`,
+      "Content-Disposition": `attachment; filename="${asciiFilename}"; filename*=UTF-8''${asciiFilename}`,
     },
   });
 }

@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { BookOpen, ArrowLeft, Download, ChevronRight, CheckCircle2, Copy, ArrowRight } from "lucide-react";
+import { BookOpen, ArrowLeft, ChevronRight, CheckCircle2, ArrowRight } from "lucide-react";
 import { MarkdownViewer } from "./markdown-viewer";
 
 interface PageProps {
@@ -376,36 +376,7 @@ export default async function ResourceDetailPage({ params }: PageProps) {
           filePath={resource.file}
           textColor={resource.textColor}
           iconBg={resource.iconBg}
-          border={resource.border}
         />
-
-        {/* File info & Download */}
-        <section className="rounded-2xl border bg-card p-6">
-          <div className="flex items-center gap-2 mb-3">
-            <Copy className="w-4 h-4 text-muted-foreground" />
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">File tài nguyên</h2>
-          </div>
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border mb-4">
-            <span className="text-sm text-muted-foreground font-mono text-xs break-all">{resource.file}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <a
-              href={`/api/download/doc?file=${encodeURIComponent(resource.file)}`}
-              download
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
-            >
-              <Download className="w-4 h-4" />
-              Tải file .md
-            </a>
-            <Link
-              href="/resources"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-input bg-background font-medium text-sm hover:bg-muted transition-colors"
-            >
-              <ChevronRight className="w-4 h-4" />
-              Tài nguyên khác
-            </Link>
-          </div>
-        </section>
 
         {/* Kết hợp với workflow */}
         <section className="rounded-2xl border bg-gradient-to-br from-primary/5 to-purple-500/5 p-6">
