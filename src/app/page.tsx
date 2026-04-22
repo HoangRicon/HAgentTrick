@@ -209,6 +209,14 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
             <Link
+              href="/guide/superpowers"
+              className="group inline-flex items-center gap-2.5 h-12 px-7 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold text-sm shadow-lg shadow-teal-500/20 hover:shadow-xl hover:shadow-teal-500/30 hover:opacity-95 transition-all duration-300"
+            >
+              <Sparkles className="w-4.5 h-4.5" />
+              Superpowers
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+            </Link>
+            <Link
               href="/resources"
               className="group inline-flex items-center gap-2.5 h-12 px-7 rounded-xl border border-border bg-background font-semibold text-sm hover:border-primary/30 hover:bg-accent transition-all duration-300"
             >
