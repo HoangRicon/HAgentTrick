@@ -17,10 +17,25 @@ import {
 
 export const metadata: Metadata = {
   title: "Hướng dẫn",
-  description: "Các hướng dẫn sử dụng AI Agent: tạo bộ luật với GPT RULES, dùng AI nghiên cứu, phân tích yêu cầu với AI BA, viết prompt chuẩn, quy trình thực chiến, và sử dụng tài nguyên.",
+  description: "Các hướng dẫn sử dụng AI Agent: Superpowers skills framework, tạo bộ luật với GPT RULES, dùng AI nghiên cứu, phân tích yêu cầu với AI BA, viết prompt chuẩn, quy trình thực chiến, và sử dụng tài nguyên.",
 };
 
 const guideSections = [
+  {
+    num: "SP",
+    icon: Sparkles,
+    href: "/guide/superpowers",
+    color: "teal",
+    title: "Superpowers — Khung kỹ năng Agent",
+    desc: "Quy trình 7 bước: brainstorming → plans → TDD → verify → review. Skills trigger tự động. Hoạt động trên Cursor, Claude Code, Codex, Gemini, Copilot.",
+    highlights: [
+      "5 triết lý: TDD, Systematic, YAGNI, Evidence, Clarify",
+      "11 skills: testing, debugging, collaboration, meta",
+      "Skills trigger tự động — không cần gõ lệnh",
+      "Cross-platform: 1 bộ skills cho 6 tool",
+    ],
+    badge: "Mới",
+  },
   {
     num: "01",
     icon: Wand2,
@@ -125,6 +140,7 @@ const colorMap: Record<string, { bg: string; text: string; border: string; iconB
   amber: { bg: "bg-amber-500/5", text: "text-amber-600 dark:text-amber-400", border: "hover:border-amber-500/40", iconBg: "bg-amber-500/10", glow: "hover:shadow-amber-500/10", badge: "bg-amber-500/10", badgeText: "text-amber-600 dark:text-amber-400" },
   cyan: { bg: "bg-cyan-500/5", text: "text-cyan-600 dark:text-cyan-400", border: "hover:border-cyan-500/40", iconBg: "bg-cyan-500/10", glow: "hover:shadow-cyan-500/10", badge: "bg-cyan-500/10", badgeText: "text-cyan-600 dark:text-cyan-400" },
   rose: { bg: "bg-rose-500/5", text: "text-rose-600 dark:text-rose-400", border: "hover:border-rose-500/40", iconBg: "bg-rose-500/10", glow: "hover:shadow-rose-500/10", badge: "bg-rose-500/10", badgeText: "text-rose-600 dark:text-rose-400" },
+  teal: { bg: "bg-teal-500/5", text: "text-teal-600 dark:text-teal-400", border: "hover:border-teal-500/40", iconBg: "bg-teal-500/10", glow: "hover:shadow-teal-500/10", badge: "bg-teal-500/10", badgeText: "text-teal-600 dark:text-teal-400" },
 };
 
 const accentGradientMap: Record<string, string> = {
@@ -134,6 +150,7 @@ const accentGradientMap: Record<string, string> = {
   amber: "from-amber-600 to-amber-400",
   cyan: "from-cyan-600 to-cyan-400",
   rose: "from-rose-600 to-rose-400",
+  teal: "from-teal-600 to-teal-400",
 };
 
 export default function GuidePage() {

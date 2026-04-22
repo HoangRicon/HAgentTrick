@@ -27,6 +27,24 @@ import {
   MessageSquare,
   Terminal,
   FileSearch,
+  GitBranch,
+  Play,
+  CheckSquare,
+  Bug,
+  AlertTriangle,
+  Target,
+  Cpu,
+  Users,
+  Check,
+  X,
+  Clock,
+  RefreshCw,
+  PlayCircle,
+  Wrench,
+  ShieldCheck,
+  Eye,
+  ListChecks,
+  ArrowDown,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -35,6 +53,14 @@ export const metadata: Metadata = {
 };
 
 const workflowResources = [
+  {
+    phase: "Quy trình Agent",
+    icon: Sparkles,
+    color: "teal",
+    resources: [
+      { name: "Superpowers", file: "docs/Chung/Superpowers.md", desc: "Khung kỹ năng Agent: brainstorming → plans → TDD → verify → review" },
+    ],
+  },
   {
     phase: "Phân tích",
     icon: Search,
@@ -78,6 +104,7 @@ const colorMap: Record<string, { bg: string; text: string; border: string }> = {
   cyan: { bg: "bg-cyan-500/10", text: "text-cyan-600 dark:text-cyan-400", border: "border-cyan-500/20" },
   amber: { bg: "bg-amber-500/10", text: "text-amber-600 dark:text-amber-400", border: "border-amber-500/20" },
   pink: { bg: "bg-pink-500/10", text: "text-pink-600 dark:text-pink-400", border: "border-pink-500/20" },
+  teal: { bg: "bg-teal-500/10", text: "text-teal-600 dark:text-teal-400", border: "border-teal-500/20" },
 };
 
 const howToUseItems = [
@@ -774,6 +801,367 @@ export default function ResourcesGuidePage() {
                     );
                   })}
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ========== PHẦN MỚI: SUPERPOWERS — HƯỚNG DẪN CHI TIẾT ========== */}
+
+        {/* Superpowers Hero */}
+        <section>
+          <div className="rounded-3xl border border-teal-500/20 bg-gradient-to-br from-teal-500/5 via-background to-cyan-500/5 overflow-hidden">
+            {/* Header */}
+            <div className="p-6 sm:p-8 border-b border-border/50">
+              <div className="flex items-start gap-5">
+                <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center shrink-0">
+                  <Sparkles className="w-8 h-8 text-teal-500" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-teal-500 text-white">SKILL FRAMEWORK</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">161k Stars</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">MIT License</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-1.5">Superpowers — Khung kỹ năng Agent</h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-3xl">
+                    Không phải tool. Là bộ quy trình giúp coding agent tự biết khi nào cần{" "}
+                    <strong className="text-foreground">hỏi trước</strong>, khi nào cần{" "}
+                    <strong className="text-foreground">lên kế hoạch</strong>, khi nào cần{" "}
+                    <strong className="text-foreground">viết test trước</strong>, khi nào cần{" "}
+                    <strong className="text-foreground">verify trước khi claim thành công</strong>.
+                    Skills trigger tự động — không cần gõ lệnh.
+                  </p>
+                </div>
+                <a
+                  href="https://github.com/obra/superpowers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:inline-flex items-center gap-1.5 h-10 px-5 rounded-xl bg-teal-500 text-white text-sm font-semibold hover:bg-teal-600 transition-all shrink-0"
+                >
+                  <GitBranch className="w-4 h-4" />
+                  GitHub
+                  <ExternalLink className="w-3 h-3 opacity-70" />
+                </a>
+              </div>
+            </div>
+
+            {/* So sánh Workflow */}
+            <div className="p-6 sm:p-8 border-b border-border/50">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Công dụng thần kỳ — So sánh trước và sau</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* Workflow THƯỜNG */}
+                <div className="rounded-xl border border-red-500/20 bg-red-500/5 overflow-hidden">
+                  <div className="px-4 py-2.5 border-b border-red-500/10 bg-red-500/10">
+                    <div className="flex items-center gap-2">
+                      <X className="w-4 h-4 text-red-500" />
+                      <span className="text-xs font-bold text-red-600 dark:text-red-400">Không dùng Superpowers</span>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-2.5">
+                    {[
+                      { step: "1", text: "Bạn: \"Thêm chức năng login\"", color: "text-muted-foreground" },
+                      { step: "2", text: "Agent: Viết code luôn", color: "text-red-600 dark:text-red-400" },
+                      { step: "3", text: "Bạn: \"Sai rồi, cần thêm OAuth\"", color: "text-muted-foreground" },
+                      { step: "4", text: "Agent: Thêm OAuth, break something", color: "text-red-600 dark:text-red-400" },
+                      { step: "5", text: "Bạn: \"Bug rồi, revert đi\"", color: "text-muted-foreground" },
+                      { step: "...", text: "Lặp đi lặp lại, tốn thời gian", color: "text-red-500" },
+                    ].map((item) => (
+                      <div key={item.step} className="flex items-start gap-2.5">
+                        <div className="w-5 h-5 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                          <span className="text-[9px] font-bold text-red-500">{item.step}</span>
+                        </div>
+                        <span className={`text-xs leading-relaxed ${item.color}`}>{item.text}</span>
+                      </div>
+                    ))}
+                    <div className="pt-2 border-t border-red-500/10">
+                      <div className="flex items-center gap-1.5 text-xs text-red-600 dark:text-red-400 font-medium">
+                        <AlertTriangle className="w-3.5 h-3.5" />
+                        Sai scope, nhiều rework, tốn thời gian
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Workflow SUPERPOWERS */}
+                <div className="rounded-xl border border-green-500/20 bg-green-500/5 overflow-hidden">
+                  <div className="px-4 py-2.5 border-b border-green-500/10 bg-green-500/10">
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-green-500" />
+                      <span className="text-xs font-bold text-green-600 dark:text-green-400">Dùng Superpowers</span>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-2.5">
+                    {[
+                      { step: "1", text: "Bạn: \"Thêm chức năng login\"", color: "text-muted-foreground" },
+                      { step: "2", text: "Agent (brainstorming): \"OAuth hay email/password?\"", color: "text-green-600 dark:text-green-400" },
+                      { step: "3", text: "Bạn: \"Chỉ email/password\"", color: "text-muted-foreground" },
+                      { step: "4", text: "Agent: Trình bày thiết kế → Bạn approve", color: "text-green-600 dark:text-green-400" },
+                      { step: "5", text: "Agent (plans): \"8 tasks, mỗi task 2-5 phút\"", color: "text-green-600 dark:text-green-400" },
+                      { step: "6", text: "Agent (TDD): RED → GREEN → REFACTOR", color: "text-green-600 dark:text-green-400" },
+                    ].map((item) => (
+                      <div key={item.step} className="flex items-start gap-2.5">
+                        <div className="w-5 h-5 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                          <span className="text-[9px] font-bold text-green-500">{item.step}</span>
+                        </div>
+                        <span className={`text-xs leading-relaxed ${item.color}`}>{item.text}</span>
+                      </div>
+                    ))}
+                    <div className="pt-2 border-t border-green-500/10">
+                      <div className="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400 font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Đúng scope, ít rework, tiết kiệm thời gian
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 5 triết lý cốt lõi */}
+            <div className="p-6 sm:p-8 border-b border-border/50">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">5 triết lý cốt lõi</h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {[
+                  { icon: Target, title: "TDD", subtitle: "Test-Driven Development", desc: "Viết test trước. Luôn luôn. RED → GREEN → REFACTOR.", color: "teal" },
+                  { icon: BrainCircuit, title: "Systematic", subtitle: "Quy trình hơn đoán mò", desc: "Debug có 4 giai đoạn. Fix có root cause trước.", color: "cyan" },
+                  { icon: Layers, title: "YAGNI", subtitle: "Đơn giản là mục tiêu", desc: "Không thêm feature vì 'tiện tay'. Không abstraction sớm.", color: "emerald" },
+                  { icon: Eye, title: "Evidence", subtitle: "Verify trước khi claim", desc: "Chưa run command → Không claim kết quả. Evidence always.", color: "amber" },
+                  { icon: MessageSquare, title: "Clarify", subtitle: "Hỏi trước khi làm", desc: "Brainstorming: 1-2 câu hỏi tránh sai scope cả giờ.", color: "violet" },
+                ].map((item) => {
+                  const colorMapLocal: Record<string, { bg: string; text: string; border: string }> = {
+                    teal: { bg: "bg-teal-500/10", text: "text-teal-600 dark:text-teal-400", border: "border-teal-500/20" },
+                    cyan: { bg: "bg-cyan-500/10", text: "text-cyan-600 dark:text-cyan-400", border: "border-cyan-500/20" },
+                    emerald: { bg: "bg-emerald-500/10", text: "text-emerald-600 dark:text-emerald-400", border: "border-emerald-500/20" },
+                    amber: { bg: "bg-amber-500/10", text: "text-amber-600 dark:text-amber-400", border: "border-amber-500/20" },
+                    violet: { bg: "bg-violet-500/10", text: "text-violet-600 dark:text-violet-400", border: "border-violet-500/20" },
+                  };
+                  const c = colorMapLocal[item.color];
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.title} className={`rounded-xl border ${c.border} bg-card p-4 hover:shadow-md transition-shadow`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className={`w-7 h-7 rounded-lg ${c.bg} flex items-center justify-center`}>
+                          <Icon className={`w-3.5 h-3.5 ${c.text}`} />
+                        </div>
+                        <div>
+                          <div className={`text-sm font-bold ${c.text}`}>{item.title}</div>
+                          <div className="text-[10px] text-muted-foreground">{item.subtitle}</div>
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Quy trình 7 bước */}
+            <div className="p-6 sm:p-8 border-b border-border/50">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Quy trình 7 bước làm việc</h3>
+              <div className="space-y-3">
+                {[
+                  { num: 1, name: "Brainstorming", skill: "brainstorming", desc: "Agent hỏi Socratic để hiểu rõ yêu cầu. Trình bày thiết kế thành từng phần nhỏ để bạn xác nhận.", color: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20", trigger: "Bạn nói \"Thêm tính năng X\", \"Build Y\", \"Tạo Z\"" },
+                  { num: 2, name: "Git Worktrees", skill: "using-git-worktrees", desc: "Tạo workspace cô lập trên branch mới. Setup project, verify baseline sạch.", color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20", trigger: "Sau khi design được approve" },
+                  { num: 3, name: "Writing Plans", skill: "writing-plans", desc: "Break work thành task nhỏ 2-5 phút. Mỗi task có: file path + code + verification step.", color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20", trigger: "Khi design được approve" },
+                  { num: 4, name: "Subagent-Driven / Executing Plans", skill: "subagent-driven-development", desc: "Dispatch agent con cho từng task. Review 2 giai đoạn: spec compliance → code quality. Checkpoint giữa các task.", color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20", trigger: "Khi có plan" },
+                  { num: 5, name: "Test-Driven Development", skill: "test-driven-development", desc: "RED: viết test fail. GREEN: viết code minimal cho test pass. REFACTOR: dọn code. Commit.", color: "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20", trigger: "Khi implement từng task" },
+                  { num: 6, name: "Requesting Code Review", skill: "requesting-code-review", desc: "Review dựa trên plan. Báo cáo issue theo mức độ nghiêm trọng. Critical → block tiến độ.", color: "bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/20", trigger: "Giữa các task" },
+                  { num: 7, name: "Finishing Development Branch", skill: "finishing-a-development-branch", desc: "Verify tests. Trình bày options: merge / PR / keep / discard. Cleanup worktree.", color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20", trigger: "Khi tasks hoàn tất" },
+                ].map((step, i) => (
+                  <div key={step.num} className="flex items-start gap-4">
+                    <div className={`w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 bg-gradient-to-br ${step.color}`}>
+                      <span className="text-xs font-bold">{step.num}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                        <span className="text-sm font-bold">{step.name}</span>
+                        <code className="text-[10px] font-mono bg-muted px-1.5 py-0.5 rounded">{step.skill}</code>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed mb-1">{step.desc}</p>
+                      <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                        <Target className="w-3 h-3 text-teal-500" />
+                        <span className="font-medium text-muted-foreground">Trigger:</span>
+                        <span>{step.trigger}</span>
+                      </div>
+                    </div>
+                    {i < 6 && (
+                      <div className="absolute left-[22px] sm:left-[26px] mt-8 w-px h-3 bg-border/50" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Thư viện skills chi tiết */}
+            <div className="p-6 sm:p-8 border-b border-border/50">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Thư viện Skills — Chi tiết từng skill</h3>
+              <div className="space-y-4">
+                {[
+                  {
+                    category: "Testing",
+                    icon: Bug,
+                    color: "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20",
+                    skills: [
+                      { name: "test-driven-development", desc: "RED-GREEN-REFACTOR cycle. Viết test trước, code sau, refactor sau. Đi kèm testing-anti-patterns reference.", benefit: "95% first-time fix rate vs 40%" },
+                    ],
+                  },
+                  {
+                    category: "Debugging",
+                    icon: Bug,
+                    color: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20",
+                    skills: [
+                      { name: "systematic-debugging", desc: "Root cause 4 giai đoạn: đọc lỗi → reproduce → check changes → trace data. Đi kèm root-cause-tracing, defense-in-depth, condition-based-waiting.", benefit: "15-30 phút fix vs 2-3 giờ guesswork" },
+                      { name: "verification-before-completion", desc: "Evidence before claims. Không claim 'xong' khi chưa run verification command. Gate: IDENTIFY → RUN → READ → VERIFY → THEN claim.", benefit: "Không còn 'Tưởng xong rồi'" },
+                    ],
+                  },
+                  {
+                    category: "Collaboration",
+                    icon: Users,
+                    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20",
+                    skills: [
+                      { name: "brainstorming", desc: "Đặt câu hỏi Socratic để tinh chỉnh thiết kế. 1 câu mỗi lượt. Nhiều lựa chọn kèm trade-offs. Đi kèm visual-companion.", benefit: "Tránh sai scope từ đầu" },
+                      { name: "writing-plans", desc: "Break work thành task nhỏ 2-5 phút. Mỗi task có file path + complete code + verification command. No placeholders.", benefit: "Junior engineer có thể follow" },
+                      { name: "subagent-driven-development", desc: "Dispatch fresh subagent cho từng task. Two-stage review: spec compliance → code quality. Checkpoint giữa các task.", benefit: "Fast iteration, autonomous trong vài giờ" },
+                      { name: "dispatching-parallel-agents", desc: "Nhiều agent đồng thời cho independent tasks. Review sau mỗi batch.", benefit: "Tiết kiệm thời gian với nhiều task" },
+                      { name: "requesting-code-review", desc: "Review checklist: scope, layer, contract, permission, shared surface, test coverage, docs. Báo cáo theo mức độ nghiêm trọng.", benefit: "Không bỏ sót lỗi trước khi merge" },
+                      { name: "receiving-code-review", desc: "Nhận feedback có tính kỹ thuật. Verify trước khi accept. Không accept mù quáng.", benefit: "Feedback chất lượng" },
+                      { name: "using-git-worktrees", desc: "Workspace cô lập trên branch mới. Không conflict với work đang làm. Cleanup khi xong.", benefit: "An toàn khi experiment" },
+                      { name: "finishing-a-development-branch", desc: "Verify tests. Present options: merge / PR / keep / discard. Cleanup worktree.", benefit: "Sạch sẽ, không遗留" },
+                    ],
+                  },
+                  {
+                    category: "Meta",
+                    icon: Wrench,
+                    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+                    skills: [
+                      { name: "writing-skills", desc: "Tạo skill mới theo best practices. TDD cho documentation: viết test → viết skill → verify → close loopholes. Đi kèm testing methodology.", benefit: "Tự tạo workflow riêng" },
+                      { name: "using-superpowers", desc: "Giới thiệu hệ thống skills. Tự động trigger khi phù hợp. Không cần gõ lệnh.", benefit: "Skills tự tìm bạn" },
+                    ],
+                  },
+                ].map((group) => {
+                  const Icon = group.icon;
+                  return (
+                    <div key={group.category} className="rounded-xl border bg-card overflow-hidden">
+                      <div className={`flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r ${group.color} bg-opacity-5 border-b border-border/50`}>
+                        <Icon className="w-4 h-4" />
+                        <span className="text-xs font-bold">{group.category}</span>
+                      </div>
+                      <div className="divide-y divide-border/50">
+                        {group.skills.map((skill) => (
+                          <div key={skill.name} className="px-4 py-3 flex items-start gap-3">
+                            <code className="font-mono text-[10px] bg-muted px-1.5 py-1 rounded border shrink-0 mt-0.5">{skill.name}</code>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs text-muted-foreground leading-relaxed">{skill.desc}</p>
+                              <div className="flex items-center gap-1.5 mt-1.5">
+                                <Sparkles className="w-3 h-3 text-teal-500" />
+                                <span className="text-[10px] font-medium text-teal-600 dark:text-teal-400">{skill.benefit}</span>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Cài đặt theo từng tool */}
+            <div className="p-6 sm:p-8 border-b border-border/50">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Cài đặt Superpowers — Theo từng tool</h3>
+              <div className="space-y-2">
+                {[
+                  { tool: "Cursor", cmd: "/add-plugin superpowers", note: "Hoặc tìm 'superpowers' trong plugin marketplace", color: "violet" },
+                  { tool: "Claude Code", cmd: "/plugin install superpowers@claude-plugins-official", note: "Marketplace chính thức Anthropic", color: "amber" },
+                  { tool: "Codex CLI", cmd: "/plugins → tìm Superpowers → Install Plugin", note: "OpenAI's coding agent", color: "green" },
+                  { tool: "Copilot CLI", cmd: "copilot plugin install superpowers@superpowers-marketplace", note: "GitHub Copilot agent mode", color: "blue" },
+                  { tool: "Gemini CLI", cmd: "gemini extensions install https://github.com/obra/superpowers", note: "Google's agent CLI", color: "cyan" },
+                  { tool: "OpenCode", cmd: "Tham khảo .opencode/INSTALL.md trên GitHub repo", note: "OpenSource coding agent", color: "pink" },
+                ].map((item) => {
+                  const colorMapLocal: Record<string, string> = {
+                    violet: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+                    amber: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+                    green: "bg-green-500/10 text-green-600 dark:text-green-400",
+                    blue: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+                    cyan: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+                    pink: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
+                  };
+                  return (
+                    <div key={item.tool} className="flex items-center gap-3 px-4 py-2.5 rounded-xl border bg-card">
+                      <span className={`w-20 text-xs font-bold shrink-0 ${colorMapLocal[item.color]}`}>{item.tool}</span>
+                      <code className="flex-1 text-xs font-mono text-muted-foreground truncate">{item.cmd}</code>
+                      <span className="text-[10px] text-muted-foreground shrink-0 hidden sm:block">{item.note}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 3 điều đặc biệt */}
+            <div className="p-6 sm:p-8 border-b border-border/50">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">3 điều đặc biệt của Superpowers</h3>
+              <div className="grid sm:grid-cols-3 gap-4">
+                {[
+                  {
+                    icon: PlayCircle,
+                    title: "Skills trigger TỰ ĐỘNG",
+                    desc: "Không cần gõ lệnh. Agent nhận diện tình huống và kích hoạt skill phù hợp. Nói \"Thêm tính năng\" → Agent tự gọi brainstorming. Nói \"Fix bug\" → Agent tự gọi systematic-debugging.",
+                    badge: "Không cần nhớ lệnh",
+                    color: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20",
+                  },
+                  {
+                    icon: RefreshCw,
+                    title: "Chạy CROSS-PLATFORM",
+                    desc: "Một bộ skills dùng cho Claude Code, Cursor, Codex, Gemini, Copilot, OpenCode. Không cần học lại khi đổi tool. Skills viết 1 lần, chạy mọi nơi.",
+                    badge: "161k stars, MIT License",
+                    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20",
+                  },
+                  {
+                    icon: ListChecks,
+                    title: "Có CHECKLIST và RED FLAGS",
+                    desc: "Mỗi skill có checklist cụ thể và red flags để agent tự nhận biết khi đang vi phạm quy trình. Rationalization table chống lời ngụy biện. Không 'tôi hiểu rồi' — phải đi qua process.",
+                    badge: "Chống rationalization",
+                    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+                  },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.title} className={`rounded-xl border ${item.color} bg-opacity-5 p-5`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Icon className="w-5 h-5" />
+                        <span className="text-sm font-bold">{item.title}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed mb-3">{item.desc}</p>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-current/10">{item.badge}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Lợi ích thực tế */}
+            <div className="p-6 sm:p-8">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4">Lợi ích thực tế khi dùng Superpowers</h3>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {[
+                  { icon: CheckCircle2, text: "Không sai scope từ đầu — 1-2 câu hỏi tiết kiệm cả giờ làm lại", color: "text-green-500" },
+                  { icon: CheckCircle2, text: "Bug fix nhanh hơn 3-5 lần — systematic debugging thay vì guesswork", color: "text-green-500" },
+                  { icon: CheckCircle2, text: "Code sạch hơn — TDD ép viết test trước, không skip được", color: "text-green-500" },
+                  { icon: CheckCircle2, text: "Không còn 'tưởng xong rồi' — verification gate bắt buộc", color: "text-green-500" },
+                  { icon: CheckCircle2, text: "Agent làm việc autonomous vài giờ không lệch kế hoạch", color: "text-green-500" },
+                  { icon: CheckCircle2, text: "Multi-agent an toàn — checkpoint + review + handoff chuẩn", color: "text-green-500" },
+                  { icon: CheckCircle2, text: "Skills trigger tự động — không cần nhớ gọi lệnh gì", color: "text-green-500" },
+                  { icon: CheckCircle2, text: "Cross-platform — đổi tool không cần học lại workflow", color: "text-green-500" },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.text} className="flex items-start gap-2.5">
+                      <Icon className={`w-4 h-4 ${item.color} flex-shrink-0 mt-0.5`} />
+                      <span className="text-xs text-muted-foreground leading-relaxed">{item.text}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
