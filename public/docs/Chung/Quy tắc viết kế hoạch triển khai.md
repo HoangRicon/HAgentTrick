@@ -36,7 +36,7 @@ File này phải giúp trả lời rõ:
 * Mỗi hạng mục trong kế hoạch phải truy nguyên được về actor, entity, chức năng hoặc ràng buộc cụ thể trong file phân tích.
 * Nếu đầu vào còn mơ hồ, phải giữ nguyên intent gần nhất và ghi assumption rõ ràng.
 * Không được biến assumption thành fact.
-* Không được dùng từ ngữ chung chung như “xây hệ thống”, “làm backend”, “xử lý dữ liệu”, “làm admin”, “làm user flow” mà không chỉ ra phạm vi cụ thể.
+* Không được dùng từ ngữ chung chung như "xây hệ thống", "làm backend", "xử lý dữ liệu", "làm admin", "làm user flow" mà không chỉ ra phạm vi cụ thể.
 * Kế hoạch phải đủ chi tiết để triển khai đúng thứ tự, nhưng chưa đi xuống mức code-level design quá sớm.
 
 ---
@@ -62,11 +62,11 @@ Phải đọc và bám theo các phần đã có trong file phân tích:
 
 Kế hoạch triển khai chỉ là bước chuyển từ:
 
-* “hệ thống phải làm gì”
+* "hệ thống phải làm gì"
 
 sang:
 
-* “nên triển khai cái gì trước, cái gì sau, theo dependency nào, với checkpoint nào”.
+* "nên triển khai cái gì trước, cái gì sau, theo dependency nào, với checkpoint nào".
 
 Không được dùng file kế hoạch để viết lại toàn bộ business analysis theo cách khác.
 
@@ -233,7 +233,7 @@ Mỗi phase phải có điểm dừng rõ để review được.
 
 ## 9. PHẢI BẢO TOÀN OWNERSHIP, PERMISSION VÀ AUTH TRONG KẾ HOẠCH
 
-Kế hoạch triển khai chi tiết không được chỉ nói “làm auth” hoặc “làm phân quyền”.
+Kế hoạch triển khai chi tiết không được chỉ nói "làm auth" hoặc "làm phân quyền".
 
 Phải làm rõ:
 
@@ -396,31 +396,34 @@ Nhưng không được đi sang các dạng:
 
 ---
 
-## 15. PHẢI CÓ CẤU TRÚC TRÌNH BÀY NHẤT QUÁN
+## 15. TEMPLATE: CẤU TRÚC MỘT FILE KẾ HOẠCH TRIỂN KHAI
 
-Một file kế hoạch triển khai chi tiết nên có cấu trúc ổn định như sau:
+File kế hoạch triển khai chi tiết nên có cấu trúc ổn định như sau. Đây là **template**, điều chỉnh theo dự án thực tế.
 
-1. Tổng quan mục tiêu triển khai
-2. Nguồn đầu vào và phạm vi áp dụng
-3. Scope được bảo toàn
-4. Actor priority cho triển khai
-5. Core entities và dependency chính
-6. Nguyên tắc build order
-7. Danh sách phase triển khai
-8. Checkpoint validation theo phase
-9. Risk areas
-10. Assumptions
-11. Completion criteria
-12. Handoff notes nếu có
-13. Observability & vận hành (logging, tracing, metrics, SLO/SLA, alerting)
-14. Bảo mật & tuân thủ (threat model, mã hóa, secrets, DR, GDPR/PDPA)
-15. Dữ liệu & thay đổi (migrations, rollback, seed, versioning API/contract)
-16. Hiệu năng & tải (Core Web Vitals, caching, rate limiting/quota)
-17. CI/CD & môi trường (gates, promotion, policy review)
-18. SEO & marketing site (SSR/SSG, robots, sitemap, canonical, schema)
-19. SaaS/multi-tenant (tenancy model, billing/plans, enforcement) nếu áp dụng
+### Phần bắt buộc
 
-Không nên viết lộn xộn kiểu nghĩ đến đâu ghi đến đó.
+1. **Tổng quan mục tiêu triển khai** — mục đích, phạm vi, giới hạn.
+2. **Nguồn đầu vào** — file phân tích yêu cầu chức năng nào, phiên bản nào, ngày nào.
+3. **Scope được bảo toàn** — trích dẫn scope từ file phân tích; ghi rõ phần ngoài scope.
+4. **Actor priority cho triển khai** — thứ tự ưu tiên actor, lý do.
+5. **Core entities và dependency chính** — entity nào trước, entity nào sau, vì sao.
+6. **Nguyên tắc build order** — dependency foundation → core flow → support flow.
+7. **Danh sách phase triển khai** — mỗi phase có: tên, mục tiêu, phạm vi, actor, entity, dependency đầu vào, đầu ra, rủi ro, tiêu chí hoàn thành.
+8. **Checkpoint validation theo phase** — điều gì cần xác nhận sau mỗi phase.
+9. **Assumptions** — các giả định còn thiếu từ file phân tích.
+10. **Risk areas** — rủi ro nổi bật theo từng phase.
+11. **Completion criteria** — điều kiện tổng thể để kế hoạch được coi là hoàn thành.
+
+### Phần tùy chọn theo dự án
+
+12. **Handoff notes** — nếu chuyển giao cho team khác.
+13. **Observability & vận hành** — logging, tracing, SLO/SLA, alerting, runbooks. *(Áp dụng khi dự án cần vận hành thực tế)*
+14. **Bảo mật & tuân thủ** — threat model, mã hóa, secrets, DR, GDPR/PDPA. *(Áp dụng khi có yêu cầu pháp lý hoặc bảo mật)*
+15. **Dữ liệu & thay đổi** — migrations, rollback, seed, API versioning. *(Áp dụng khi có thay đổi lớn về lược đồ)*
+16. **Hiệu năng & tải** — Core Web Vitals, caching, rate limiting. *(Áp dụng khi có yêu cầu phi chức năng cụ thể)*
+17. **CI/CD & môi trường** — gates, promotion, release strategy. *(Áp dụng khi cần đồng bộ pipeline)*
+18. **SEO & marketing site** — SSR/SSG, sitemap, schema. *(Áp dụng khi có khu vực public)*
+19. **SaaS / multi-tenant** — tenancy model, billing, custom domain, SSO. *(Áp dụng khi triển khai theo mô hình SaaS)*
 
 ---
 
@@ -448,71 +451,34 @@ Nguyên tắc:
 
 File kế hoạch triển khai chi tiết phải đủ rõ để chuyển tiếp thành prompt triển khai từng phần.
 
-Ví dụ sau khi có file kế hoạch tốt, có thể sinh ra các prompt kiểu:
+Mỗi phase phải có thể sinh ra prompt kiểu: "dựng auth foundation theo boundary đã chốt", "dựng product management flow cho admin", "dựng order flow theo lifecycle và permission đã xác định".
 
-* dựng auth foundation theo boundary đã chốt,
-* dựng admin route, layout và access guard,
-* dựng user profile flow với ownership check,
-* dựng product management flow cho admin,
-* dựng product listing flow cho user,
-* dựng order flow theo lifecycle và permission đã xác định,
-* dựng validation và review gates cho các flow chính.
-
-Nếu file kế hoạch vẫn viết kiểu:
-
-* làm admin,
-* làm user,
-* làm dữ liệu,
-* làm kiểm thử,
-
-thì chưa đủ chất lượng để dùng tiếp.
+Nếu file kế hoạch chỉ ghi "làm admin", "làm user", "làm kiểm thử" thì chưa đủ chất lượng để dùng tiếp.
 
 ---
 
-## 18. PHẢI ĐẢM BẢO FILE KẾ HOẠCH REVIEW ĐƯỢC VÀ ĐỐI CHIẾU ĐƯỢC
+## 18. TIÊU CHÍ CỦA MỘT FILE KẾ HOẠCH TRIỂN KHAI CHI TIẾT TỐT
 
-File kế hoạch triển khai chi tiết phải giúp review được:
+Một file kế hoạch triển khai chi tiết được coi là tốt khi đáp ứng tất cả các quy tắc ở trên. Các câu hỏi kiểm tra:
 
-* có lệch scope không,
-* có bỏ sót actor không,
-* có build sai thứ tự không,
-* có bỏ sót permission hoặc ownership không,
-* có đẩy support flow lên trước core flow không,
-* có checkpoint validation đủ chưa,
-* có assumption nào đang bị dùng như fact không.
-
-Vì vậy:
-
-* thuật ngữ phải nhất quán,
-* tên actor phải nhất quán,
-* tên entity phải nhất quán,
-* phase naming phải rõ,
-* dependency phải đọc ra được,
-* completion criteria phải kiểm được.
+* Bám đúng file phân tích yêu cầu chức năng?
+* Không mở rộng scope?
+* Giữ đúng intent nghiệp vụ?
+* Phản ánh rõ actor priority?
+* Phản ánh rõ core entity dependency?
+* Có build order hợp lý theo dependency thực tế?
+* Có phase rõ ràng với checkpoint validation?
+* Có xét ownership, permission và auth?
+* Tách rõ foundation, core flow và support flow?
+* Có assumptions rõ ràng nếu đầu vào thiếu?
+* Đủ cụ thể để sinh prompt triển khai, nhưng chưa sa vào code-level detail quá sớm?
+* Thuật ngữ, tên actor, tên entity nhất quán xuyên suốt?
+* Phase naming rõ, dependency đọc ra được, completion criteria kiểm được?
+* Không có assumption nào đang bị dùng như fact?
 
 ---
 
-## 19. TIÊU CHÍ CỦA MỘT FILE KẾ HOẠCH TRIỂN KHAI CHI TIẾT TỐT
-
-Một file kế hoạch triển khai chi tiết được coi là tốt khi:
-
-* bám đúng file phân tích yêu cầu chức năng,
-* không mở rộng scope,
-* giữ đúng intent nghiệp vụ,
-* phản ánh rõ actor priority,
-* phản ánh rõ core entity dependency,
-* có build order hợp lý,
-* có phase rõ ràng,
-* có checkpoint validation rõ ràng,
-* có xét ownership, permission và auth,
-* tách rõ foundation, core flow và support flow,
-* có assumptions rõ ràng nếu đầu vào thiếu,
-* đủ cụ thể để sinh prompt triển khai,
-* nhưng chưa sa vào code-level detail quá sớm.
-
----
-
-## 20. KẾT LUẬN
+## 19. KẾT LUẬN
 
 Nguyên tắc viết file kế hoạch triển khai chi tiết từ yêu cầu chức năng là:
 
@@ -535,189 +501,19 @@ Nếu prompt triển khai mơ hồ, code sẽ dễ lệch scope, lệch quyền,
 
 ---
 
-## 21. PHẢI HỖ TRỢ MÔ HÌNH SAAS/MULTI-TENANT KHI ÁP DỤNG
+## PHỤ LỤC: CÁC CHỦ ĐỀ MỞ RỘNG THEO NHU CẦU DỰ ÁN
 
-Khi sản phẩm triển khai theo mô hình SaaS, kế hoạch phải làm rõ tối thiểu:
+Các chủ đề dưới đây **không phải quy tắc viết kế hoạch** — chúng là tài liệu tham khảo, đưa vào kế hoạch khi dự án thực sự cần.
 
-* Tenancy model: pooled (chung schema với cột `tenant_id`), siloed (schema/DB riêng), hoặc hybrid. Quy định rõ chiến lược chọn theo quy mô, compliance, isolation.
-* Propagation `tenantId`: từ auth → API → service/repository → ORM/query. Cấm truy vấn thiếu điều kiện scope theo tenant.
-* Enforcement: ownership/permission theo tenant tại service/repository layer; test chống “tenant data leak” là checkpoint bắt buộc.
-* RBAC theo tenant: vai trò trong phạm vi tổ chức/workspace; phân biệt rõ superadmin hệ thống và admin tenant.
-* Tổ chức/Workspace & mời thành viên: mô hình tổ chức, lời mời, vai trò, chuyển nhượng quyền sở hữu.
-* Billing & kế hoạch giá: cổng thanh toán (Stripe/Braintree), metering events, trial, dunning, thuế, hóa đơn, customer portal.
-* Plan enforcement: giới hạn theo gói (số user, project, API calls, tính năng); feature flags/gates theo gói.
-* Custom domains: ánh xạ domain → tenant; cấp chứng chỉ tự động (ACME), gia hạn, kiểm soát ownership.
-* Audit & compliance: audit logs theo tenant, data export, xóa dữ liệu theo yêu cầu, retention policy.
-* SSO doanh nghiệp: OIDC/SAML theo tenant; SCIM (nếu gói phù hợp).
-* Webhooks: ký HMAC, retry/backoff, idempotency, portal theo dõi webhook.
-* Công cụ hỗ trợ vận hành: admin console an toàn (just-in-time access, breakglass), impersonation có audit.
-* Data residency: vùng lưu trữ dữ liệu theo tenant (nếu có yêu cầu pháp lý/thị trường).
-* Rate limiting/quota: theo tenant và theo user; phối hợp với gói cước.
+| Mục | Chủ đề | Khi nào đưa vào |
+|---|---|---|
+| A | SaaS / Multi-tenant | Mô hình SaaS, có billing, tenant, workspace |
+| B | Observability & Vận hành | Cần logging, tracing, SLO/SLA, alerting |
+| C | Bảo mật & Tuân thủ | Có yêu cầu pháp lý (GDPR/PDPA) hoặc bảo mật cao |
+| D | Quản trị dữ liệu & Thay đổi | Thay đổi lớn về lược đồ, cần migration an toàn |
+| E | Hiệu năng & Tải | Có yêu cầu phi chức năng cụ thể về tải |
+| F | Sản phẩm & UX | Cần i18n, a11y, email/SMS, onboarding |
+| G | CI/CD & Môi trường | Cần đồng bộ pipeline, promotion, release strategy |
+| H | SEO & Marketing Site | Có khu vực public, cần tối ưu crawl |
 
-Checkpoint bắt buộc theo phase SaaS:
-
-* Không có truy vấn nào trả dữ liệu chéo tenant (negative tests).
-* Plan limit được cưỡng chế trên API/UI theo gói.
-* Billing events đầy đủ, đúng thời điểm, có thể bù trễ an toàn.
-* Custom domain sở hữu hợp lệ, chứng chỉ phát hành thành công, tự động gia hạn.
-
----
-
-## 22. PHẢI BAO GỒM OBSERVABILITY & VẬN HÀNH
-
-Kế hoạch phải quy định rõ lớp quan sát và vận hành:
-
-* Logging chuẩn hóa: mức log, cấu trúc, không lộ PII; gắn trace/span IDs.
-* Distributed tracing: gắn trace qua các dịch vụ; sampling chiến lược theo môi trường.
-* Metrics: RED/USE metrics, business metrics theo actor/tenant; dashboard bắt buộc.
-* SLO/SLA/SLI: mục tiêu, ngưỡng báo động, quy trình xử lý.
-* Alerting: rule, kênh, thời gian phản hồi; loại trừ nhiễu.
-* Runbooks: kịch bản xử lý sự cố, checklist khôi phục.
-* Feature flags & dark launch: bật/tắt theo tenant/actor, canary, progressive delivery.
-* Capacity planning: dự báo lưu lượng, chiến lược scale (horizontal/vertical), warm-up.
-
-Checkpoint:
-
-* Mỗi flow lõi có logs/metrics/traces tối thiểu.
-* Dashboard và cảnh báo hoạt động trước khi mở rộng user thật.
-
----
-
-## 23. PHẢI BAO GỒM BẢO MẬT & TUÂN THỦ
-
-* Threat modeling theo phase; xác định asset, actor tấn công, đường tấn công.
-* Mã hóa: in-transit (TLS bắt buộc), at-rest (DB, object storage), quản trị key.
-* Secret management: không hardcode; rotation định kỳ; phân quyền truy cập tối thiểu.
-* Backup/Restore/DR: RPO/RTO, bài diễn tập khôi phục, kiểm chứng backup khởi động được.
-* Admin RBAC: giới hạn quyền, session ngắn, MFA, ghi audit, tách môi trường.
-* Tuân thủ: GDPR/PDPA (quyền truy cập/xóa dữ liệu), lưu trữ theo vùng; cookie & tracking hợp lệ.
-* Dependency & image scanning: SAST/DAST/Secrets scan trong CI.
-
-Checkpoint:
-
-* Tất cả endpoint nhạy cảm có authz kiểm chứng.
-* Bản dựng không chứa secrets; dependency không có lỗ hổng nghiêm trọng chưa xử lý.
-
----
-
-## 24. PHẢI QUY ĐỊNH QUẢN TRỊ DỮ LIỆU & THAY ĐỔI
-
-* Migrations: chiến lược an toàn, không downtime, khả năng rollback; version hóa lược đồ.
-* Seed data: theo môi trường; dữ liệu mẫu cho demo/tenant mới.
-* API/Contract versioning: semver; deprecation policy; backward-compat windows.
-* Data lifecycle: retention, purge, archive; quyền truy cập dữ liệu lịch sử.
-
-Checkpoint:
-
-* Migration được thử trên dữ liệu thật giả lập; có kịch bản quay lui.
-
----
-
-## 25. PHẢI XÁC LẬP MỤC TIÊU HIỆU NĂNG & TẢI
-
-* Core Web Vitals: mục tiêu LCP/CLS/INP cho marketing site.
-* Caching: edge/app/db; invalidation rõ ràng; cache key có tenant.
-* Rate limiting & quotas: theo IP/user/tenant; backpressure, circuit breaker.
-* Nén & phân phối: CDN, định dạng ảnh WebP/AVIF, prefetch/preload.
-* Nhiệt độ dữ liệu: hot/warm/cold; tối ưu truy vấn và index.
-
-Checkpoint:
-
-* Kịch bản tải chính đạt mục tiêu; không rò rỉ bộ nhớ/kết nối.
-
----
-
-## 26. PHẢI BAO GỒM YÊU CẦU SẢN PHẨM & UX
-
-* i18n/l10n: chiến lược ngôn ngữ, định dạng vùng; nội dung SEO theo ngôn ngữ.
-* Accessibility: tiêu chí WCAG; bàn phím, contrast, aria, focus.
-* Email/SMS: SPF/DKIM/DMARC, theo dõi gửi, retry, template theo ngôn ngữ/tenant.
-* Empty states & onboarding: hành trình người dùng mới; checklist hoàn tất thiết lập tenant.
-
-Checkpoint:
-
-* Trang trọng yếu đạt tiêu chí a11y; email xác thực tới được inbox chính.
-
----
-
-## 27. PHẢI QUY ĐỊNH CI/CD & MÔI TRƯỜNG
-
-* Gates theo phase: lint, unit, integration, e2e, SAST/DAST, secret scan.
-* Promotion dev → staging → prod: tiêu chí lên môi trường; freeze window.
-* Policy PR: review bắt buộc, kiểm tra contract/test snapshot, bảo vệ nhánh.
-* Release strategy: canary/blue-green; rollback nhanh.
-
-Checkpoint:
-
-* Pipeline chặn merge khi kiểm thất bại; kịch bản rollback đã thử.
-
----
-
-## 28. PHẢI TỐI ƯU SEO & MARKETING SITE
-
-Áp dụng chủ yếu cho khu vực marketing công khai; khu vực ứng dụng đăng nhập nên noindex.
-
-* Render & crawl: SSR/SSG; `robots.txt` theo môi trường; chặn staging.
-* Sitemap & canonical: `sitemap.xml` tự động; canonical tránh trùng lặp nội dung.
-* Metadata & social: title/description động; Open Graph/Twitter Cards; favicon/manifest.
-* Structured data (JSON-LD): Organization, Product, BreadcrumbList, FAQPage/HowTo/Article khi phù hợp.
-* i18n/hreflang: thẻ `hreflang` cho ngôn ngữ/khu vực; cấu trúc URL rõ (`/vi/`, `/en/`).
-* Hiệu năng (CWV): preload critical, lazy-load media, image CDN, split JS/CSS critical.
-* URL & nội dung: slug sạch, breadcrumb, headings H1/H2 hợp lý, internal linking; noindex trang lọc vô giá trị.
-* Technical hygiene: 301 canonical, 404/410 đúng; theo dõi GSC; giám sát CWV.
-* App area: `noindex, nofollow` cho trang đăng nhập/khu vực nội bộ.
-
-Checkpoint:
-
-* Trang chính có schema/canonical đúng; sitemap sinh tự động và được crawl.
-
----
-
-## 29. CẤU TRÚC THƯ MỤC THAM KHẢO (SẴN SÀNG SAAS)
-
-Tham khảo mẫu cấu trúc monorepo (điều chỉnh theo stack thực tế):
-
-```bash
-/ (repo root)
-├─ apps/
-│  ├─ web/                 # marketing site + public pages (SSR/SSG, SEO)
-│  └─ app/                 # ứng dụng đăng nhập (dashboard), noindex
-│
-├─ services/
-│  └─ api/                 # backend API, auth, tenancy, rate limiting
-│
-├─ packages/
-│  ├─ ui/                  # design system, components dùng chung
-│  ├─ config/              # cấu hình build/lint/tsconfig/chung
-│  ├─ sdk/                 # client SDK (versioned) cho API
-│  └─ tooling/             # tiện ích CLI, codegen
-│
-├─ infra/
-│  ├─ terraform/           # IaC (VPC, DB, queue, CDN, DNS)
-│  ├─ k8s/                 # manifests/helm nếu dùng k8s
-│  └─ pipelines/           # CI/CD (lint/test/build/deploy, gates)
-│
-├─ db/
-│  ├─ migrations/          # migration hỗ trợ multi-tenant
-│  └─ seeds/               # seed theo môi trường/tenant mẫu
-│
-├─ docs/
-│  ├─ product/             # BRD, use cases, actor/entity
-│  ├─ implementation-plan/ # kế hoạch hiện tại + checkpoints
-│  ├─ architecture/        # ADRs, sơ đồ, tenancy model
-│  └─ runbooks/            # vận hành, DR, incident
-│
-├─ .github/
-│  └─ workflows/           # CI (lint, unit, e2e, SAST/DAST, scan secrets)
-│
-├─ scripts/                # seed, backup/restore, rotate secrets
-└─ SECURITY.md / CONTRIBUTING.md / CODEOWNERS
-```
-
-Nguyên tắc kèm theo:
-
-* `apps/web` tối ưu SEO; `apps/app` noindex, tách `robots.txt`.
-* `services/api` có middleware context tenant, enforcer ownership theo tenant.
-* `db/migrations` có chiến lược pooled/siloed/hybrid rõ ràng.
-* `packages/sdk` công bố surface ổn định, có versioning.
-* `infra` bao gồm metering/billing events, webhooks, worker queues.
+Cấu trúc thư mục tham khảo (monorepo, SaaS-ready) nằm trong file phụ lục riêng.
