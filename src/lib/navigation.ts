@@ -16,8 +16,8 @@ export type DocCategory = {
 
 export const mainNav: NavItem[] = [
   {
-    title: "Quy trình",
-    href: "/workflow",
+    title: "HOT",
+    href: "/guide/workflow",
   },
   {
     title: "Tài nguyên",

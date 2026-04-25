@@ -113,100 +113,7 @@ const fileStructure = [
   { num: "10", title: "Assumptions", desc: "Giả định nếu đầu vào chưa đủ" },
 ];
 
-const aiBATools = [
-  {
-    icon: Bot,
-    name: "Claude (claude.ai / Claude Code)",
-    tagline: "BA Agent — Business Analyst chuyên nghiệp",
-    color: "amber",
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/30",
-    text: "text-amber-600 dark:text-amber-400",
-    badge: "Khuyến nghị",
-    badgeBg: "bg-amber-500",
-    badgeText: "text-white",
-    website: "https://claude.ai",
-    summary: "Claude nổi bật về phân tích nghiệp vụ nhờ khả năng suy luận mạnh và ngữ cảnh dài. Dùng Claude khi cần AI đặt câu hỏi phản biện, gợi ra edge cases, và tổ chức yêu cầu có hệ thống.",
-    howTo: [
-      { step: 1, action: "Mở Claude.ai hoặc Claude Code", detail: "Dùng claude.ai cho trao đổi nhanh, Claude Code cho làm việc trong project" },
-      { step: 2, action: "Gửi mô tả project ngắn gọn", detail: 'Ví dụ: "Tôi đang làm một ứng dụng quản lý cửa hàng. Khách hàng mua hàng, nhân viên bán hàng tại quầy, admin quản lý kho. Hãy giúp tôi phân tích yêu cầu chức năng."' },
-      { step: 3, action: "AI sẽ hỏi câu hỏi phản biện", detail: "Claude sẽ hỏi về edge cases, exception flows, security concerns. Trả lời để AI hiểu sâu hơn." },
-      { step: 4, action: "AI tạo file phân tích hoàn chỉnh", detail: "Claude sẽ xuất ra cấu trúc đầy đủ: actors, entities, permissions, use cases, build order" },
-    ],
-    pros: ["Hỏi câu hỏi phản biện trước khi viết", "Tạo FRD đầy đủ theo chuẩn học thuật", "Phát hiện edge cases và risks", "Duy trì ngữ cảnh cuộc hội thoại dài"],
-    cons: ["Cần subscription cho Claude Pro", "Chậm hơn GPT-4o một chút"],
-    prompt: 'Tôi đang làm dự án [tên dự án]. Đây là mô tả: [mô tả ngắn]. Hãy phân tích yêu cầu chức năng theo chuẩn FRD (Functional Requirements Document): xác định actors, entities, ownership, permissions, use cases, build order. Đặt câu hỏi phản biện nếu thông tin chưa đủ.',
-  },
-  {
-    icon: Sparkles,
-    name: "ChatGPT / GPT-4o",
-    tagline: "Phân tích nhanh — Brainstorm sâu",
-    color: "blue",
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/30",
-    text: "text-blue-600 dark:text-blue-400",
-    badge: "Phổ biến",
-    badgeBg: "bg-blue-500",
-    badgeText: "text-white",
-    website: "https://chatgpt.com",
-    summary: "GPT-4o mạnh về tốc độ và đa dụng. Dùng khi cần phân tích nhanh, brainstorm nhiều scenario, hoặc muốn AI đóng vai khách hàng để kiểm tra yêu cầu.",
-    howTo: [
-      { step: 1, action: "Chọn GPT-4o trong ChatGPT", detail: "Đảm bảo dùng model mới nhất để có khả năng phân tích tốt nhất" },
-      { step: 2, action: "Gửi prompt phân tích yêu cầu", detail: "Dùng prompt chuẩn (xem bên dưới) để AI hoạt động đúng vai trò BA" },
-      { step: 3, action: "Yêu cầu AI đóng vai khách hàng", detail: 'Hãy AI đặt câu hỏi như khách hàng thật: "Tôi muốn hỏi về trường hợp..."' },
-      { step: 4, action: "Export kết quả", detail: "Copy nội dung phân tích vào file .md, format lại nếu cần" },
-    ],
-    pros: ["Miễn phí (với GPT-3.5) hoặc subscription rẻ", "Tốc độ nhanh", "Nhiều phiên bản để chọn", "Hỗ trợ file upload nếu cần"],
-    cons: ["Ít hỏi câu hỏi phản biện chủ động", "Ngữ cảnh hội thoại ngắn hơn Claude"],
-    prompt: 'Bạn là một Business Analyst (BA) chuyên nghiệp. Tôi cần bạn giúp phân tích yêu cầu chức năng cho dự án: [mô tả dự án]. Hãy phân tích theo cấu trúc FRD: (1) Actors — ai là người dùng chính, (2) Entities — dữ liệu cốt lõi là gì, (3) Use Cases — mỗi actor cần làm gì, (4) Ownership & Permissions — ai quản lý dữ liệu gì, (5) Build Order — thứ tự xây dựng ưu tiên, (6) Risks — phần nào dễ sai. Đặt câu hỏi làm rõ nếu thông tin chưa đủ.',
-  },
-  {
-    icon: Code2,
-    name: "Cursor Composer / Plan Mode",
-    tagline: "Phân tích ngay trong IDE",
-    color: "violet",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/30",
-    text: "text-violet-600 dark:text-violet-400",
-    badge: "IDE",
-    badgeBg: "bg-violet-500",
-    badgeText: "text-white",
-    website: "https://cursor.sh",
-    summary: "Cursor có chế độ Composer với Plan mode cho phép AI phân tích và lập kế hoạch ngay trong IDE. Tốt khi bạn đã có codebase và muốn phân tích feature mới trong bối cảnh project hiện tại.",
-    howTo: [
-      { step: 1, action: "Mở Cursor, tạo Composer mới", detail: "Nhấn Cmd+K (Mac) / Ctrl+K (Windows) để mở Composer" },
-      { step: 2, action: "Chuyển sang Plan mode", detail: "Nhấn Tab Plan để AI tập trung vào phân tích thay vì viết code" },
-      { step: 3, action: "Mô tả feature muốn phân tích", detail: "AI sẽ đọc codebase hiện tại, rồi phân tích feature mới trong bối cảnh project" },
-      { step: 4, action: "Review và chỉnh sửa plan", detail: "Cursor cho phép edit plan trực tiếp. Bổ sung thêm nếu AI bỏ sót" },
-    ],
-    pros: ["Đọc được codebase hiện tại", "Phân tích trong bối cảnh project thật", "Chuyển plan sang code dễ dàng", "Tích hợp với luật project (.cursorrules)"],
-    cons: ["Cần trả phí (Cursor Pro)", "Plan mode có giới hạn context", "Chỉ mạnh khi đã có project"],
-    prompt: "Dùng Plan mode của Cursor: mô tả feature, để AI phân tích trong bối cảnh codebase hiện tại.",
-  },
-  {
-    icon: Bot,
-    name: "Claude Code — Plan Mode",
-    tagline: "CLI BA cho developer",
-    color: "cyan",
-    bg: "bg-cyan-500/10",
-    border: "border-cyan-500/30",
-    text: "text-cyan-600 dark:text-cyan-400",
-    badge: "CLI",
-    badgeBg: "bg-cyan-500",
-    badgeText: "text-white",
-    website: "https://docs.anthropic.com/en/docs/claude-code",
-    summary: "Claude Code CLI có plan mode cho phép phân tích và lập kế hoạch ngay trong terminal. Đặc biệt mạnh khi kết hợp với CLAUDE.md chứa quy tắc phân tích yêu cầu.",
-    howTo: [
-      { step: 1, action: "Chạy claude trong terminal từ thư mục project", detail: "Claude Code sẽ tự đọc CLAUDE.md nếu có" },
-      { step: 2, action: 'Dùng lệnh /plan hoặc gõ "plan"', detail: "Kích hoạt plan mode để AI tập trung phân tích" },
-      { step: 3, action: "Mô tả feature cần phân tích", detail: "Claude sẽ đọc project hiện tại và đưa ra phân tích" },
-      { step: 4, action: "Yêu cầu xuất ra file FRD", detail: 'Gõ "xuất ra file phân tích yêu cầu.md" để lưu kết quả' },
-    ],
-    pros: ["Chạy trong terminal, không cần IDE", "Đọc được toàn bộ project", "Tích hợp với CLAUDE.md", "Miễn phí (cần API key)"],
-    cons: ["Cần API key", "Learning curve cho developer mới"],
-    prompt: 'Dùng /plan trong Claude Code: mô tả feature, để Claude phân tích và xuất ra file phân tích yêu cầu.',
-  },
-];
+;
 
 const baWorkflow = [
   {
@@ -248,10 +155,9 @@ const baWorkflow = [
 
 const relatedTools = [
   { label: "Quy tắc viết Prompt", href: "/guide/prompt", desc: "Dùng phân tích để viết prompt chính xác" },
-  { label: "Quy trình thực chiến", href: "/workflow", desc: "Từ phân tích đến kế hoạch triển khai" },
+  { label: "Sự kết thúc của Vibe Coding", href: "/guide/workflow", desc: "Từ phân tích đến kế hoạch triển khai" },
   { label: "Tạo bộ luật riêng", href: "/guide/gpt-rules", desc: "Tạo bộ luật phân tích cho AI BA" },
 ];
-
 export default function AnalysisGuidePage() {
   return (
     <div className="min-h-screen">
@@ -317,131 +223,7 @@ export default function AnalysisGuidePage() {
             })}
           </div>
 
-          {/* AI Tool Cards */}
-          {aiBATools.map((tool) => {
-            const Icon = tool.icon;
-            return (
-              <div key={tool.name} className={`rounded-2xl border ${tool.border} ${tool.bg} overflow-hidden`}>
-                {/* Tool Header */}
-                <div className="p-6 border-b border-border/50">
-                  <div className="flex items-start gap-4">
-                    <div className={`w-14 h-14 rounded-2xl bg-white/50 dark:bg-black/20 border ${tool.border} flex items-center justify-center shrink-0`}>
-                      <Icon className={`w-7 h-7 ${tool.text}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${tool.badgeBg} ${tool.badgeText}`}>{tool.badge}</span>
-                      </div>
-                      <h3 className="text-lg font-bold mb-0.5">{tool.name}</h3>
-                      <p className="text-sm text-muted-foreground italic mb-3">{tool.tagline}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{tool.summary}</p>
-                    </div>
-                    {tool.website && (
-                      <a href={tool.website} target="_blank" rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-1.5 h-9 px-4 rounded-xl ${tool.bg} border ${tool.border} font-medium text-xs ${tool.text} hover:opacity-80 transition-all shrink-0`}>
-                        Truy cập <ChevronRight className="w-3 h-3" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                {/* How to */}
-                <div className="p-6 border-b border-border/50">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Cách dùng</h4>
-                  <div className="space-y-3">
-                    {tool.howTo.map((step) => (
-                      <div key={step.step} className="flex items-start gap-3">
-                        <div className={`w-6 h-6 rounded-full ${tool.bg} border ${tool.border} flex items-center justify-center shrink-0 mt-0.5`}>
-                          <span className={`text-[10px] font-bold ${tool.text}`}>{step.step}</span>
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium">{step.action}</div>
-                          <div className="text-xs text-muted-foreground mt-0.5">{step.detail}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Pros & Cons */}
-                <div className="p-6 grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-green-600 dark:text-green-400">Ưu điểm</span>
-                    </div>
-                    <div className="space-y-1.5">
-                      {tool.pros.map((p) => (
-                        <div key={p} className="flex items-start gap-2 text-xs text-muted-foreground">
-                          <CheckCircle2 className="w-3 h-3 text-green-500 flex-shrink-0 mt-0.5" />
-                          <span>{p}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <XCircle className="w-3.5 h-3.5 text-red-500" />
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400">Hạn chế</span>
-                    </div>
-                    <div className="space-y-1.5">
-                      {tool.cons.map((c) => (
-                        <div key={c} className="flex items-start gap-2 text-xs text-muted-foreground">
-                          <XCircle className="w-3 h-3 text-red-400 flex-shrink-0 mt-0.5" />
-                          <span>{c}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Prompt mẫu */}
-                {tool.prompt && (
-                  <div className="px-6 pb-6">
-                    <div className="rounded-xl border bg-card p-4">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">Prompt mẫu cho {tool.name}</div>
-                      <div className={`rounded-lg border ${tool.border} bg-muted/30 p-3`}>
-                        <p className="text-xs font-mono text-muted-foreground leading-relaxed">{tool.prompt}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
         </section>
-
-        {/* ========== PLAN MODE (MỚI) ========== */}
-
-        <section>
-          <div className="rounded-2xl border bg-gradient-to-br from-violet-500/5 to-purple-500/5 p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-violet-500/10 flex items-center justify-center shrink-0">
-                <Compass className="w-6 h-6 text-violet-500" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-base mb-2">Plan Mode trong IDE AI</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  Plan mode là chế độ đặc biệt trong các AI coding IDE (Cursor, Claude Code, Copilot) cho phép AI tập trung phân tích và lập kế hoạch thay vì viết code. Khác với chat thông thường, Plan mode buộc AI phải suy nghĩ trước khi hành động.
-                </p>
-                <div className="grid sm:grid-cols-3 gap-3">
-                  {[
-                    { tool: "Cursor", how: "Cmd+K → Tab Plan", desc: "Composer với Plan mode" },
-                    { tool: "Claude Code", how: "Gõ /plan hoặc plan", desc: "CLI plan mode" },
-                    { tool: "Copilot", how: "@workspace /plan", desc: "Copilot Chat plan" },
-                  ].map((item) => (
-                    <div key={item.tool} className="p-3 rounded-xl border bg-card">
-                      <div className="text-sm font-semibold mb-0.5">{item.tool}</div>
-                      <div className="text-[10px] font-mono text-muted-foreground mb-1">{item.how}</div>
-                      <div className="text-[10px] text-muted-foreground">{item.desc}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ========== Socratic Method (MỚI) ========== */}
 
         <section>

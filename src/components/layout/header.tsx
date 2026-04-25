@@ -35,7 +35,7 @@ export function Header() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const navIcons: Record<string, React.ElementType> = {
-    "/workflow": Workflow,
+    "/guide/workflow": Workflow,
     "/resources": Bookmark,
     "/projects": Layers,
     "/qa": MessageSquare,
@@ -172,8 +172,8 @@ export function Header() {
                     return Icon ? <Icon className="w-4 h-4" /> : null;
                   })()}
                   {item.title}
-                  {item.href === "/guide/superpowers" && (
-                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-teal-500 text-white animate-pulse">
+                  {item.href === "/guide/workflow" && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-orange-500 text-white animate-pulse">
                       HOT
                     </span>
                   )}
