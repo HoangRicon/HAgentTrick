@@ -37,6 +37,36 @@ const guideSections = [
     badge: "Mới",
   },
   {
+    num: "SF",
+    icon: Compass,
+    href: "/guide/spec-first-superpowers",
+    color: "slate",
+    title: "Spec-First Superpowers — SDD Workflow",
+    desc: "Orchestration skill cho spec-before-code workflow. Tích hợp Spec-Kit, OpenSpec, Superpowers, planning-with-files, ui-ux-pro-max và MemPalace.",
+    highlights: [
+      "6 phase flow: G0-G4 quality gates",
+      "3 complexity levels: Quick / Standard / Thorough",
+      "Auto mode selection: Spec-Kit vs OpenSpec",
+      "3-Strike Protocol + Anti-Rush protection",
+    ],
+    badge: "Mới",
+  },
+  {
+    num: "SS",
+    icon: FileText,
+    href: "/guide/superspec",
+    color: "orange",
+    title: "Superspec — SDD với Superpowers",
+    desc: "Specification-Driven Development kết hợp spec-kit với superpowers. 6 giai đoạn, 9 lệnh chính, session recovery, checkpoint con người giữa các giai đoạn.",
+    highlights: [
+      "6 giai đoạn: Constitution → Specify → Brainstorm → Plan → Tasks → Execute",
+      "9 lệnh: /superspec.constitution đến /superspec.status",
+      "Marker [TDD], [P], [REVIEW], [SUBAGENT] cho từng task",
+      "Review 5 chiều đo lường: compliance, quality, coverage",
+    ],
+    badge: "Mới",
+  },
+  {
     num: "01",
     icon: Wand2,
     href: "/guide/gpt-rules",
@@ -139,8 +169,10 @@ const colorMap: Record<string, { bg: string; text: string; border: string; iconB
   emerald: { bg: "bg-emerald-500/5", text: "text-emerald-600 dark:text-emerald-400", border: "hover:border-emerald-500/40", iconBg: "bg-emerald-500/10", glow: "hover:shadow-emerald-500/10", badge: "bg-emerald-500/10", badgeText: "text-emerald-600 dark:text-emerald-400" },
   amber: { bg: "bg-amber-500/5", text: "text-amber-600 dark:text-amber-400", border: "hover:border-amber-500/40", iconBg: "bg-amber-500/10", glow: "hover:shadow-amber-500/10", badge: "bg-amber-500/10", badgeText: "text-amber-600 dark:text-amber-400" },
   cyan: { bg: "bg-cyan-500/5", text: "text-cyan-600 dark:text-cyan-400", border: "hover:border-cyan-500/40", iconBg: "bg-cyan-500/10", glow: "hover:shadow-cyan-500/10", badge: "bg-cyan-500/10", badgeText: "text-cyan-600 dark:text-cyan-400" },
+  slate: { bg: "bg-slate-500/5", text: "text-slate-600 dark:text-slate-400", border: "hover:border-slate-500/40", iconBg: "bg-slate-500/10", glow: "hover:shadow-slate-500/10", badge: "bg-slate-500/10", badgeText: "text-slate-600 dark:text-slate-400" },
   rose: { bg: "bg-rose-500/5", text: "text-rose-600 dark:text-rose-400", border: "hover:border-rose-500/40", iconBg: "bg-rose-500/10", glow: "hover:shadow-rose-500/10", badge: "bg-rose-500/10", badgeText: "text-rose-600 dark:text-rose-400" },
   teal: { bg: "bg-teal-500/5", text: "text-teal-600 dark:text-teal-400", border: "hover:border-teal-500/40", iconBg: "bg-teal-500/10", glow: "hover:shadow-teal-500/10", badge: "bg-teal-500/10", badgeText: "text-teal-600 dark:text-teal-400" },
+  orange: { bg: "bg-orange-500/5", text: "text-orange-600 dark:text-orange-400", border: "hover:border-orange-500/40", iconBg: "bg-orange-500/10", glow: "hover:shadow-orange-500/10", badge: "bg-orange-500/10", badgeText: "text-orange-600 dark:text-orange-400" },
 };
 
 const accentGradientMap: Record<string, string> = {
@@ -151,6 +183,8 @@ const accentGradientMap: Record<string, string> = {
   cyan: "from-cyan-600 to-cyan-400",
   rose: "from-rose-600 to-rose-400",
   teal: "from-teal-600 to-teal-400",
+  orange: "from-orange-600 to-orange-400",
+  slate: "from-slate-600 to-slate-400",
 };
 
 export default function GuidePage() {
