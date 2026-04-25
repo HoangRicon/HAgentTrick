@@ -17,7 +17,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Hướng dẫn",
-  description: "Các hướng dẫn sử dụng AI Agent: Superpowers skills framework, tạo bộ luật với GPT RULES, dùng AI nghiên cứu, phân tích yêu cầu với AI BA, viết prompt chuẩn, quy trình thực chiến, và sử dụng tài nguyên.",
+  description: "Các hướng dẫn sử dụng AI Agent: 4 công cụ SDD (Superpowers, Spec-Kit, Superspec, Spec-First Superpowers), tạo bộ luật với GPT RULES, dùng AI nghiên cứu, phân tích yêu cầu với AI BA, viết prompt chuẩn, và sử dụng tài nguyên.",
 };
 
 const guideSections = [
@@ -129,17 +129,17 @@ const guideSections = [
   {
     num: "05",
     icon: Target,
-    href: "/workflow",
-    color: "emerald",
-    title: "Quy trình thực chiến",
-    desc: "6 bước Power → Plan → Resources → Build → Review → Ship. Từ xác định sức mạnh AI đến triển khai sản phẩm hoàn chỉnh.",
+    href: "/guide/workflow",
+    color: "orange",
+    title: "Sự kết thúc của Vibe Coding — HOT",
+    desc: "4 công cụ SDD: Superpowers, Spec-Kit, Superspec, Spec-First Superpowers. Biết khi nào vibe coding đủ — và khi nào cần spec-driven workflow. So sánh chi tiết + hướng dẫn chọn tool phù hợp.",
     highlights: [
-      "Xác định sức mạnh AI trước khi giao việc",
-      "Mỗi module 2-5 files, có checkpoint",
-      "AI tự review theo checklist",
-      "Commit nhỏ, commit sớm — mỗi bước là checkpoint",
+      "Khi vibe coding phải dừng lại: dự án vượt ngưỡng demo → production",
+      "4 tool SDD: Superpowers · Spec-Kit · Superspec · Spec-First Superpowers",
+      "So sánh 11 chiều: trọng lượng, gates, TDD, cross-platform, UI/UX...",
+      "7 tình huống cụ thể: mới bắt đầu, dự án mới, feature nhỏ, dự án lớn...",
     ],
-    badge: "6 bước",
+    badge: "HOT",
   },
   {
     num: "06",
